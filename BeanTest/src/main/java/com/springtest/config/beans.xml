@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- Id 속성 생략, .xml 로딩 시 자동으로 객체 생성, 객체 주소값 받을 수 없음 -->
+	<bean class="com.springtest.beans.TestBean" />
+
+	<!-- getBean 메소드를 통해 객체의 주소값을 가져올 수 있다. -->
+	<!-- 생성된 객체는 더이상 생성되지 않는다. (Singleton) -->
+	<bean id="defaultBean" class="com.springtest.beans.TestBean" />
+
+	<!-- lazy-init을 사용하면 xml을 로딩할 때 객체가 생략되지 않는다. (default = false) -->
+	<!-- getBean 메소드를 호출하면 객체가 생성된다. (Singleton) -->
+	<bean id="lazyinitBean" class="com.springtest.beans.TestBean" lazy-init="true" />
+
+	<!-- scope: prototype, xml을 로딩할 때 객체가 생성되지 않는다. -->
+	<!-- getBean 메소드를 호출할 때 마다 객체를 생성 -->
+	<bean id="prototypeBean" class="com.springtest.beans.TestBean" scope="prototype" />
+</beans>
