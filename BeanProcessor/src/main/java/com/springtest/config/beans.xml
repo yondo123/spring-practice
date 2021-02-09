@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="fb" class="com.springtest.beans.FirstBeanTest" init-method="firstbeanInit" lazy-init="true"/>
+	<bean id="sb" class="com.springtest.beans.SecondBeanTest" init-method="secondBeanInit" lazy-init="true"/>
+	<!-- beanProcess 설정 -->
+	<bean class="com.springtest.processor.TestBeanPostProcessor"/>
+</beans>
