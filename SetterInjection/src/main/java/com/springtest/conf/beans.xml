@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="t1" class="com.springtest.beans.TestBean">
+		<!-- type 미지원, 문자열-실수-정수 -->
+		<property name="data1" value="100"></property>
+		<property name="data2" value="11.11"></property>
+		<property name="data3" value="true"></property>
+		<property name="data4" value="setter!"></property>
+		<property name="dataBean">
+			<bean class="com.springtest.beans.DataBean"/>
+		</property>
+		<property name="data5" ref="data_bean"></property>
+	</bean>
+	<bean id="data_bean" class="com.springtest.beans.DataBean"></bean>
+</beans>
