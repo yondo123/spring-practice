@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- byName -->
+	<bean id="data_bean" class="com.springtest.beans.TestBean" autowire="byName"></bean>
+	<bean id="data" class="com.springtest.beans.DataBean"></bean>
+	<bean id="data2" class="com.springtest.beans.DataBean"></bean>
+	
+	<!-- byType -->
+	<bean id="data_second_bean" class="com.springtest.beans.TestBeanSecond" autowire="byType"></bean>
+	<bean class="com.springtest.beans.DataBeanSecond"></bean>
+</beans>
