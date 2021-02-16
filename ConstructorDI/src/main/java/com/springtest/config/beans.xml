@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="testObj1" class="com.springtest.beans.TestBean" lazy-init="true"/>
+	<bean id="testObj2" class="com.springtest.beans.TestBean" lazy-init="true">
+		<!-- 매개변수를 1개 받는 생성자를 추적 -->
+		<constructor-arg value="100" type="int"></constructor-arg>
+		<constructor-arg value="11.11" type="double"></constructor-arg>
+		<constructor-arg value="hello!!" type="java.lang.String"></constructor-arg>
+	</bean>
+</beans>
