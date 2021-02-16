@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="test" class="com.springtest.beans.TestBean">
+		<!-- 제네릭이 String 인 List -->
+		<property name="listExam">
+			<list>
+				<value>문자열</value>
+				<value>문자열2</value>
+				<value>문자열3</value>
+			</list>
+		</property>
+
+		<property name="listRef">
+			<list>
+				<value type="int">100</value>
+				<value type="int">200</value>
+				<value type="int">300</value>
+			</list>
+		</property>
+
+		<!-- set, 중복 허용 x -->
+		<property name="setAddr">
+			<set>
+				<value>안산시 상록구</value>
+				<value>안산시 단원구</value>
+				<value>안산시 상록구</value>
+			</set>
+		</property>
+
+		<!-- map -->
+		<property name="mapUserInfo">
+			<map>
+				<entry key="userId" value="sjchoi"></entry>
+				<entry key="userPw" value="abcd123"></entry>
+				<entry key="authCode" value="1" value-type="int"></entry>
+				<!-- Map 내부 list 삽입 -->
+				<entry key="accessMenu">
+					<list>
+						<value>MAIN</value>
+						<value>OPTN</value>
+						<value>ADMN</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>
+
