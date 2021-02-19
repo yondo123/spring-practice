@@ -19,5 +19,4 @@ public class AutowireBean {
 	public void setData2(DataBean data2) {
 		this.data2 = data2;
 	}
-
 }

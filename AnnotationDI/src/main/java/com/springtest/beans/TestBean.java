@@ -32,7 +32,7 @@ public class TestBean {
 	public TestBean() {
 
 	}
-	
+
 	public TestBean(int number, String string, Object bean) {
 		this.number = number;
 		this.string = string;
