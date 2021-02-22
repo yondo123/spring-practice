@@ -1,5 +1,6 @@
 ## spring-practice
 
+:leaves:  
 Spring Frame 워크 예제 코드 테스트 및 학습 내용 정리
 
 ## 개발 환경
