@@ -1,31 +1,33 @@
 ## spring-practice
 
-:leaves:  
-Spring Frame 워크 예제 코드 테스트 및 학습 내용 정리
+:leaves: Spring FrameWork 예제 코드 테스트 및 학습 내용 정리
 
 ## 개발 환경
-
 | 구분             | 버전   |
 | ---------------- | ------ |
 | Java             | 1.8    |
 | Spring Framework | 4.3.25 |
+| DBMS			   | Oracle 11g |
 
-## 디렉토리 위키
+## 참고 자료
+| 구분 | 자료 명 |
+| --- | --- |
+| 도서 | 스프링 퀵 스타트, 채규태 저 |
+| 강의 | SoftCampus 윤재성 스프링 입문 강의 | 
 
+## :open_file_folder: Directory Wiki
 ### IoC
-
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
 **IOC**  
 관리할 클래스들이 등록된 `xml`파일을 로드하여 구동하는 개념.  
 클라이언트의 요청이 들어온 순간 `xml`파일을 참조하여 객체 생성, 객체의 생명주기 관리.
 
 ---
-
 ### BeanTest
 
-Bean 속성 테스트  
-**Bean**
+Bean 속성 학습
 
+**Bean**
 - class : 객체를 생성하기 위해 사용할 클래스
 - id : 객체를 가져오기 위해 사용하는 이름 지정 `(유일성)`
 - lazy-init : `xml파일을 로딩`할 때 객체 생성 여부 설정
@@ -37,7 +39,7 @@ Bean 속성 테스트
 
 ### BeanLifeCycle
 
-빈 생명주기 테스트  
+빈 생명주기 학습
 **init-method**  
 생성자 호출 후 자동으로 호출  
 **destory-method**  
@@ -51,7 +53,7 @@ Bean 속성 테스트
 
 ### BeanProcessor
 
-BeanFactory 전/후처리기 생성 연습
+BeanFactory 전/후처리기 생성 학습 
 **PostProcessBeforeInitialization**  
 `init-method`에 지정된 메소드가 호출되기 전에 호출  
 **postProcessAfterInitialization**  
@@ -91,7 +93,7 @@ public class TestBeanPostProcessor implements BeanPostProcessor{
 
 ### SetterInjection
 
-의존성 주입(DI)의 개념 확인 및 setter 방식의 의존성 주입 테스트.  
+의존성 주입(DI)의 개념 확인 및 setter 방식의 의존성 주입 학습  
 **Dependency Injection(DI)**  
 의존성 주입, 객체 사이의 의존 관계를 스프링 설정 파일 `xml`에 등록된 정보를 바탕으로 컨테이너가 자동으로 처리해준다.
 
@@ -197,9 +199,10 @@ public class TestBean {
   ```xml
   <property name="setAddr">
   		<set>
-  			<value>안산시 상록구</value>
-  			<value>안산시 단원구</value>
-  			<value>안산시 상록구</value>
+  			<value>value I</value>
+  			<value>value II</value>
+  			<value>value III</value>
+				<value>value I</value>
   		</set>
   	</property>
   ```
@@ -208,7 +211,7 @@ public class TestBean {
 
 ### AutowireTest
 
-자동주입 테스트, 객체를 명시(주입)하지 않아도 컨테이너가 알아서 자동으로 필요한 객체에 주입해준다.
+자동주입 학습, 객체를 명시(주입)하지 않아도 컨테이너가 알아서 자동으로 필요한 객체에 주입해준다.
 
 - byName
   - 프로퍼티의 이름과 같은 이름을 갖는 빈 객체를 설정
@@ -325,3 +328,142 @@ Spring 4 버전까지 사용하는 방식
 ```
 
 ```
+---
+### AOP
+AOP 개념 학습
+
+**AOP 개념**
+비즈니스 로직에서 실제 수행되는 로직을 `핵심 관심(Core Contents)`, 공통으로 비즈니스 로직 수행시 중복적으로 수행되는 로직을 `횡단 관심(Crosscutting Contents)`라고 하면 이 둘 관심을 분리하는 것.
+
+**AOP 용어**
++ **Joint Point**
+  + 모듈이 삽입되어 동작하게 되는 특정 위치(메소드 호출 등)
++ **Point Cut**
+  + 다양한 Joint Point 중에서 어떤 것을 사용할지에 대한 설정
++ **Advice**
+  + 횡단 관심에 해당하는 공통기능의 코드 (독립된 클래스의 메소드로 작성)
+    + **before**
+      + 메소드 호출 전 
+    + **after-running**
+      + 예외 없이 호출된 메소드의 동작이 완료
+    + **after-throwing**
+      + 호출된 메소드 동작 중 `예외가 발생`하였을 때
+    + **after**
+      + 예외 관계없이 메소드의 동작이 완료되었을 때
+    + **around**
+      + 메소드 호출 전-후에 동작
+      + 메소드 호출 자체를 가로채 비즈니스 메소드 실행 전후에 처리할 로직 수행
++ **Weabing**
+  + `Advice`를 핵심 로직 코드(핵심 관심)에 적용하는 것 
+  + 비즈니스 메소드를 수정하지 않고도 횡단 관심에 해당하는 기능을 추가/수정 가능
+  + 스프링에서는 런타임 위빙만 지원
++ **Advisor(Aspect)**
+  + Point Cut + Advice (어떤 포인트 컷 메소드에 대해서 어떤 어드바이스 메소드를 실행할지 결정)
+---
+### AOP_XML
+XML 기반의 AOP 어드바이저 생성 연습
+
+**<aop:config> 엘리먼트 생성**  
+```xml
+	<!-- Advisor 클래스 등록 -->
+	<bean id="advisor" class="com.springtest.advisor.AdvisorClass"></bean>
+	<!-- Aop 설정 -->
+	<aop:config>
+		<!--ref 속성에 등록한 Advisor 빈 객체의 id를 삽입-->
+		<aop:aspect ref="advisor">
+			<!--Elements-->
+		</aop:aspect>
+	</aop:config>
+```
+
+**Aspect 엘리먼트 생성**  
+어드바이스의 동작 시점에 호출 할 클래스들을 정의한다.  
+```java
+public class AdvisorClass {
+	//before
+	public void advBefore() {
+		System.out.println("Advisor:: Before Method");
+	}
+	
+	//after
+	public void advAfter() {
+		System.out.println("Advisor:: After Method");
+	}
+
+	//around
+	public Object aroundMethod(ProceedingJoinPoint joinpoint) throws Throwable {
+		Object text = joinpoint.proceed();
+		System.out.println("around Method!");
+		// 원래 메소드 호출
+		return text;
+	}
+
+	//after return
+	public void advAfterReturn() {
+		System.out.println("Advisor :: After Returning Method");
+	}
+
+	//after throwing (error)
+	public void throwsMethod() {
+		System.out.println("Advisor :: Error!!");
+	}
+}
+```
+`aop:asperct`하위 요소로 포인트 컷과 시점을 정의한다.  
+포인트 컷은 여러 개 정의할 수 있으며 id를 통해 포인트 컷을 참조한다.  
+```xml
+	<!-- Aop 설정 -->
+	<aop:config>
+		<aop:aspect ref="advisor">
+			<!-- pointcut 설정 -->
+			<aop:pointcut expression="execution(* displayHello())" id="advisorPoint"/>
+			<!-- advisorPoint(pointcut-ref 메소드) 호출 전 시행  -->
+			<aop:before method="advBefore" pointcut-ref="advisorPoint"/>
+			<!-- advisorPoint(pointcut-ref 메소드) 호출 후 시행  -->
+			<aop:after method="advAfter" pointcut-ref="advisorPoint"/>
+			<!-- aop around 설정 -->
+			<aop:around method="aroundMethod" pointcut-ref="advisorPoint"/>
+			<!-- afterReturning 메소드,  메소드 정상 호출 후 시행-->
+			<aop:after-returning method="advAfterReturn" pointcut-ref="advisorPoint"/>
+			<!--예외처리 메소드, 에러 발생시-->
+			<aop:after-throwing method="throwsMethod" pointcut-ref="advisorPoint"/>
+		</aop:aspect>
+	</aop:config>
+```
+
+**Point Cut 표현식**
+```Text
+1. 리턴타입
+2. 패키지 경로
+3. 클래스 명
+4. 메소드 명, 매개변수
+execution(* com.package.path *Impl get*(..))
+```
+
++ **리턴타입**
+	| 표현식 | 내용 |
+	| ---- | ----|
+	| * | 모든 리턴타입 허용 |
+	| void | 리턴타입이 void인 메소드 |
+	| !void | 리턴타입이 void가 아닌 메소드 |
+  
++ **패키지**
+  	| 표현식 | 내용 |
+	| ---- | ----|
+	| com.springtest | 정확한 com/springtest 단일 패키지 선택 |
+	| com.springtest.. | com.springtest 패키지로 시작하는 모든 패키지 |
+	| com.springtest..biz | com.springtest로 시작하면서 biz로 끝나는 이름을 가진 패키지 |
+
++ **클래스**
+  	| 표현식 | 내용 |
+	| ---- | ----|
+	| ClassName | ClassName 클래스만 선택 |
+	| *Name | 'Name'으로 끝나는 클래스명을 가진 클래스 선택 |
+	| Class+ | 클래스로부터 파생된 모든 자식 클래스 or 해당 인터페이스를 구현한 모든 클래스 선택 |
+
++ **메소드**
+  	| 표현식 | 내용 |
+	| ---- | ----|
+	| *(..) | 기본 설정, 모든 메소드 선택 |
+	| display*(..) | 메소드 이름이 'display'으로 시작하는 모든 메소드 |
+---
