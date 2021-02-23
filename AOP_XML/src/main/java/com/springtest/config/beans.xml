@@ -15,7 +15,7 @@
 	<aop:config>
 		<aop:aspect ref="advisor">
 			<!-- pointcut 설정 -->
-			<aop:pointcut expression="execution(* displayHello())" id="advisorPoint"/>
+			<aop:pointcut expression="execution(* com.springtest.beans.*Bean.displayHello(..));" id="advisorPoint"/>
 			<!-- advisorPoint(pointcut-ref 메소드) 호출 전 시행  -->
 			<aop:before method="advBefore" pointcut-ref="advisorPoint"/>
 			<!-- advisorPoint(pointcut-ref 메소드) 호출 후 시행  -->
@@ -29,6 +29,3 @@
 		</aop:aspect>
 	</aop:config>
 </beans>
-
-
-
