@@ -12,10 +12,25 @@
 ## 참고 자료
 | 구분 | 자료 명 |
 | --- | --- |
-| 도서 | 스프링 퀵 스타트, 채규태 저 |
-| 강의 | SoftCampus 윤재성 스프링 입문 강의 | 
+| 도서 | 스프링 퀵 스타트, 채규태 |
+| 강의 | SoftCampus 스프링 입문 강의, 윤재성 | 
 
 ## :open_file_folder: Directory Wiki
+1. [IoC 컨테이너](#ioc)
+2. [Bean 객체](#beantest)
+3. [Bean 생명주기](#beanlifecycle)
+4. [Bean Processor](#beanprocessor)
+5. [DI(의존성 주입) - Setter](#setterinjection)
+6. [DI(의존성 주입) - 생성자 방식](#constructor-di)
+7. [컬렉션 주입](#collectioninjection)
+8. [자동 주입](#autowiretest)
+9. [Annotation](#javabeanconfing)
+10. [Annotation 의존성 주입](#annotationdi)
+11. [Annotation 다양한 속성](#annotationproperties)
+12. [AOP](#aop)
+13. [XML 방식 AOP 실습](#aop_xml)
+14. [Annotation 방식 AOP 실습](#aop_annotation)
+---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
 **IOC**  
@@ -353,6 +368,14 @@ AOP 개념 학습
     + **around**
       + 메소드 호출 전-후에 동작
       + 메소드 호출 자체를 가로채 비즈니스 메소드 실행 전후에 처리할 로직 수행
+      + 클라이언트가 호출한 비즈니스 메소드를 호출하기 위해서 `proceedingJoinPoint`객체를 매개변수로 받는다.
+		```java
+		public Object aroundMethod(ProceedingJoinPoint joinpoint) throws Throwable {
+			// 비즈니스 메소드 호출
+			Object resultObj = joinpoint.proceed();
+			return resultObj;
+		}
+		```
 + **Weabing**
   + `Advice`를 핵심 로직 코드(핵심 관심)에 적용하는 것 
   + 비즈니스 메소드를 수정하지 않고도 횡단 관심에 해당하는 기능을 추가/수정 가능
@@ -432,14 +455,10 @@ public class AdvisorClass {
 ```
 
 **Point Cut 표현식**
-```Text
-1. 리턴타입
-2. 패키지 경로
-3. 클래스 명
-4. 메소드 명, 매개변수
-execution(* com.package.path *Impl get*(..))
+```java
+//execution([리턴타입] [패키지 경로].[클래스명].[메소드/매개변수])
+execution(* com.springtest.beans.*Bean.displayHello(..));
 ```
-
 + **리턴타입**
 	| 표현식 | 내용 |
 	| ---- | ----|
@@ -466,4 +485,51 @@ execution(* com.package.path *Impl get*(..))
 	| ---- | ----|
 	| *(..) | 기본 설정, 모든 메소드 선택 |
 	| display*(..) | 메소드 이름이 'display'으로 시작하는 모든 메소드 |
+---
+
+### AOP_Annotation
+Annotation 기반의 AOP 설정 학습
+**XML 설정 파일에 aspectj-autoproxy 등록**  
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<!-- advisor 클래스에 설정되어 있는 Annotation 셋팅 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+</beans>
+```
+
+**@EnableAspectAutoProxy**
+`BeanConfig`클래스에 해당 속성을 정의한다.
+```java
+@ComponentScan(basePackages={"com.springtest.beans, com.springtest.advisor"})
+@EnableAspectJAutoProxy
+public class BeanConfig {
+	//code
+}
+```
+**Aspect 설정**
+어드바이저 클래스에 `@Aspect` 속성을 정의한다.
+```java
+@Aspect
+@Component
+public class AdvisorClass {
+
+}
+```
+
+**Aspect 지원 어노테이션**
++ **@Before** : 관심사 동작 이전에 호출
++ **@After** : 관심사 동작 이후에 호출
++ **@Around** : 관심사 동작 이전-이후
++ **@AfterReturning** : 정삭적으로 종료되었을 때 호출
++ **@AfterThrowing** : 예외가 발생하였을 때 호출 
 ---
