@@ -30,6 +30,7 @@
 12. [AOP](#aop)
 13. [XML 방식 AOP 실습](#aop_xml)
 14. [Annotation 방식 AOP 실습](#aop_annotation)
+15. [JDBC 연동](#jdbctest)
 ---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
@@ -54,7 +55,7 @@ Bean 속성 학습
 
 ### BeanLifeCycle
 
-빈 생명주기 학습
+빈 생명주기 학습  
 **init-method**  
 생성자 호출 후 자동으로 호출  
 **destory-method**  
@@ -68,7 +69,7 @@ Bean 속성 학습
 
 ### BeanProcessor
 
-BeanFactory 전/후처리기 생성 학습 
+BeanFactory 전/후처리기 생성 학습   
 **PostProcessBeforeInitialization**  
 `init-method`에 지정된 메소드가 호출되기 전에 호출  
 **postProcessAfterInitialization**  
@@ -264,7 +265,7 @@ public SecondTestBean secondBean(){
 ### AnnotationDI
 
 Annotation 방식을 활용한 의존성주입(DI) 테스트.  
-**생성자 방식**
+**생성자 방식**  
 `@Bean`객체 정의 시 반환 값에 직접 초기화
 
 ```java
@@ -533,3 +534,168 @@ public class AdvisorClass {
 + **@AfterReturning** : 정삭적으로 종료되었을 때 호출
 + **@AfterThrowing** : 예외가 발생하였을 때 호출 
 ---
+
+### JDBCTest
+JDBC 드라이버 연동 학습  
+**라이브러리 추가**  
++ spring-jdbc, ojdbc, dbcp 
+
+**JDBC Template**  
+`JDBC Template` 클래스를 통해 JDBC 연동
+
+**템플릿 메소드**  
++ update()
+  + INSERT, UPDATE, DELETE 구문 
++ queryForObject()
+  + SELECT문의 실행결과를 객체 형식으로 받음
++ query()
+  + SELECT문의 결과가 목록일 때
+
+**DataSource 설정**  
+DB 연결을 위해 DBMS에 관한 정보를 설정  
+**XML**
+```xml
+<!--DataSource 설정-->
+<context:property-placeholder location="classpath:config/database.properties" destroy-method="close">
+<bean id="source" class="org.apahe.commons.dbcp.BasicDataSource">
+	<property name="driverClassName" value="oracle.jdbc.OracleDriver">
+	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe">
+	<property name="username" value="spring">
+	<property name="password" value="spring">
+</bean>
+```
+**Annotation**
+```java
+@Bean
+	public BasicDataSource source() {
+		BasicDataSource src = new BasicDataSource();
+		// DBMS 접속정보 생성
+		src.setDriverClassName("oracle.jdbc.OracleDriver");
+		src.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+		src.setUsername("spring");
+		src.setPassword("spring");
+		return src;
+	}
+```
+
+**VO 클래스 작성**  
+데이터 전달을 목적으로 사용하는 클래스  
+`private`접근 제한자를 이용해 DB에 저장되어 있는 컬럼과 같은 이름의 멤버변수 설정  
+```sql
+CREATE TABLE user_table
+( 
+	name varchar2(10) not null,
+	sex varchar(2),
+	hobby varchar2(10)
+);
+```
+
+```java
+//VOClass.java
+@Component //bean 생성을 위한 component
+@Scope("prototype") // Query 실행 시 객체 생성
+public class JdbcBean {
+	//테이블 컬럼 프로퍼티 변수 생성
+	private String name;
+	private String sex;
+	private String hobby;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getHobby() {
+		return hobby;
+	}
+
+	public void setHobby(String hobby) {
+		this.hobby = hobby;
+	}
+}
+```
+**JdbcTemplate 메소드 연동**  
+1. 스프링 설정 파일에 `JdbcTemplate`설정
+	```java
+	//BeanConfig.java
+		@Bean
+		public JdbcTemplate db(BasicDataSource source) {
+			// 데이터 소스 (접속정보 가지고 있는 객체, DBCP)
+			JdbcTemplate db = new JdbcTemplate(source);
+			return db;
+		}
+	```
+2. JdbcTemplate 객체에 DataSource의존성 주입
+	```java
+	//DAOClass.java
+	@Component
+	public class JdbcDAO {
+		// jdbc 관리 객체(JdbcTemplate 주입)
+		@Autowired
+		private JdbcTemplate db;
+		// Mapper클래스 주입
+		@Autowired
+		private MapperClass mp;
+
+		// INSERT
+		public void data_insert(JdbcBean bean) {
+			String sql = "insert into USER_TABLE (NAME, SEX, HOBBY) values(?,?,?)";
+			// 각각의 insert 값에 binding
+			db.update(sql, bean.getName(), bean.getSex(), bean.getHobby());
+		}
+
+		// SELECT
+		public List<JdbcBean> data_select() {
+			String sql = "SELECT NAME, HOBBY, SEX FROM USER_TABLE";
+			List<JdbcBean> list = db.query(sql, mp);
+			return list;
+		}
+	}
+	```
+**Mapper**  
+`select`쿼리를 사용할 때 어떤 컬럼의 값을 bean 객체에 주입할 것인지 결정  
+1. Mapper 클래스 작성
+	```java
+	//MapperClass.java
+	@Component
+	public class MapperClass implements RowMapper<JdbcBean> {
+		public JdbcBean mapRow(ResultSet rs, int rowNum) throws SQLException {
+			JdbcBean bean = new JdbcBean();
+			bean.setName(rs.getString("NAME"));
+			bean.setSex(rs.getString("SEX"));
+			bean.setHobby(rs.getString("HOBBY"));
+
+			return bean;
+		}
+	}
+	```
+2. `Dao`클래스에서 query 메소드에 쿼리문과 mapper 객체를 전달
+	```java
+	//DAOClass.java
+	@Component
+	public class JdbcDAO {
+		// jdbc 관리 객체(JdbcTemplate 주입)
+		@Autowired
+		private JdbcTemplate db;
+		// Mapper클래스 주입
+		@Autowired
+		private MapperClass mp;
+		// SELECT
+		public List<JdbcBean> data_select() {
+			String sql = "SELECT NAME, HOBBY, SEX FROM USER_TABLE";
+			List<JdbcBean> list = db.query(sql, mp);
+			return list;
+		}
+	}
+	```
