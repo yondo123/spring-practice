@@ -31,6 +31,8 @@
 13. [XML 방식 AOP 실습](#aop_xml)
 14. [Annotation 방식 AOP 실습](#aop_annotation)
 15. [JDBC 연동](#jdbctest)
+16. [MyBatis 연동](#mybatis-test)
+17. [Spring MVC]()
 ---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
@@ -566,7 +568,7 @@ DB 연결을 위해 DBMS에 관한 정보를 설정
 ```
 **Annotation**
 ```java
-@Bean
+	@Bean
 	public BasicDataSource source() {
 		BasicDataSource src = new BasicDataSource();
 		// DBMS 접속정보 생성
@@ -699,3 +701,109 @@ public class JdbcBean {
 		}
 	}
 	```
+---
+### MyBatis Test
+MyBatis 라이브러리 연동 학습  
+**라이브러리 추가**  
+mybatis, mybatis-spring 라이브러리 두개를 추가
+```xml
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.4.6</version>
+</dependency>
+
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis-spring</artifactId>
+    <version>1.3.2</version>
+</dependency>
+```
+
+**VO 클래스 작성**
+```java
+@Component
+@Scope("prototype") //쿼리실행시 동작하도록 설정
+public class UserVO {
+	private String name;
+	private String sex;
+	private String hobby;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getHobby() {
+		return hobby;
+	}
+
+	public void setHobby(String hobby) {
+		this.hobby = hobby;
+	}
+
+}
+```
+**Mapper Interface**  
+DB연동에 필요한 SQL 명령어들을 작성  
+```java
+public interface MapperInterface {
+	//select
+	@Select("SELECT NAME, SEX, HOBBY FROM USER_TABLE")
+	List<UserVO> selectData();
+
+	//insert
+	@Insert("INSERT INTO USER_TABLE (NAME, SEX, HOBBY) VALUES(#{name}, #{sex}, #{hobby})")
+	void insertData(UserVO bean);
+}
+```
+
+**MyBatis 환경설정(BasicDataSource)**  
+DB 커넥션 정보를 담은 dbcp 객체를 `SqlSessionFactory`에 주입하고, 다시 `Mapper`인터페이스에 주입시킨다. 
+```java
+@Configuration
+@ComponentScan(basePackages = "com.springtest.beans")
+public class BeanConfig {
+	// dbcp datasource
+	@Bean
+	public BasicDataSource dataSource() {
+		BasicDataSource src = new BasicDataSource();
+		src.setDriverClassName("oracle.jdbc.OracleDriver");
+		src.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+		src.setUsername("spring");
+		src.setPassword("spring");
+		return src;
+	}
+
+	// SqlSessionFactory (JDBC 처리 객체)
+	// BasicDataSource 주입
+	@Bean
+	public SqlSessionFactory factory(BasicDataSource src) throws Exception {
+		SqlSessionFactoryBean factoryBaan = new SqlSessionFactoryBean();
+		factoryBaan.setDataSource(src);
+		SqlSessionFactory factory = factoryBaan.getObject();
+		return factory;
+	}
+
+	// Mapper
+	// SqlSessionFactory 주입
+	// 다수의 mapper 관리를 위해 bean 호출 시 name으로 호출
+	@Bean
+	public MapperFactoryBean<MapperInterface> usertbl_mapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<MapperInterface> factoryBean = new MapperFactoryBean<MapperInterface>(MapperInterface.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+}
+```
