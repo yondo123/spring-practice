@@ -6,8 +6,10 @@
 | 구분             | 버전   |
 | ---------------- | ------ |
 | Java             | 1.8    |
-| Spring Framework | 4.3.25 |
+| Spring Framework | 4.3.25, 5.2.9 |
 | DBMS			   | Oracle 11g |
+| Apache/Tomcat    | 9.0	|
+| Servlet 	       | 4.0 	|
 
 ## 참고 자료
 | 구분 | 자료 명 |
