@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+								http://www.springframework.org/schema/mvc/spring-mvc.xsd
+								http://www.springframework.org/schema/beans
+								http://www.springframework.org/schema/beans/spring-beans.xsd
+								http://www.springframework.org/schema/context
+								http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Controller 어노테이션을 가지고 있는 클래스들을 Controller로 로드 -->
+	<annotation-driven />
+	<!-- 스캔 대상 package 경로 -->
+	<context:component-scan base-package="com.springtest.controller"></context:component-scan>
+
+	<!-- Controller 메서드에서 반환하는 문자열 패턴 설정 -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.internalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
+		<beans:property name="suffix" value=".jsp"></beans:property>
+	</beans:bean>
+</beans:beans>
+
