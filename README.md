@@ -35,6 +35,7 @@
 15. [JDBC 연동](#jdbctest)
 16. [MyBatis 연동](#mybatis-test)
 17. [Spring MVC](#spring-mvc)
+18. [Request Mapping](#)
 ---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
@@ -810,3 +811,87 @@ public class BeanConfig {
 }
 ```
 ### Spring MVC
+Spring MVC 패턴 개념 학습
+**개념**
+`Model-View-Controller` 세 개의 계층(Layer)으로 이루어져 있는 구조  
+사용자 인터페이스와 애플리케이션 로직 분리하는데 사용하는 패턴  
+
++ Model  
+애플리케이션의 비즈니스 계층 정의
+
++ Controller  
+애플리케이션의 흐름 관리 `(Model과 View 계층 연결)`
+
++ View  
+애플리케이션 presentation 계층 정의 (사용자에게 보여지는 부분)
+
+**Spring MVC 구조**
++ Dispatcher Servlet  
+클라이언트 요청을 분석하여 어느 컨트롤러와 매칭시킬지 결정하는 서블릿 클래스
+
++ WebApplicationContext  
+개발영역, `viewResolver`에게 전달하고 해당 리졸버가 클라이언트에게 전달  
+---
+
+### Request Mapping
+**@RequestMapping**
+클라이언트로부터 요청이 왔을 때, 처리 메소드를 매핑해주겠다는 의미  
++ value : 요청주소 `(실제 물리적인 주소가 아닌 가상의 주소)`
++ method : 요청 타입 (POST, GET..) 
+```java
+@Controller
+public class MainController {
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String IndexController() {
+		return "index";
+	}
+}
+```
+**하위 경로 설정**  
+특정 URL에 하위 경로가 여러개로 나누어 진다면 매핑 컨트롤러 내부에 중첩해서 사용이 가능하다. 예를들어 /board/sports, /board/game.. 등 상위 path가 동일하다면 일일이 분리 할 필요가 없다.
+```java
+@Controller
+@RequestMapping("/board")
+public class MainController {
+	@RequestMapping(value = "/sports", method = RequestMethod.GET)
+	public String sports() {
+		return "board/sports";
+	}
+
+	@RequestMapping(value = "/study", method = RequestMethod.GET)
+	public String study() {
+		return "board/study";
+	}
+```
+
+**Request 어노테이션**
+RequestMapping 대신 요청별로 메소드를 지정할 수 있다. (요청 메소드 별 처리 로직이 다를 때 사용한다.)  
+`value` 속성을 생략할 수 있다.
+```java
+@Controller
+public class MainController {
+	@ResponseBody
+	@GetMapping("/getString") //value="/getString"
+	public String testData() {
+		return "return Data";
+	}
+
+	@ResponseBody
+	@PostMapping("/postString") //value="/getString"
+	public String testData() {
+		return "return Data";
+	}
+}
+```
+
+**Request 동시 설정**  
+요청 방식에 따라 처리방법이 동일 할 경우, 동시에 메서드를 설정할 수 있다.
+```java
+@Controller
+public class MainController {
+	@RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
+	public String IndexController() {
+		return "index";
+	}
+}
+```
