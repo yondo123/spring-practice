@@ -35,7 +35,8 @@
 15. [JDBC 연동](#jdbctest)
 16. [MyBatis 연동](#mybatis-test)
 17. [Spring MVC](#spring-mvc)
-18. [Request Mapping](#)
+19. [Request Mapping](#springrequest)
+20. [파라미터 주입](#parameter)
 ---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
@@ -833,7 +834,8 @@ Spring MVC 패턴 개념 학습
 개발영역, `viewResolver`에게 전달하고 해당 리졸버가 클라이언트에게 전달  
 ---
 
-### Request Mapping
+### SpringRequest
+요청 관련 어노테이션 학습  
 **@RequestMapping**
 클라이언트로부터 요청이 왔을 때, 처리 메소드를 매핑해주겠다는 의미  
 + value : 요청주소 `(실제 물리적인 주소가 아닌 가상의 주소)`
@@ -894,4 +896,99 @@ public class MainController {
 		return "index";
 	}
 }
+```
+### parameter
+파라미터 주입 학습
+**HttpServletRequest**  
+기본적으로 제공하는 http 서블릿 객체를 이용해 파라미터를 받을 수 있다.
+```java
+@Controller
+public class RequestController {
+
+	// GET
+	@GetMapping("/test")
+	public String test(HttpServletRequest request) {
+		// 단일 파라미터
+		String data1 = request.getParameter("data1");
+		String data2 = request.getParameter("data2");
+		System.out.println(data1 + '\n' + data2);
+		// 다중 파라미터
+		String[] dupData = request.getParameterValues("dupData");
+		for (String val : dupData) {
+			System.out.println("username : " + val);
+		}
+		return "result";
+	}
+
+	// POST
+	@PostMapping("/postResult")
+	public String postResult(HttpServletRequest request) {
+		String userName = request.getParameter("userName");
+		String userId = request.getParameter("userId");
+		String[] userHobby = request.getParameterValues("hobby");
+		System.out.println("username, userid : " + userName + ", " + userId);
+		if (userHobby != null) {
+			for (String hobby : userHobby) {
+				System.out.println("취미 : " + hobby);
+			}
+		}
+		return "result";
+	}
+}
+```
+
+**WebRequest**  
+`HttpServletRequest` 확장 클래스 (사용 메소드는 동일하고, 기능이 추가되었다.)
+```java
+	//WebRequest GET
+	@GetMapping("/webReqTest")
+	public String webReqTest(WebRequest request) {
+		String data1 = request.getParameter("data1");
+		String data2 = request.getParameter("data2");
+		System.err.println(data1 + ", " + data2);
+		return "result";
+	}
+```
+
+**@PathVariable**  
+URL 경로에 변수를 주입해주는 어노테이션  
+URL 구분자 경로에서 값을 처리할 때 주로 사용한다.
++ controller
+	```java
+		//@pathVariable
+		@GetMapping("/board/{subPath}/{detailPath}")
+		public String values(@PathVariable String subPath, @PathVariable String detailPath) {
+
+			System.out.println("중분류 :" + subPath);
+			System.out.println("소분류 :" + detailPath);
+			return "result";
+		}
+	```
++ view
+	```html
+	<a href="board/sports/football">FOOTBALL BOARD</a>
+	```
+
+**@RequestParam**  
+요청한 파라미터를 받는 어노테이션, 받을 프로퍼티 이름과 변수명을 지정해준다.
+```java
+	GetMapping("/football")
+	public String post(@RequestParam String post, @RequestParam String user) {
+		System.out.println("post number : " + post);
+		System.out.println("post writer : " + user);
+		return "result";
+	}
+```
+위와 같이 사용하면, 요청한 파라미터가 없을 경우 오류가 발생하게된다.  
+(넘겨질 파라미터를 받ㄷ지 않는 것은 문제가 되지 않지만, 파라미터가 존재하지 않는 경우에 로직을 수행하는 것이 불가능하다.)  
+따라서 `default`값을 줄 수 있다.
++ **required** : `false`로 설정된 경우, null 값으로 받을 수 있다.
++ **defaultValue** : 파라미터의 기본 값을 설정할 수 있다.
+```java
+	GetMapping("/football")
+	public String post(@RequestParam String post, @RequestParam String user) {
+		System.out.println("post number : " + post);
+		System.out.println("post writer : " + user);
+		return "result";
+	}
 ```
