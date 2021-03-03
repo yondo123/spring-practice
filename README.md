@@ -34,9 +34,11 @@
 14. [Annotation 방식 AOP 실습](#aop_annotation)
 15. [JDBC 연동](#jdbctest)
 16. [MyBatis 연동](#mybatis-test)
-17. [Spring MVC](#spring-mvc)
-19. [Request Mapping](#springrequest)
-20. [파라미터 주입](#parameter)
+17. [Properties](#properties)
+18. [유효성 검사](#validatetest)
+19. [Spring MVC](#spring-mvc)
+20. [Request Mapping](#springrequest)
+21. [파라미터 주입](#parameter)
 ---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
@@ -723,7 +725,6 @@ mybatis, mybatis-spring 라이브러리 두개를 추가
     <version>1.3.2</version>
 </dependency>
 ```
-
 **VO 클래스 작성**
 ```java
 @Component
@@ -811,6 +812,226 @@ public class BeanConfig {
 	}
 }
 ```
+---
+### Properties    
+Properties 파일 사용 테스트
+**Properties**  
+주로 절대 변하지 않는 값(상수)들을 관리할 때 사용하는 파일이다.
+
+**파일 생성하기**  
+`root\WEB-INF`디렉토리 내에 자율적으로 파일을 생성한다. (확장자는 .properties)  
+※한글 입력 시 유니코드로 변환되어 작성되므로, Eclipse 같은 경우, 별도의 플러그인 설치가 필요하다.
+```text
+database.dbms = oracle 11g
+database.username = oracle
+```
+**@PropertySource**  
+@PropertySource 어노테이션을 통해 사용 할 프로퍼티 파일을 불러올 수 있다.
+```java
+//ControllerClass
+@Controller
+@PropertySource("/WEB-INF/properties/constant.properties")
+public class PropController {
+	@GetMapping("/properties")
+	public String properties() {
+		return "prop";
+	}
+}
+```
+**@Value**
+해당 프로퍼티에서 정의한 값을 가져오기 위한 어노테이션.  
+주입받을 변수에 `@Value(${key})` 형태로 선언해 사용한다.
+```java
+@PropertySource("/WEB-INF/properties/constant.properties")
+public class PropController {
+
+	@Value("${database.dbms}")
+	private String db_service;
+
+	@Value("${database.username}")
+	private String db_username;
+
+	@GetMapping("/properties")
+	public String properties() {
+		System.out.println(db_service + ", " + db_username);
+		return "prop";
+	}
+}
+```
+---
+### ValidateTest
+브라우저 측 (JavaScript)에서 데이터 유효성 검사를 하는 것이 아닌, 서버 측에서 검사 (SpringFramework)  
+프론트에서는 단순히 사용자에게 적절한 요구 값을 알려주는 것이지 보안 측면에서 기대할 수 없다.
+`JSR`규격의 유효성 검사 라이브러리를 사용할 수 있다.  
+**원리**  
+Bean에 데이터가 입력될 때 유효성 검사 규칙을 어노테이션으로 지정하고 해당 조건에 따라 오류 정보 제공  
+
+**라이브러리 추가**  
+`hibernate`라는 유효성 검사 클래스 라이브러리를 사용
+```xml
+<!--pom.xml-->
+<!-- JavaX Validation -->
+<dependency>
+	<groupId>javax.validation</groupId>
+	<artifactId>validation-api</artifactId>
+	<version>2.0.1.Final</version>
+</dependency>
+
+<!-- hibernate validator -->
+<dependency>
+	<groupId>org.hibernate.validator</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>6.1.6.Final</version>
+</dependency>
+```
+**Bean에 어노테이션 설정**  
+유혀성 검사를 위한 어노테이션은 해당 `Bean`객체에 정의해야한다.
+```java
+//VO (DataBean)
+public class DataBean {
+	@Length(max = 10, min = 5) // 최소 5글자 ~ 최대 10글자 이내
+	private String userId;
+	@NotBlank // 빈 값 허용하지 않음
+	@Length(max = 20, min = 5) // 최소 5글자 ~ 최대 10글자 이내
+	private String userPw;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPw() {
+		return userPw;
+	}
+
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
+	}
+}
+```
+규칙에 따른 어노테이션을 선언하였으면 주입 받는 Bean 객체에 `@Valid`를 설정하여 유효성 검사를 시행할 수 있다.  
+```java
+//Controller
+@Controller
+public class LoginController {
+	@PostMapping("result")
+	//해당 Bean 객체에 @Valid를 설정해주고, BindingResult 객체를 주입받아야 한다.
+	public String login(@Valid DataBean dataBean, BindingResult res) {
+		System.out.println("userId : " + dataBean.getUserId());
+		System.out.println("userPW : " + dataBean.getUserPw());
+		System.out.println("Validation Result : " + res);
+		return "registry";
+	}
+}
+```
+**출력값**  
+Veiw 페이지에서 사용자가 입력 값을 제대로 주었다면, res값에 `org.springframework.validation.BeanPropertyBindingResult: 0 errors` 라고 출력 될 것이다.  
+만약 임의로 해당 범위 값 이상으로 제출하였다면 오류에 대한 정보를 담는다. (그렇다고 실제 서비스에서 오류를 발생시키지 않는다, 직접 컨트롤하여야 한다.)
+```text
+Validation Result : org.springframework.validation.BeanPropertyBindingResult: 2 errors
+Field error in object 'dataBean' on field 'userPw': rejected value [afdqsdasfqEfqcwqadsvcxzsadbsfd]; codes [Length.dataBean.userPw,Length.userPw,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [dataBean.userPw,userPw]; arguments []; default message [userPw],20,5]; default message [길이가 5에서 20 사이여야 합니다]
+Field error in object 'dataBean' on field 'userId': rejected value [yondo123123231213123123]; codes [Length.dataBean.userId,Length.userId,Length.java.lang.String,Length]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [dataBean.userId,userId]; arguments []; default message [userId],10,5]; default message [길이가 5에서 10 사이여야 합니다]
+```
+**메소드**  
+유혀성 검사에서 위반한 부분을 출력하거나 분기처리를 통해 접근을 제한시킨다.
+```java
+@Controller
+public class LoginController {
+	@PostMapping("result")
+	public String login(@Valid DataBean dataBean, BindingResult res) {
+		System.out.println("userId : " + dataBean.getUserId());
+		System.out.println("userPW : " + dataBean.getUserPw());
+		System.out.println("Validation Result : " + res);
+
+		if (res.hasErrors()) {
+			for (ObjectError err : res.getAllErrors()) {
+				System.out.println("Message : " + err.getDefaultMessage());
+				System.out.println("Error Code : " + err.getCode());
+				System.out.println("Object Name : " + err.getObjectName());
+				System.out.println("--------------------------------------");
+			}
+			return "index"; //만약 유효성 검사에 위배된 경우, 입력페이지 재요청
+		}
+		return "registry";
+	}
+}
+```
++ **res.hasError()**
+  + 유효성 검사에서 위반 여부를 반환 `bool`
++ **res.getAllErrors()**
+  + 위반된 내용들을 반환 `Object`
+    + **getDefaultMessage** : deault 오류 내용 반환
+    + **getCode** : 오류 코드 반환
+    + **getObjectName** : 해당 bean 객체 이름 반환
+    + **getCodes** 해당 유효성 검사 정보 (검사타입.객체.데이터)를 배열 형태로 반환 `Array`
+  
+**에러 메시지 설정**  
+기본적으로 출력되는 메시지는 `JSR-303`에서 정의한 메시지이다.  
+`properties`설정을 통해 에러 메시지를 커스텀할 수 있다.(일부만 가능)  
+1. **Properties 파일 생성**  
+   ```text
+	#error_message.properties
+	Length.dataBean.userId = Input ID min 5 ~ max 10 Length Please.
+	NotBlank.dataBean.userPw = Please enter the password you want.
+	Length.dataBean.userPw = Input Password min 5 ~ max 10 Length Please.
+   ```
+2. **스프링 설정 파일에서 메시지 소스 등록**
+   ```java
+	//properties 파일을 메시지로 등록
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
+		res.setBasename("/WEB-INF/properties/error_message"); //파일 이름까지만 등록
+		return res;
+	}
+   ```
+3. **view 영역에서 codes[]메소드 호출**
+	`getFieldError`의 codes 메소드를 호출해 설정한 에러메시지를 호출한다.
+	```jsp
+	<form action="result" method="post">
+		<input type="text" name="userId" /><br />
+		<spring:hasBindErrors name="dataBean">
+			<c:if test="${errors.hasFieldErrors('userId') }">
+				<spring:message code="${errors.getFieldError('userId').codes[0] }"></spring:message><br/>
+			</c:if>
+		</spring:hasBindErrors>
+		<input type="password" name="userPw" />
+		<spring:hasBindErrors name="dataBean">
+			<c:if test="${errors.hasFieldErrors('userPw') }">
+				<spring:message code="${errors.getFieldError('userPw').codes[0] }"></spring:message><br/>
+			</c:if>
+		</spring:hasBindErrors>
+		<button type="submit">Submit</button>
+	</form>
+	```
+**JSR 어노테이션**  
+JSR-303, 380 어노테이션을 지원한다.  
++ **@AssertTrue/false**
+  + true/false 값 확인
++ **@DecimalMax / Min**
+  + 해당 value보다 같거나 초과 / 미만인지 검사
+  + `inclusive`는 해당 값도 포함인지의 여부
++ **@Null**
+  + 값이 들어오면 오류가 발생
++ **@NotNull**
+  + 값이 들어오지 않으면 오류 발생
++ **@Digits**
+  + 지정된 자릿수의 숫자가 아닐 경우 오류 발생 
+  + Integer : 정수 자릿수, fraction : 실수 자릿수
++ **@Size**
+  + 지정된 글자수 보다 짧거나 크면 오류가 발생
++ **@Pattern**
+  + 지정된 정규식에 위배되면 오류가 발생
+  ```java
+	@Pattern(regexp = "[a-zA-Z]*") //영문자만 허용
+  ```
++ **@NotBlank**
+  + (공백 미포함) 문자열 길이가 0이면 오류 발생
+
+---
 ### Spring MVC
 Spring MVC 패턴 개념 학습
 **개념**
