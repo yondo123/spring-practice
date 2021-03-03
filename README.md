@@ -38,7 +38,8 @@
 18. [유효성 검사](#validatetest)
 19. [Spring MVC](#spring-mvc)
 20. [Request Mapping](#springrequest)
-21. [파라미터 주입](#parameter)
+21. [Restful API](#restfulapi)
+22. [파라미터 주입](#parameter)
 ---
 ### IoC
 IOC 컨테이너 개념 학습, Bean 객체 개념, `xml` 설정 파일 생성  
@@ -1043,11 +1044,19 @@ Spring MVC 패턴 개념 학습
 
 + Controller  
 애플리케이션의 흐름 관리 `(Model과 View 계층 연결)`
+	+ @Service : Controller에서 호출하는 메소드를 가지고 있는 Bean
+	+ @Repository : `@Service`에서 정의한 Bean 객체 중 데이터베이스와 관련된 작업을 구현한 Bean 을 호출하는 객체
 
 + View  
 애플리케이션 presentation 계층 정의 (사용자에게 보여지는 부분)
 
 **Spring MVC 구조**
++ Service  
+클라이언트의 요청에 따라 응답 값을 생성해 다시 클라이언트에게 전달 (Controller에서 호출)  
+
++ DAO(Data Access Object)  
+DB연동 (데이터베이스)을 통해 필요한 작업 수행
+
 + Dispatcher Servlet  
 클라이언트 요청을 분석하여 어느 컨트롤러와 매칭시킬지 결정하는 서블릿 클래스
 
@@ -1118,6 +1127,120 @@ public class MainController {
 	}
 }
 ```
+---
+### RestfulAPI
+Jackson 라이브러리를 활용해 REST API 학습  
+**REST API**  
+서버측에서 view 영역을 생성하지 않고 클라이언트쪽에서 필요한 요청 결과만 전달하는 패턴
+
+**RestController**  
+`@Controller`는 사용할 JSP 파일(view)을 반환하지만, `@RestController`는 값 자체를 브라우저로 전달할 수 있다.
+만약 아래와 같이 컨트롤러를 구성하면 문자열 `shop`을 반환한다.
+```java
+@RestController
+public class RestController {
+	@GetMapping("/shop")
+	public String shop() {
+		return "shop";
+	}
+}
+```
+**Jackson Library**  
+주로 클라이언트에게 응답할 때 `JSON`형태로 내려주는데 Jackson 라이브러리를 설치해 쉽게 생성할 수 있다.
+
+**VO 객체 생성**  
+DB를 사용하지 않고 테스트용으로 생성자 호출 해 데이터를 생성하였다.
+```java
+//beans/DataBean.java
+public class DataBean {
+	private String name;
+	private int visitCnt;
+	private String location;
+	private boolean isOpen;
+	
+	//데이터 생성을 위한 임시 생성자
+	public DataBean(String name, int visitCnt, String location, boolean isOpen) {
+		this.name = name;
+		this.visitCnt = visitCnt;
+		this.location = location;
+		this.isOpen = isOpen;
+	}
+
+	public boolean isOpen() {
+		return isOpen;
+	}
+
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getVisitCnt() {
+		return visitCnt;
+	}
+
+	public void setVisitCnt(int visitCnt) {
+		this.visitCnt = visitCnt;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+}
+```
+**컨트롤러 구성**  
+반환 형태가 `ResponseEntity`객체로 반환되므로 return 타입을 수정한다.
+컬렉션 형태의 인자가 필요하기 때문에 배열에 bean 객체 값들을 넣어준다.
+```java
+//controller/HomeController.java
+@org.springframework.web.bind.annotation.RestController
+public class RestController {
+	@GetMapping("/shop")
+	public ResponseEntity<ArrayList<DataBean>> shop() {
+		// 데이터 객체 생성
+		DataBean regShop1 = new DataBean("마리오 상점", 13, "경기도 안산시", true);
+		DataBean regShop2 = new DataBean("피치 카페", 100, "서울", false);
+
+		// 리스트 생성
+		ArrayList<DataBean> list = new ArrayList<DataBean>();
+		list.add(regShop1);
+		list.add(regShop2);
+
+		// 응답 전문 생성 (전송 리스트, 상태코드)
+		ResponseEntity<ArrayList<DataBean>> entry = new ResponseEntity<ArrayList<DataBean>>(list, HttpStatus.OK);
+		return entry;
+	}
+}
+```
+
+**응답결과**  
+해당 주소로 request 시 JSON 형태로 잘 반환된다.
+```json
+{
+"name":"마리오 상점",
+"visitCnt":13,
+"location":"경기도 안산시",
+"open":true
+},
+{
+"name":"피치 카페",
+"visitCnt":100,
+"location":"서울",
+"open":false
+}
+```
+---
 ### parameter
 파라미터 주입 학습
 **HttpServletRequest**  
