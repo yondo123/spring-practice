@@ -1,12 +1,16 @@
 /* 공통 */
 :root {
-    --main-bg-color:blue;
+    --main-color : #6900FF;
+    --accent-color : #FF9B19;
+    --hover-color : #09B332;
+    --font-color : #222;
 }
 
 body {
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
     width: auto;
+    height: auto;
     margin: 0;
     padding: 0;
     font-size: 1.2rem;
@@ -39,7 +43,7 @@ body {
 }
 
 .header a.select {
-    background-color: green;
+    background-color: var(--accent-color);
     color: white;
 }
 
@@ -65,6 +69,18 @@ body {
 .menu-right {
     float: right;
 }
+
+/* 섹션 h3 */
+section h3 {
+    color: var(--accent-color);
+    text-decoration: underline;
+    text-decoration-color: #ddd;
+    text-underline-position: under;
+    text-align: left;
+    margin-left: 1.2rem;
+    line-height: 1.1rem;
+}
+
 
 /* 반응형 */
 @media screen and (max-width:500px) {

@@ -4,10 +4,11 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>What-Todo</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/layout.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/board.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/todo.css'>
     <script src='main.js'></script>
 </head>
 
@@ -79,10 +80,44 @@
             </ul>
         </section>
     </section>
-
+    <!--Todo List-->
+    <!--flag 1 :  &bigotimes; flag 0 :&bigodot;-->
+    <section class="mainTodo">
+        <h3>Todo</h3>
+        <table class="todo-list">
+            <colgroup>
+                <col width="10%" />
+                <col width="20%" />
+                <col width="50%" />
+                <col width="20%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th wi>flag</th>
+                    <th>writer</th>
+                    <th>item</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&bigotimes;</td>
+                    <td>admin</td>
+                    <td>test data!</td>
+                    <td>2021/03/04</td>
+                </tr>
+                <tr class="completed">
+                    <td>&bigodot;</td>
+                    <td>admin</td>
+                    <td>test data!</td>
+                    <td>2021/03/05</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
     <!--footer-->
     <footer>
-
+        <h1>Footer Area</h1>
     </footer>
 </body>
 
