@@ -9,7 +9,8 @@ $(document).ready(function () {
             type: "POST",
             url: "/TodoCommunity/user/signup",
             data: JSON.stringify(signData),
-            contentType: 'application/json',
+            contentType: 'application/json; UTF-8;',
+            dataType: 'json',
             success: function (response) {
                 console.log(JSON.stringify(response));
             }

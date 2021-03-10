@@ -28,15 +28,6 @@ public class UserController {
 		return "join";
 	}
 
-	// 회원가입(Service)
-	@PostMapping("/signup")
-	public String signup(@Valid @RequestBody Map<String, Object> userData, BindingResult res) {
-		UserInfoBean userInfo = new UserInfoBean();
-		if (res.hasErrors()) {
-			return "user/join";
-		} 
-		return "user/joinSuccess";
-	}
 
 	// 로그아웃
 
