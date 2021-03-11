@@ -4,46 +4,47 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UserInfoBean {
-	private int USER_INDEX;
-	@Size(min = 2, max = 10) // length 2~10
-	@Pattern(regexp = "[가-힣]*") // only korean
-	private String USER_NAME;
-	@Size(min = 5, max = 10)
-	@Pattern(regexp = "[a-zA-Z]*") // only English
-	private String USER_ID;
+	private int userIndex;
+	@Size(min = 2, max = 10, message ="성함이 올바르지 않습니다.") // length 2~10
+	@Pattern(regexp = "[가-힣]*", message = "성함이 올바르지 않습니다.") // only korean
+	private String userName;
+	@Size(min = 5, max = 10, message = "아이디는 5~10자의 영문, 숫자만 허용됩니다.")
+	@Pattern(regexp = "^[0-9a-z]+$*", message = "아이디는 5~10자의 영문, 숫자만 허용됩니다.") // only English
+	private String userId;
 	@Size(min = 5, max = 20)
-	@Pattern(regexp = "[a-zA-Z]*") // only English
-	private String USER_PW;
-	public int getUSER_INDEX() {
-		return USER_INDEX;
+	@Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^\\w\\s]).*", message = "비밀번호는 5~20자의 특수문자를 포함한 문자만 허용됩니다.")
+	private String userPw;
+
+	public int getUserIndex() {
+		return userIndex;
 	}
 
-	public void setUSER_INDEX(int uSER_INDEX) {
-		USER_INDEX = uSER_INDEX;
+	public void setUserIndex(int userIndex) {
+		this.userIndex = userIndex;
 	}
 
-	public String getUSER_NAME() {
-		return USER_NAME;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUSER_NAME(String uSER_NAME) {
-		USER_NAME = uSER_NAME;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getUSER_ID() {
-		return USER_ID;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUSER_ID(String uSER_ID) {
-		USER_ID = uSER_ID;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getUSER_PW() {
-		return USER_PW;
+	public String getUserPw() {
+		return userPw;
 	}
 
-	public void setUSER_PW(String uSER_PW) {
-		USER_PW = uSER_PW;
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
 
 }

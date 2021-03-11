@@ -27,7 +27,6 @@
         <sapn>비밀번호 : </sapn><input type="text" id="userPw"><br/>
         <sapn>비밀번호 확인 : </sapn><input type="text" id=""><br/>
 		<input type="button" value="Sign Up" id="joinBtn"></input>
-
 	</div>
 </body>
 </html>
