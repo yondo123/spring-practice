@@ -12,7 +12,7 @@ public class UserInfoBean {
 	@Pattern(regexp = "^[0-9a-z]+$*", message = "아이디는 5~10자의 영문, 숫자만 허용됩니다.") // only English
 	private String userId;
 	@Size(min = 5, max = 20)
-	@Pattern(regexp = "(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^\\w\\s]).*", message = "비밀번호는 5~20자의 특수문자를 포함한 문자만 허용됩니다.")
+	@Pattern(regexp = "^.*(?=^.{5,20}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", message = "비밀번호는 5~20자의 특수문자, 숫자 영문을 포함한 문자만 허용됩니다.")
 	private String userPw;
 
 	public int getUserIndex() {
