@@ -79,4 +79,13 @@ td {
     .mainTodo , .todo-list {
         margin-top: 0 0 0 0;
     }
+
+    td {
+        font-size: 0.8rem;
+        color: #222;
+    }
+
+    .todo-list tr th{
+        font-size: 1rem;
+    }
 }
