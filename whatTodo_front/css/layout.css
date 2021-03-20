@@ -1,9 +1,12 @@
 /* 공통 */
 :root {
-    --main-color : #6900FF;
-    --accent-color : #FF9B19;
-    --hover-color : #09B332;
-    --font-color : #222;
+    --main-color: #6900FF;
+    --accent-color: #FF9B19;
+    --hover-color: #09B332;
+    --font-color: #222;
+    --input-color: #e5e5e5;
+    --input-hover-color: #eaeaea;
+    --icon-color: #6b6b6b;
 }
 
 body {
@@ -81,13 +84,19 @@ section h3 {
     line-height: 1.1rem;
 }
 
+/* font-awesome */
+.font-awesome {
+    color: var(--icon_color);
+}
+
 
 /* 반응형 */
 @media screen and (max-width:500px) {
     .header {
-        width:auto;
+        width: auto;
         height: 237px;
     }
+
     .header a {
         float: none;
         display: block;
