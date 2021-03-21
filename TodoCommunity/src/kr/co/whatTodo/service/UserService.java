@@ -14,12 +14,12 @@ public class UserService {
 	private UserDao userDao;
 	
 	//ID 존재 확인 
-	public String userIdEx(String USER_ID) {
+	public Boolean userIdEx(String USER_ID) {
 		String userName = userDao.checkUserId(USER_ID);
 		if(userName == null) {
-			return "1";
+			return true;
 		}else {
-			return "0";
+			return false;
 		}
 	}
 	

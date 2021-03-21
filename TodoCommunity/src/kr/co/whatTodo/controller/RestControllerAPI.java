@@ -22,10 +22,13 @@ public class RestControllerAPI {
 	@Autowired
 	private UserService userService;
 
+	// 회원가입(Service)
+	@ResponseBody
 	@GetMapping("/user/identity/{userId}")
-	public String checkId(@PathVariable String userId) {
-		String checkFlag = userService.userIdEx(userId);
-		return checkFlag;
+	public ResponseEntity<ResponseBean> checkId(@PathVariable String userId) {
+		Boolean existFlag = userService.userIdEx(userId);
+		ResponseBean result = new ResponseBean("success userId Check", existFlag);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	// 회원가입(Service)
