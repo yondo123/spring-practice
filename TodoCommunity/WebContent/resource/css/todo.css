@@ -1,0 +1,91 @@
+/* 공통 */
+
+/* main - todo */
+.mainTodo {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    border: solid 0.14rem #ddd;
+    border-radius: 11px;
+    height: 360px;
+}
+
+.todo-list {
+    margin: auto;
+    width: 99%;
+    table-layout: fixed;
+    border-collapse: separate;
+}
+
+.todo-list thead,
+tbody {
+    border: solid 0.14rem #ddd;
+    border-radius: 15px;
+    border-collapse: separate;
+}
+
+.todo-list thead {
+    text-align: left;
+    color: var(--font-color);
+}
+
+.todo-list tr th{
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    border-bottom: solid 0.14rem var(--hover-color);
+}
+
+.todo-list tr:nth-of-type(2n) {
+    background: #f4f4f4;
+}
+
+thead tr {
+    border-width: 2px;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+th:first-child,
+td:first-child {
+    width: 10%;
+    height: 44px;
+    text-align: center;
+}
+
+
+td:first-child:hover,
+td:first-child:focus {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+td {
+    font-size: 1rem;
+    color: #222;
+}
+
+.completed td {
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.completed td:nth-child(2) {
+    text-decoration: line-through;
+}
+
+/* 반응형 */
+@media screen and (max-width:500px) {
+    .mainTodo , .todo-list {
+        margin-top: 0 0 0 0;
+    }
+
+    td {
+        font-size: 0.8rem;
+        color: #222;
+    }
+
+    .todo-list tr th{
+        font-size: 1rem;
+    }
+}
