@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class RestControllerAPI {
 	@Autowired
 	private UserService userService;
 
-	// 회원가입(Service)
+	//ID중복검사(Service)
 	@ResponseBody
 	@GetMapping("/user/identity/{userId}")
 	public ResponseEntity<ResponseBean> checkId(@PathVariable String userId) {
@@ -35,7 +36,6 @@ public class RestControllerAPI {
 	@ResponseBody
 	@PostMapping("/user/signup")
 	public ResponseEntity<ResponseBean> signup(@Valid @RequestBody UserInfoBean userData, BindingResult res) {
-		System.out.println(userData.getUserId());
 		if (res.hasErrors()) {
 			System.out.println(res);
 			ResponseBean error = new ResponseBean(res.getAllErrors().get(0).getDefaultMessage(), false);
@@ -44,6 +44,18 @@ public class RestControllerAPI {
 		// call Service
 		userService.addUser(userData);
 		ResponseBean success = new ResponseBean("success", true);
+		return new ResponseEntity<>(success, HttpStatus.OK);
+	}
+	
+	//로그인 reqeust(Service)
+	@ResponseBody
+	@PostMapping("/user/signin")
+	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res){
+		if(res.hasErrors()) {
+			ResponseBean error = new ResponseBean(res.getAllErrors().get(0).getDefaultMessage(), false);
+			return new ResponseEntity<>(error, HttpStatus.OK);
+		}
+		ResponseBean success = new ResponseBean("success", false);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
 }

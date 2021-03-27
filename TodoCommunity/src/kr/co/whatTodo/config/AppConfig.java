@@ -32,6 +32,6 @@ public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Class[] { RootAppContext.class };
 	}
 }
