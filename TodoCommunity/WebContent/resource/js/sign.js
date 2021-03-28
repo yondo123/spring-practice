@@ -1,9 +1,10 @@
 $(document).ready(function () {
-    $('#loginBtn').on("click",function () {
+    $('#loginBtn').on("click", function () {
         const userData = {};
         userData.userId = $('#userId').val();
         userData.userPw = $('#userPw').val();
-        alert(`${constants.REQUEST_URL}/user/signin`);
+        userData.confirmPw = userData.userPw;
+        userData.isUserCheck = true;
         $.ajax({
             type: "POST",
             url: `${constants.REQUEST_URL}/user/signin`,

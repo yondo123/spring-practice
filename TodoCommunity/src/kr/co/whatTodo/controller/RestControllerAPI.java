@@ -2,6 +2,7 @@ package kr.co.whatTodo.controller;
 
 import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class RestControllerAPI {
 	@Autowired
 	private MessageSource errorMessage;
 
+	@Resource(name = "loginUserInfoBean")
+	private UserInfoBean loginUserInfo;
+	
 	//ID중복검사(Service)
 	@ResponseBody
 	@GetMapping("/user/identity/{userId}")
@@ -44,7 +48,6 @@ public class RestControllerAPI {
 	@PostMapping("/user/signup")
 	public ResponseEntity<ResponseBean> signup(@Valid @RequestBody UserInfoBean userData, BindingResult res) {
 		if (res.hasErrors()) {
-			System.out.println(errorMessage);
 			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
@@ -59,11 +62,18 @@ public class RestControllerAPI {
 	@PostMapping("/user/signin")
 	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res){
 		if(res.hasErrors()) {
-			ResponseBean error = new ResponseBean(res.getAllErrors().get(0).getDefaultMessage(), false);
+			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
-		ResponseBean success = new ResponseBean("success", false);
-		return new ResponseEntity<>(success, HttpStatus.OK);
+		userService.login(loginUserInfoBean);
+		//로그인 성공유무
+		if(loginUserInfo.getIsLogin()) {
+			ResponseBean success = new ResponseBean("success", true);
+			return new ResponseEntity<>(success, HttpStatus.OK);
+		}else {
+			ResponseBean fail = new ResponseBean("fail", false);
+			return new ResponseEntity<>(fail, HttpStatus.OK);
+		}
 	}
 	
 	// 추가적인 요청 (custom validator)

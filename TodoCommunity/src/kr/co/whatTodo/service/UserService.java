@@ -1,6 +1,9 @@
 package kr.co.whatTodo.service;
 
 
+import javax.annotation.Resource;
+
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,10 @@ public class UserService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Resource(name = "loginUserInfoBean")
+	@Lazy
+	private UserInfoBean loginUserInfo;
 	
 	//ID 존재 확인 
 	public Boolean userIdEx(String USER_ID) {
@@ -26,5 +33,16 @@ public class UserService {
 	//회원가입
 	public void addUser(UserInfoBean userInfoBean) {
 		userDao.addUser(userInfoBean);
+	}
+	
+	//로그인
+	public void login(UserInfoBean userInfoBean) {
+		UserInfoBean userInfo = userDao.login(userInfoBean);
+		if(userInfo != null) {
+			loginUserInfo.setUserId(userInfoBean.getUserId());
+			loginUserInfo.setUserName(userInfoBean.getUserName());
+			loginUserInfo.setIsLogin(true);
+		}
+			
 	}
 }

@@ -10,7 +10,7 @@ import kr.co.whatTodo.beans.UserInfoBean;
 public class RootAppContext {
 	@Bean("loginUserInfoBean")
 	@SessionScope
-	public UserInfoBean loginUserInfo() {
+	public UserInfoBean loginUserInfoBean() {
 		return new UserInfoBean();
 	}
 }
