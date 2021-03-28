@@ -5,17 +5,18 @@ import javax.validation.constraints.Size;
 
 public class UserInfoBean {
 	private int userIndex;
-	@Size(min = 2, max = 10, message ="성함이 올바르지 않습니다.") // length 2~10
-	@Pattern(regexp = "[가-힣]*", message = "성함이 올바르지 않습니다.") // only korean
+	@Size(min = 2, max = 10) // length 2~10
+	@Pattern(regexp = "[가-힣]*") // only korean
 	private String userName;
-	@Size(min = 5, max = 10, message = "아이디는 5~10자의 영문, 숫자만 허용됩니다.")
-	@Pattern(regexp = "^[0-9a-z]+$*", message = "아이디는 5~10자의 영문, 숫자만 허용됩니다.") // only English
+	@Size(min = 5, max = 10)
+	@Pattern(regexp = "^[0-9a-z]+$*") // only English
 	private String userId;
-	@Size(min = 5, max = 20, message = "비밀번호는 5~20자의 특수문자, 숫자 영문을 포함한 문자만 허용됩니다.")
+	@Size(min = 5, max = 20)
 	@Pattern(regexp = "^.*(?=^.{5,20}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", message = "비밀번호는 5~20자의 특수문자, 숫자 영문을 포함한 문자만 허용됩니다.")
 	private String userPw;
 	private Boolean loginFlag; //로그인 플래그 유무
-
+	private String confirmPw; //비밀번호 확인
+	
 	public UserInfoBean() {
 		this.loginFlag = false;
 	}
@@ -59,5 +60,14 @@ public class UserInfoBean {
 	public void setLoginFlag(Boolean loginFlag) {
 		this.loginFlag = loginFlag;
 	}
+
+	public String getConfirmPw() {
+		return confirmPw;
+	}
+
+	public void setConfirmPw(String confirmPw) {
+		this.confirmPw = confirmPw;
+	}
+	
 
 }

@@ -46,7 +46,7 @@
                 </div>
                 <div class="input_container">
                     <i class="font-awesome fas fa-lock"></i>
-                    <input placeholder="Confirm Password" type="password" name="userPw" id="userPw"
+                    <input placeholder="Confirm Password" type="password" name="confirmPw" id="userPw"
                         class="inputArea" />
                 </div>
                 <input type="button" value="Sign Up" id="joinBtn" class="inputArea signArea" />

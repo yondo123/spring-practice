@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -110,6 +112,19 @@ public class ServletAppContext implements WebMvcConfigurer {
 		MenuInterceptor menuInterceptor = new MenuInterceptor(menuService);
 		InterceptorRegistration reg = registry.addInterceptor(menuInterceptor);
 		reg.addPathPatterns("/**"); // all requests
+	}
+	
+	
+	@Bean //properties파일이 여러개면 충돌발생 (새로운 Bean 생성)
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
+	
+	@Bean //error message properties
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
+		res.setBasenames("/WEB-INF/properties/errorMessage");
+		return res;
 	}
 
 }

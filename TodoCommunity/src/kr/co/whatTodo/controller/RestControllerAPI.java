@@ -1,13 +1,17 @@
 package kr.co.whatTodo.controller;
 
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.co.whatTodo.beans.ResponseBean;
 import kr.co.whatTodo.beans.UserInfoBean;
 import kr.co.whatTodo.service.UserService;
+import kr.co.whatTodo.validator.UserValidator;
 
 @RestController
 public class RestControllerAPI {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MessageSource errorMessage;
 
 	//ID중복검사(Service)
 	@ResponseBody
@@ -37,8 +44,8 @@ public class RestControllerAPI {
 	@PostMapping("/user/signup")
 	public ResponseEntity<ResponseBean> signup(@Valid @RequestBody UserInfoBean userData, BindingResult res) {
 		if (res.hasErrors()) {
-			System.out.println(res);
-			ResponseBean error = new ResponseBean(res.getAllErrors().get(0).getDefaultMessage(), false);
+			System.out.println(errorMessage);
+			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
 		// call Service
@@ -57,5 +64,12 @@ public class RestControllerAPI {
 		}
 		ResponseBean success = new ResponseBean("success", false);
 		return new ResponseEntity<>(success, HttpStatus.OK);
+	}
+	
+	// 추가적인 요청 (custom validator)
+	@InitBinder
+	public void iniBinder(WebDataBinder binder) {
+		UserValidator userValidator = new UserValidator();
+		binder.addValidators(userValidator);
 	}
 }

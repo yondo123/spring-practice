@@ -6,6 +6,7 @@ $(document).ready(function () {
         const signData = {};
         signData.userId = $('#userId').val();
         signData.userPw = $('#userPw').val();
+        signData.confirmPW = $('#confirmPw').val();
         signData.userName = $('#userName').val();
         if(enableJoin){
             $.ajax({
