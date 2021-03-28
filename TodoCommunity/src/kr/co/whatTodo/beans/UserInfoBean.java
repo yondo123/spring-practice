@@ -14,13 +14,15 @@ public class UserInfoBean {
 	@Size(min = 5, max = 20)
 	@Pattern(regexp = "^.*(?=^.{5,20}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$", message = "비밀번호는 5~20자의 특수문자, 숫자 영문을 포함한 문자만 허용됩니다.")
 	private String userPw;
-	private Boolean loginFlag; //로그인 플래그 유무
-	private String confirmPw; //비밀번호 확인
-	
+	private String confirmPw; // 비밀번호 확인
+	private Boolean isUserCheck;
+	private Boolean isLogin;
+
 	public UserInfoBean() {
-		this.loginFlag = false;
+		this.isLogin = false;
+		this.isUserCheck = false;
 	}
-	
+
 	public int getUserIndex() {
 		return userIndex;
 	}
@@ -53,14 +55,6 @@ public class UserInfoBean {
 		this.userPw = userPw;
 	}
 
-	public Boolean getLoginFlag() {
-		return loginFlag;
-	}
-
-	public void setLoginFlag(Boolean loginFlag) {
-		this.loginFlag = loginFlag;
-	}
-
 	public String getConfirmPw() {
 		return confirmPw;
 	}
@@ -68,6 +62,21 @@ public class UserInfoBean {
 	public void setConfirmPw(String confirmPw) {
 		this.confirmPw = confirmPw;
 	}
-	
+
+	public Boolean getisUserCheck() {
+		return isUserCheck;
+	}
+
+	public void setisUserCheck(Boolean isUserCheck) {
+		this.isUserCheck = isUserCheck;
+	}
+
+	public Boolean getIsLogin() {
+		return isLogin;
+	}
+
+	public void setIsLogin(Boolean isLogin) {
+		this.isLogin = isLogin;
+	}
 
 }

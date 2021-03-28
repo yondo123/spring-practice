@@ -6,8 +6,9 @@ $(document).ready(function () {
         const signData = {};
         signData.userId = $('#userId').val();
         signData.userPw = $('#userPw').val();
-        signData.confirmPW = $('#confirmPw').val();
+        signData.confirmPw = $('#confirmPw').val();
         signData.userName = $('#userName').val();
+        signData.isUserCheck = enableJoin;
         if(enableJoin){
             $.ajax({
                 type: "POST",
@@ -28,7 +29,7 @@ $(document).ready(function () {
                 }
             });
         }else{
-            alert("사용하실 수 없는 ID 입니다.");
+            alert("사용 불가능한 ID 입니다.");
         }
     });
     
