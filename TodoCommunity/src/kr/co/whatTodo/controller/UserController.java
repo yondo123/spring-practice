@@ -1,17 +1,12 @@
 package kr.co.whatTodo.controller;
 
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.co.whatTodo.beans.UserInfoBean;
+import kr.co.whatTodo.validator.UserValidator;
 
 @Controller
 @RequestMapping("/user")
@@ -27,12 +22,4 @@ public class UserController {
 	public String join() {
 		return "join";
 	}
-
-
-	// 로그아웃
-
-	// 로그인(Service)
-
-	// 로그아웃(Service)
-
 }
