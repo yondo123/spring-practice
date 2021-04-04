@@ -4,37 +4,23 @@
 <c:set var="path" value="${pageContext.request.contextPath}/resource" />
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8'>
-<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<title>저녁먹고 한거 뭐야!?</title>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='${path}/css/style.css'>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='${path}/css/main.css'>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src='${path}/js/menu.js'></script>
-<meta charset="UTF-8">
-</head>
-<body>
-	<nav class="main-menu">
-		<ul>
-			<c:forEach var="obj" items="${menuList}">
-				<li>
-					<a href="${root}board/main?board_info_index=${obj.BOARD_INFO_INDEX}">${obj.BOARD_INFO_NAME}</a>
-				</li>
-			</c:forEach>
-			<li><a href="${root }/user/sign">로그인</a></li>
-			<li><a href="${root }/user/join">회원가입</a></li>
-			<li><a href="${root }/user/join">로그아웃</a></li>
-			<li>
-				<span><input type="text"></span>
-				<button>검색</button>
-			</li>
-		</ul>
-	</nav>
-</body>
-</html>
+<div class="logoArea">
+	<img src="${path}/img/app_logo.png" class="logo"></img> <a href="#">WhatTodo
+		<br> 당신의 할 일을 공유해보세요.
+	</a>
+</div>
+<nav class="menu-right">
+	<c:choose>
+		<c:when test="${loginUserInfo.isLogin==true}">
+			<a href="${root }/user/logout">로그아웃</a>
+		</c:when>
+		<c:otherwise>
+			<a href="${root }/user/sign">로그인</a>
+			<a href="${root }/user/join">회원가입</a>
+		</c:otherwise>
+	</c:choose>
+	<c:forEach var="obj" items="${menuList}">
+		<a href="${root}board/main?board_info_index=${obj.BOARD_INFO_INDEX}">${obj.BOARD_INFO_NAME}</a>
+	</c:forEach>
+	<a class="select" href="#">TODO</a>
+</nav>

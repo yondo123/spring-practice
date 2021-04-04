@@ -21,18 +21,7 @@ pageEncoding="UTF-8"%>
 <body>
     <!-- title -->
     <header class="header">
-        <div class="logoArea">
-            <img src="${path}/img/app_logo.png" class="logo"></img>
-            <a href="#">WhatTodo <br> 당신의 할 일을 공유해보세요.</a>
-        </div>
-        <nav class="menu-right">
-            <c:forEach var="obj" items="${menuList}">
-				<a href="${root}board/main?board_info_index=${obj.BOARD_INFO_INDEX}">${obj.BOARD_INFO_NAME}</a>
-			</c:forEach>
-            <a class="select" href="#">TODO</a>
-            <a href="${root }/user/sign">로그인</a>
-            <a href="${root }/user/join">회원가입</a>
-        </nav>
+        <jsp:include page="../include/menu.jsp"/>
     </header>
     <!--board-->
     <section class="board">
