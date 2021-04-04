@@ -37,6 +37,7 @@
                     <input placeholder="Password" type="password" name="userPw" id="userPw"
                         class="inputArea" />
                 </div>
+                <p id="status" class="error hide"></p>
                 <input type="button" value="Login" id="loginBtn" class="inputArea signArea" />
                 <span id="signBtn">
                     <a href="#">회원가입 ➡ </a>
