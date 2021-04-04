@@ -91,6 +91,11 @@ section h3 {
     color: var(--icon_color);
 }
 
+.done {
+    color: var(--accent-color);
+}
+
+
 /* 에러 텍스트 여부 */
 .hide {
     display: none;
@@ -109,6 +114,11 @@ section h3 {
 .success{
     font-size: 0.863rem;
     color: var(--success-color);
+}
+
+/* 커서 */
+.link {
+    cursor: pointer;
 }
 
 /* 반응형 */

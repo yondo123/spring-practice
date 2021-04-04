@@ -13,10 +13,12 @@
 	<c:choose>
 		<c:when test="${loginUserInfo.isLogin==true}">
 			<a href="${root }/user/logout">로그아웃</a>
+			<a href="${root }/board/board">테스트게시판</a>
 		</c:when>
 		<c:otherwise>
 			<a href="${root }/user/sign">로그인</a>
 			<a href="${root }/user/join">회원가입</a>
+			<a href="${root }/board/board">테스트게시판</a>
 		</c:otherwise>
 	</c:choose>
 	<c:forEach var="obj" items="${menuList}">
