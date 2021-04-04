@@ -1,7 +1,10 @@
-
 /* 게시판 목록 */
 .board {
     display: flex;
+}
+
+.board-all{
+    height: 720px;
 }
 
 .boardArea {
@@ -14,13 +17,18 @@
     border-radius: 11px;
 }
 
+.board-list .post-info {
+    color: var(--icon-color);
+    font-size: 0.8rem;
+}
+
 .boardArea li p {
     line-height: normal;
     font-size: 16px;
     text-decoration: none;
 }
 
-.boardArea h5{
+.boardArea h5 {
     color: #FF9B19;
     margin-block-start: 1.22;
     margin-block-end: 1.22em;
@@ -56,8 +64,43 @@ p {
     height: 55px;
 }
 
+/* pagination */
+.paginationArea{
+    margin: 10px;
+    text-align: center;
+}
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    text-align: center;
+    color: var(--icon-color);
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color:var(--hover-color);
+    color: white;
+    border-radius: 5px;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.pagination .font-awesome {
+    color: var(--hover-color);
+}
+
 /* 반응형 */
 @media screen and (max-width:500px) {
+    .paginationArea {
+        display: none;
+    }
     .board {
         display: block;
     }
@@ -67,5 +110,9 @@ p {
         margin-top: 10px;
         margin-left: 10px;
         margin-right: 10px;
+    }
+
+    .board-all{
+        height: 100%;
     }
 }
