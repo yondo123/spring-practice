@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -47,6 +48,7 @@ public class RestControllerAPI {
 	@ResponseBody
 	@PostMapping("/user/signup")
 	public ResponseEntity<ResponseBean> signup(@Valid @RequestBody UserInfoBean userData, BindingResult res) {
+
 		if (res.hasErrors()) {
 			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
 			return new ResponseEntity<>(error, HttpStatus.OK);
