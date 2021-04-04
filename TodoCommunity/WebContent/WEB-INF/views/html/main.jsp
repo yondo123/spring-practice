@@ -13,6 +13,8 @@ pageEncoding="UTF-8"%>
     <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/layout.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/board.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/todo.css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
 	<script src='${path}/js/lib/jquery-3.6.js'></script>
     <script src='${path}/js/common/constants.js'></script>
 	<script src='${path}/js/main.js'></script>
@@ -27,7 +29,7 @@ pageEncoding="UTF-8"%>
     <section class="board">
         <!-- 상단게시판(좌) -->
         <section class="boardArea">
-            <h3>스터디</h3>
+            <h3 id="leftTitle" class="btnBoard link">스터디</h3>
             <ul class="board-list">
                 <li class="post">
                     <div class="category"><img src="${path}/img/app_logo.png"></div>
@@ -53,7 +55,7 @@ pageEncoding="UTF-8"%>
         </section>
         <!-- 하단게시판(우) -->
         <section class="boardArea">
-            <h3>자유</h3>
+            <h3 id="rightTitle" class="btnBoard link">커뮤니티</h3>
             <ul class="board-list">
                 <li class="post">
                     <div class="category"></div>
@@ -81,7 +83,7 @@ pageEncoding="UTF-8"%>
     <!--Todo List-->
     <!--flag 1 :  &bigotimes; flag 0 :&bigodot;-->
     <section class="mainTodo">
-        <h3>Todo</h3>
+        <h3 class="btnBoard link">Todo</h3>
         <table class="todo-list">
             <colgroup>
                 <col width="10%" />
@@ -99,13 +101,13 @@ pageEncoding="UTF-8"%>
             </thead>
             <tbody>
                 <tr>
-                    <td>&bigotimes;</td>
+                    <td><i class="font-awesome fas fa-check-circle done"></i></td>
                     <td>admin</td>
                     <td>test data!</td>
                     <td>2021/03/04</td>
                 </tr>
                 <tr class="completed">
-                    <td>&bigodot;</td>
+                    <td><i class="font-awesome far fa-check-circle"></i></td>
                     <td>admin</td>
                     <td>test data!</td>
                     <td>2021/03/05</td>
@@ -115,7 +117,7 @@ pageEncoding="UTF-8"%>
     </section>
     <!--footer-->
     <footer>
-        <h1>Footer Area</h1>
+        <jsp:include page="../include/footer.jsp"></jsp:include>
     </footer>
 </body>
 
