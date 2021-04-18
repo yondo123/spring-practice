@@ -9,11 +9,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BoardController {
 	
 	/**
-	 * @desc : 게시판
+	 * @desc   : 스터디 게시판 
 	 * @return : board.jsp
 	 */
-	@GetMapping("/board")
-	public String board() {
+	@GetMapping("/study")
+	public String study() {
 		return "board";
+	}
+	
+	/**
+	 * @desc   : 자유 게시판 (커뮤니티)
+	 * @return : board.jsp
+	 */
+	@GetMapping("/community")
+	public String community() {
+		return "board";
+	}
+	
+	/**
+	 * @desc   : 글쓰기 (커뮤니티)
+	 * @return : write.jsp
+	 */
+	@GetMapping("/write")
+	public String write() {
+		return "write";
 	}
 }
