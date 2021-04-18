@@ -98,6 +98,54 @@ p {
     color: var(--hover-color);
 }
 
+.writeArea h3,
+input {
+    display: inline;
+}
+
+.input_container {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.buttonArea input {
+    float: right;
+    margin: 1.25rem;
+    height: 1.875rem;
+    background-color: var(--accent-color);
+    color: #efefef;
+    /* make the borders more round */
+    border-radius: 30px;
+    border-style: none;
+    width: 6.25rem;
+}
+
+.inputArea {
+    height: 1.3rem;
+    width: 15rem;
+    margin-left: 3.438rem;
+}
+
+.selectArea {
+    margin-left: 1.25rem;
+}
+
+.textArea {
+    margin-bottom: 1.25rem;
+    margin-left: 1.125rem;
+    resize: none;
+    width: 80%;
+    height: 500px
+}
+
+.inputArea, .selectArea, .textArea{
+    padding: 0;
+    border: solid 0.14rem #ddd;
+    border-radius: 11px;
+}
+
+
 /* 반응형 */
 @media screen and (max-width:500px) {
     .board {

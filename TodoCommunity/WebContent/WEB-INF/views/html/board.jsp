@@ -35,18 +35,21 @@ pageEncoding="UTF-8"%>
                 <li class="post">
                     <div class="category"><img src="${path}/img/app_logo.png"></div>
                     <h5 class="content">공부내용 내용 내용 내용 내용</h5>
-                    <p class="post-info">yondo123 | 2020-04-03 20:20:22</p>
+                    <p class="post-info">글쓴이 : yondo123 | 작성 날짜 : 2020-04-03 20:20:22</p>
                 </li>
                 <li class="post">
                     <div class="category"><img src="${path}/img/app_logo.png"></div>
                     <h5 class="content">공부내용 내용 내용 내용 내용</h5>
-                    <p class="post-info">yondo123 | 2020-04-03 20:20:22</p>
+                    <p class="post-info">글쓴이 : yondo123 | 작성 날짜 : 2020-04-03 20:20:22</p>
                 </li>
             </ul>
         </section>
     </section>
 
     <div class="paginationArea">
+        <section class="buttonArea">
+            <input type="button" value="글쓰기">
+        </section>
         <div class="pagination">
             <a href="#"><i class="font-awesome fas fa-arrow-circle-left"></i></a>
             <a href="#">1</a>
@@ -57,9 +60,5 @@ pageEncoding="UTF-8"%>
             <a href="#"><i class="font-awesome fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <footer>
-        <jsp:include page="../include/footer.jsp"></jsp:include>
-    </footer>
 </body>
-
 </html>
