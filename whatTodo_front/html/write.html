@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>What-Todo</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/layout.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/board.css'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <script src='main.js'></script>
+</head>
+
+<body>
+    <!-- title -->
+    <header class="header">
+        <div class="logoArea">
+            <img src="../img/app_logo.png" class="logo"></img>
+            <a href="#">WhatTodo <br> 당신의 할 일을 공유해보세요.</a>
+        </div>
+        <nav class="menu-right">
+            <a class="#" href="#">TODO</a>
+            <a href="#">스터디 게시판</a>
+            <a href="#" class="select">자유 게시판</a>
+        </nav>
+    </header>
+    <section class="board">
+        <section class="boardArea writeArea">
+            <div class="input_container">
+                <h3>Title</h3>
+                <input type="text" class="inputArea"/>
+            </div>
+            <div class="input_container">
+                <h3>Subject</h3>
+                <select class="selectArea">
+                    <option>Python</option>
+                    <option>PHP</option>
+                    <option>Etc</option>
+                    <option>Java</option>
+                    <option>JavaScript</option>
+                    <option>Etc</option>
+                    <option>HTML/CSS</option>
+                    <option>Mobile</option>
+                </select>
+            </div>
+            <div class="input_container">
+                <h3>Content</h3>
+                <textarea class="textArea"></textarea>
+            </div>
+        </section>
+    </section>
+    <section class="buttonArea">
+        <input type="button" value="취소">
+        <input type="button" value="등록">
+    </section>
+</body>
+
+</html>
