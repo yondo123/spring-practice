@@ -15,6 +15,7 @@
 			<a href="${root }/user/logout">로그아웃</a>
 			<a href="${root }/board/study">스터디</a>
 			<a href="${root }/board/community">커뮤니티</a>
+			<a href="${root }/board/write">글쓰기 테스트</a>
 		</c:when>
 		<c:otherwise>
 			<a href="${root }/user/sign">로그인</a>

@@ -1,6 +1,8 @@
 package kr.co.whatTodo.config;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -33,5 +35,14 @@ public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub
 		return new Class[] { RootAppContext.class };
+	}
+	
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		// TODO Auto-generated method stub
+		super.customizeRegistration(registration);
+		//임시파일 경로, 업로드 용량(Byte, 50MB), 전체 요청정보 용량(파일데이터 포함), 파일 임계값
+		MultipartConfigElement config = new MultipartConfigElement(null, 52428800, 524288000, 0);
+		registration.setMultipartConfig(config);
 	}
 }

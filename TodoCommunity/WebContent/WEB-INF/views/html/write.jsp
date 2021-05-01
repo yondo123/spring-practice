@@ -18,7 +18,7 @@ pageEncoding="UTF-8"%>
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
     <script src='${path}/js/lib/jquery-3.6.js'></script>
     <script src='${path}/js/common/constants.js'></script>
-    <script src='${path}/js/main.js'></script>
+    <script src='${path}/js/write.js'></script>
 </head>
 
 <body>
@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
         <section class="boardArea writeArea">
             <div class="input_container">
                 <h3>Title</h3>
-                <input type="text" class="inputArea"/>
+                <input type="text" class="inputArea" id="title"/>
             </div>
             <div class="input_container">
                 <h3>Subject</h3>
@@ -46,13 +46,17 @@ pageEncoding="UTF-8"%>
                 </select>
             </div>
             <div class="input_container">
+                <h3>Image</h3>
+                <input type="file" class="inputArea" id="imageFile"/>
+            </div>
+            <div class="input_container">
                 <h3>Content</h3>
-                <textarea class="textArea"></textarea>
+                <textarea class="textArea" id="content"></textarea>
             </div>
         </section>
     </section>
     <section class="buttonArea">
-        <input type="button" value="취소">
-        <input type="button" value="등록">
+        <input type="button" value="취소" id="btnCancle">
+        <input type="button" value="등록" id="btnWrite">
     </section>
 </body>

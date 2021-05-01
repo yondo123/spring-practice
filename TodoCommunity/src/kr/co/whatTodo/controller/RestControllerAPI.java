@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -27,6 +26,7 @@ import kr.co.whatTodo.validator.UserValidator;
 
 @RestController
 public class RestControllerAPI {
+	
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -36,6 +36,7 @@ public class RestControllerAPI {
 	private UserInfoBean loginUserInfo;
 	
 	//ID중복검사(Service)
+	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@GetMapping("/user/identity/{userId}")
 	public ResponseEntity<ResponseBean> checkId(@PathVariable String userId) {
@@ -45,6 +46,7 @@ public class RestControllerAPI {
 	}
 
 	// 회원가입(Service)
+	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@PostMapping("/user/signup")
 	public ResponseEntity<ResponseBean> signup(@Valid @RequestBody UserInfoBean userData, BindingResult res) {
@@ -60,6 +62,7 @@ public class RestControllerAPI {
 	}
 	
 	//로그인 reqeust(Service)
+	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@PostMapping("/user/signin")
 	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res){

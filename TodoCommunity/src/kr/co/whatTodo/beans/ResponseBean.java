@@ -1,10 +1,11 @@
 package kr.co.whatTodo.beans;
 
-public class ResponseBean {
+public class ResponseBean<T> {
 	private String message;
 	private boolean result;
-	
-	public ResponseBean (String message, boolean result) {
+	private T data = null;
+
+	public ResponseBean(String message, boolean result) {
 		this.message = message;
 		this.result = result;
 	}
@@ -24,7 +25,13 @@ public class ResponseBean {
 	public void setResult(boolean result) {
 		this.result = result;
 	}
-	
-	
-}
 
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
+
+}
