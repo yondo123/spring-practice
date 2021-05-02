@@ -143,7 +143,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 	}
 	
 	/**
-	 * 
+	 * multipasrt Resolver Bean 등록
 	 */
 	@Bean
 	public StandardServletMultipartResolver multipartResolver() {

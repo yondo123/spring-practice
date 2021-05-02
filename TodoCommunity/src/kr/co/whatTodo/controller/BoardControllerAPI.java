@@ -32,7 +32,7 @@ public class BoardControllerAPI {
 	@SuppressWarnings("rawtypes")
 	@ResponseBody
 	@PostMapping("/contentWrite")
-	public ResponseEntity<ResponseBean> contentWrite(@Valid @RequestBody BoardListBean boardListBean, BindingResult res){
+	public ResponseEntity<ResponseBean> contentWrite(@Valid BoardListBean boardListBean, BindingResult res){
 		if (res.hasErrors()) {
 			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
 			return new ResponseEntity<>(error, HttpStatus.OK);
