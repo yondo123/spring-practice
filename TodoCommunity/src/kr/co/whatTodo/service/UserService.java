@@ -40,8 +40,9 @@ public class UserService {
 	public void login(UserInfoBean userInfoBean) {
 		UserInfoBean userInfo = userDao.login(userInfoBean);
 		if(userInfo != null) {
-			loginUserInfo.setUserId(userInfoBean.getUserId());
-			loginUserInfo.setUserName(userInfoBean.getUserName());
+			loginUserInfo.setUserIndex(userInfo.getUserIndex());
+			loginUserInfo.setUserId(userInfo.getUserId());
+			loginUserInfo.setUserName(userInfo.getUserName());
 			loginUserInfo.setIsLogin(true);
 		}
 			

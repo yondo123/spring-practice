@@ -16,6 +16,6 @@ public interface UserMapper {
 	void addUser(UserInfoBean userInfoBean);
 
 	// 로그인
-	@Select("SELECT USER_NAME as userName, USER_ID as userId FROM USER_TABLE WHERE USER_ID = #{userId} AND USER_PW = #{userPw}")
+	@Select("SELECT USER_INDEX as userIndex, USER_NAME as userName, USER_ID as userId FROM USER_TABLE WHERE USER_ID = #{userId} AND USER_PW = #{userPw}")
 	UserInfoBean login(UserInfoBean userInfoBean);
 }
