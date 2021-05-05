@@ -22,7 +22,6 @@
 			<a href="${root }/user/join">회원가입</a>
 			<a href="${root }/board/study">스터디</a>
 			<a href="${root }/board/community">커뮤니티</a>
-			<a href="${root }/board/write">글쓰기 테스트</a>
 		</c:otherwise>
 	</c:choose>
 	<!-- <c:forEach var="obj" items="${menuList}">

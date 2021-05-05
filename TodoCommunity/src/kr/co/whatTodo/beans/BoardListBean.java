@@ -14,7 +14,7 @@ public class BoardListBean {
 	@NotBlank
 	private String contentText;
 	private String file;
-	private MultipartFile uploadFile;
+	private MultipartFile uploadFile = null;
 	private int writerIndex;
 	private int boardIndex;
 
@@ -97,13 +97,4 @@ public class BoardListBean {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-
-	@Override
-	public String toString() {
-		return "BoardListBean [startRow=" + startRow + ", endRow=" + endRow + ", contentIndex=" + contentIndex
-				+ ", cateIndex=" + cateIndex + ", contentSubject=" + contentSubject + ", contentText=" + contentText
-				+ ", file=" + file + ", uploadFile=" + uploadFile + ", writerIndex=" + writerIndex + ", boardIndex="
-				+ boardIndex + "]";
-	}
-
 }
