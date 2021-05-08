@@ -1,5 +1,6 @@
 package kr.co.whatTodo.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -29,16 +30,27 @@ public class BoardControllerAPI {
 	private MessageSource errorMessage;
 
 	// 게시글 등록
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/contentWrite")
 	public ResponseEntity<ResponseBean> contentWrite(@Valid BoardListBean boardListBean, BindingResult res){
 		if (res.hasErrors()) {
-			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
+			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
 		boardService.addPost(boardListBean);
-		ResponseBean success = new ResponseBean("success", true);
+		ResponseBean success = new ResponseBean("success", true, null);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
+	
+	//게시물 조회
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@ResponseBody
+	@PostMapping("/getBoardList")
+	public ResponseEntity<ResponseBean> getBoardList(@RequestBody BoardListBean boardListBean){
+		List<BoardListBean> boardList = boardService.getContentList(boardListBean.getBoardIndex());
+		ResponseBean success = new ResponseBean("success", true, boardList);
+		return new ResponseEntity<>(success, HttpStatus.OK);
+	}
+	
 }

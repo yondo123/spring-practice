@@ -1,5 +1,7 @@
 package kr.co.whatTodo.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +16,9 @@ public class BoardDao {
 	
 	public void insertContentInfo(BoardListBean boardListBean) {
 		boardMapper.insertContentInfo(boardListBean);
+	}
+	
+	public List<BoardListBean> selectContentList(int boardIndex) {
+		return boardMapper.selectContentList(boardIndex);
 	}
 }

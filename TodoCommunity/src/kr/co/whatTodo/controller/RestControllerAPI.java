@@ -26,7 +26,7 @@ import kr.co.whatTodo.validator.UserValidator;
 
 @RestController
 public class RestControllerAPI {
-	
+
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -34,53 +34,55 @@ public class RestControllerAPI {
 
 	@Resource(name = "loginUserInfoBean")
 	private UserInfoBean loginUserInfo;
-	
-	//ID중복검사(Service)
-	@SuppressWarnings("rawtypes")
+
+	// ID중복검사(Service)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@GetMapping("/user/identity/{userId}")
 	public ResponseEntity<ResponseBean> checkId(@PathVariable String userId) {
 		Boolean existFlag = userService.userIdEx(userId);
-		ResponseBean result = new ResponseBean("success userId Check", existFlag);
+		ResponseBean result = new ResponseBean("success userId Check", existFlag, null);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	// 회원가입(Service)
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/user/signup")
 	public ResponseEntity<ResponseBean> signup(@Valid @RequestBody UserInfoBean userData, BindingResult res) {
 
 		if (res.hasErrors()) {
-			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
+			ResponseBean error = new ResponseBean(
+					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
 		// call Service
 		userService.addUser(userData);
-		ResponseBean success = new ResponseBean("success", true);
+		ResponseBean success = new ResponseBean("success", true, null);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
-	
-	//로그인 reqeust(Service)
-	@SuppressWarnings("rawtypes")
+
+	// 로그인 reqeust(Service)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/user/signin")
-	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res){
-		if(res.hasErrors()) {
-			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false);
+	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res) {
+		if (res.hasErrors()) {
+			ResponseBean error = new ResponseBean(
+					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
 		userService.login(loginUserInfoBean);
-		//로그인 성공유무
-		if(loginUserInfo.getIsLogin()) {
-			ResponseBean success = new ResponseBean("success", true);
+		// 로그인 성공유무
+		if (loginUserInfo.getIsLogin()) {
+			ResponseBean success = new ResponseBean("success", true, null);
 			return new ResponseEntity<>(success, HttpStatus.OK);
-		}else {
-			ResponseBean fail = new ResponseBean("fail", false);
+		} else {
+			ResponseBean fail = new ResponseBean("fail", false, null);
 			return new ResponseEntity<>(fail, HttpStatus.OK);
 		}
 	}
-	
+
 	// 추가적인 요청 (custom validator)
 	@InitBinder
 	public void iniBinder(WebDataBinder binder) {

@@ -17,6 +17,8 @@ public class BoardListBean {
 	private MultipartFile uploadFile = null;
 	private int writerIndex;
 	private int boardIndex;
+	private String writeDate;
+	private String writerId;
 
 	public int getStartRow() {
 		return startRow;
@@ -97,4 +99,22 @@ public class BoardListBean {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
+
+
+	public String getWriteDate() {
+		return writeDate;
+	}
+
+	public void setWriteDate(String writeDate) {
+		this.writeDate = writeDate;
+	}
+
+	public String getWriterId() {
+		return writerId;
+	}
+
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
+	}
+	
 }

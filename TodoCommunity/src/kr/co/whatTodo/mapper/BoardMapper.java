@@ -1,9 +1,9 @@
 package kr.co.whatTodo.mapper;
 
-import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
-import org.springframework.web.multipart.MultipartFile;
+import org.apache.ibatis.annotations.Select;
 
 import kr.co.whatTodo.beans.BoardListBean;
 
@@ -14,5 +14,12 @@ public interface BoardMapper {
 			+ "VALUES (CONTENT_SEQ.NEXTVAL, #{contentSubject}, #{contentText}, #{file, jdbcType=VARCHAR},"
 			+ "#{writerIndex}, #{boardIndex}, sysdate, #{cateIndex})")
 	void insertContentInfo(BoardListBean boardListBean);
+	
+	@Select("SELECT ct.CONTENT_SUBJECT AS contentSubject, ut.USER_ID AS writerId, "
+			+ "		to_char(ct.CONTENT_DATE, 'YYYYMMDD') AS writeDate "
+			+ "FROM CONTENT_TABLE ct, USER_TABLE ut "
+			+ "WHERE ct.CONTENT_BOARD_INDEX = #{boardIndex} "
+			+ "AND ct.CONTENT_WRITER_INDEX = ut.USER_INDEX "
+			+ "ORDER BY ct.CONTENT_INDEX")
+	List<BoardListBean> selectContentList(int boardIndex);
 }
-

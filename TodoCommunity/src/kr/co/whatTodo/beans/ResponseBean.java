@@ -1,13 +1,16 @@
 package kr.co.whatTodo.beans;
 
+import java.util.List;
+
 public class ResponseBean<T> {
 	private String message;
 	private boolean result;
 	private T data = null;
 
-	public ResponseBean(String message, boolean result) {
+	public ResponseBean(String message, boolean result, T data) {
 		this.message = message;
 		this.result = result;
+		this.data = data;
 	}
 
 	public String getMessage() {

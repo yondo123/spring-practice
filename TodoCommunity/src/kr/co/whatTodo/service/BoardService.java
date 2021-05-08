@@ -1,6 +1,7 @@
 package kr.co.whatTodo.service;
 
 import java.io.File;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -46,5 +47,10 @@ public class BoardService {
 		}
 		boardListBean.setWriterIndex(userInfoBean.getUserIndex());
 		boardDao.insertContentInfo(boardListBean);
+	}
+	
+	//게시글 목록 조회
+	public List<BoardListBean> getContentList(int boardIndex){
+		return boardDao.selectContentList(boardIndex);
 	}
 }
