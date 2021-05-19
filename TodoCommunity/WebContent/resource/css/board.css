@@ -33,6 +33,7 @@
 .boardArea li h5,
 p {
     margin-left: 70px;
+    cursor: pointer; 
 }
 
 .boardArea li {
@@ -65,31 +66,31 @@ p {
     font-size: 0.8rem;
 }
 
-
 /* pagination */
 .paginationArea{
     margin: 10px;
     text-align: center;
 }
 .pagination {
+    list-style-type: none;
     display: inline-block;
 }
 
-.pagination a {
+.pagination li {
+    cursor: pointer;
     text-align: center;
     color: var(--icon-color);
     float: left;
     padding: 8px 16px;
-    text-decoration: none;
 }
 
-.pagination a.active {
+.pagination li.active {
     background-color:var(--hover-color);
     color: white;
     border-radius: 5px;
 }
 
-.pagination a:hover:not(.active) {
+.pagination li:hover:not(.pageCtrl) {
     background-color: #ddd;
     border-radius: 5px;
 }

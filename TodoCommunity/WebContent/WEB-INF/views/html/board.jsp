@@ -18,6 +18,7 @@ pageEncoding="UTF-8"%>
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
     <script src='${path}/js/lib/jquery-3.6.js'></script>
     <script src='${path}/js/common/template.js'></script>
+    <script src='${path}/js/common/util.js'></script>
     <script src='${path}/js/common/constants.js'></script>
     <script src='${path}/js/board.js'></script>
 </head>
@@ -33,16 +34,6 @@ pageEncoding="UTF-8"%>
         <section class="boardArea board-all">
             <h3 class="link">자유 게시판</h3>
             <ul class="board-list">
-                <li class="post">
-                    <div class="category"><img src="${path}/img/app_logo.png"></div>
-                    <h5 class="content">공부내용 내용 내용 내용 내용</h5>
-                    <p class="post-info">글쓴이 : yondo123 | 작성 날짜 : 2020-04-03 20:20:22</p>
-                </li>
-                <li class="post">
-                    <div class="category"><img src="${path}/img/app_logo.png"></div>
-                    <h5 class="content">공부내용 내용 내용 내용 내용</h5>
-                    <p class="post-info">글쓴이 : yondo123 | 작성 날짜 : 2020-04-03 20:20:22</p>
-                </li>
             </ul>
         </section>
     </section>
@@ -51,15 +42,11 @@ pageEncoding="UTF-8"%>
         <section class="buttonArea">
             <input type="button" value="글쓰기">
         </section>
-        <div class="pagination">
-            <a href="#"><i class="font-awesome fas fa-arrow-circle-left"></i></a>
-            <a href="#">1</a>
-            <a href="#" class="active">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#"><i class="font-awesome fas fa-arrow-circle-right"></i></a>
-        </div>
+
+        <ul class="pagination" id="pagingList">
+            <li class="pageCtrl prevPage"><i class="font-awesome fas fa-arrow-circle-left"></i></li>
+            <li class="pageCtrl nextPage"><i class="font-awesome fas fa-arrow-circle-right"></i></li>
+        </ul>        
     </div>
 </body>
 </html>

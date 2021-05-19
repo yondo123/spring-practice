@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    let reqPageNumber = 1;
     $.ajax({
         type: "POST",
         url: `${constants.REQUEST_URL}/board/getBoardList`,
@@ -18,14 +19,27 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * 글쓰기 렌더링
+     * @param {Array} data 
+     */
     function renderBoardList(data) {
-        for (let i = 0; i < data.length; i++) {
+        const listArray = data.items;
+        for (let i = 0; i < listArray.length; i++) {
             let $listTemplate = $(template.BOARD_ITEM);
-            let postInfo = '글쓴이 : ' + data[i].writerId + ' | 작성날짜 : ' + data[i].writeDate;
+            let postInfo = '글쓴이 : ' + listArray[i].writerId + ' | 작성날짜 : ' + util.date.formatToDate(listArray[i].writeDate);
             $listTemplate.find('img').attr('src', '/TodoCommunity/resource/img/app_logo.png');
-            $listTemplate.find('.content').text(data[i].contentSubject);
+            $listTemplate.find('.content').text(listArray[i].contentSubject);
             $listTemplate.find('.post-info').text(postInfo);
             $listTemplate.appendTo('.board-list');
         }
+
+        util.ui.setPagingArea({
+            listCnt : data.totalCount,
+            viewCnt : constants.BOARD_COUNT,
+            loopCnt : constants.PAGINATION_COUNT,
+            reqPage : reqPageNumber,
+            page    : $('#pagingList')
+        })
     }
 });

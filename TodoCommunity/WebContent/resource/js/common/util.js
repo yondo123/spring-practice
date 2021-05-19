@@ -81,6 +81,19 @@ const util = (function () {
         }
 
         /**
+         * 선택 클래스 추가
+         * @param {String} menu : 메뉴 타입 
+         */
+        ui.addSelectMenuClass = function (menu) {
+            $('#menuList a').each(function (idx, item) {
+                if($(item).attr('type') == menu){
+                    $(item).addClass('select');
+                    return $(item).siblings().removeClass('select');
+                }
+            });
+        }
+
+        /**
          * 페이지 영역 렌더링
          * @param {Object} param : 페이징 data 객체
          * 			 {Number} listCnt    : 리스트 총 갯수
@@ -97,8 +110,8 @@ const util = (function () {
             const reqPage = Number(param.reqPage);
             const $page = param.page;
             const $seqPage = $page.find('li').not('.pageCtrl'); //실제 페이지 영역
-            const firstPage = Number($seqPage.first().find('button').attr('pageSeq')) ? Number($seqPage.first().find('button').attr('pageSeq')) : 0;
-            const lastPage = Number($seqPage.last().find('button').attr('pageSeq')) ? Number($seqPage.last().find('button').attr('pageSeq')) : 0;
+            const firstPage = Number($seqPage.first().attr('pageSeq')) ? Number($seqPage.first().attr('pageSeq')) : 0;
+            const lastPage = Number($seqPage.last().attr('pageSeq')) ? Number($seqPage.last().attr('pageSeq')) : 0;
 
             if (listCount > 0 && typeof loopCount == 'number' && $page.length && typeof reqPage == 'number') {
                 //실제 페이지 그리는 함수
@@ -108,8 +121,9 @@ const util = (function () {
 
                     for (let i = startIndex; i < startIndex + loopCount; i++) {
                         if (i <= pagingLength) {
-                            const onClass = (i == reqPage) ? "<li class='on'>" : "<li>";
-                            $page.find('.btn_next').before(onClass + "<button type='button' pageSeq=" + i + ">" + i + "</button></li>");
+                            const activeClass = (i == reqPage) ? "<li class='active'>" + i + "</li>" : "<li>" + i + "</li>";
+                            $(activeClass).attr('pageSeq', i);
+                            $page.find('.nextPage').before(activeClass);
                         }
                     }
                 }
@@ -120,8 +134,8 @@ const util = (function () {
 
                 if (firstPage > 0 && lastPage > 0) { //페이지 영역 존재 여부 
                     if (reqPage >= firstPage && reqPage <= lastPage && reqPage <= pagingLength) { //요청 번호가 이미 페이지에 존재
-                        $seqPage.removeClass('on'); //기존 select class 제거
-                        $page.find('li [pageSeq =' + reqPage + ']').closest('li').addClass('on');
+                        $seqPage.removeClass('active'); //기존 select class 제거
+                        $page.find('li [pageSeq =' + reqPage + ']').addClass('active');
                     } else {
                         return renderPage();
                     }
