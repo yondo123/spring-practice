@@ -14,6 +14,10 @@ public class BoardDao {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	public int selectContentTotalCount(int boardIndex) {
+		return boardMapper.selectContentTotalCount(boardIndex);
+	}
+	
 	public void insertContentInfo(BoardListBean boardListBean) {
 		boardMapper.insertContentInfo(boardListBean);
 	}

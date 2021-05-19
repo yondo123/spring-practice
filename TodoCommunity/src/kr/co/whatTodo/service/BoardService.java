@@ -27,6 +27,7 @@ public class BoardService {
 	@Resource(name = "loginUserInfoBean")
 	private UserInfoBean userInfoBean;
 
+	// 파일 처리
 	private String fileProcessing(MultipartFile uploadFile) {
 		String fileName = System.currentTimeMillis() + "_" + uploadFile.getOriginalFilename();
 		try {
@@ -36,6 +37,11 @@ public class BoardService {
 		}
 
 		return fileName;
+	}
+
+	// 게시판 전체 갯수
+	public int getContentTotalCount(int boardIndex) {
+		return boardDao.selectContentTotalCount(boardIndex);
 	}
 
 	// 게시판 글 쓰기
@@ -48,9 +54,9 @@ public class BoardService {
 		boardListBean.setWriterIndex(userInfoBean.getUserIndex());
 		boardDao.insertContentInfo(boardListBean);
 	}
-	
-	//게시글 목록 조회
-	public List<BoardListBean> getContentList(int boardIndex){
+
+	// 게시글 목록 조회
+	public List<BoardListBean> getContentList(int boardIndex) {
 		return boardDao.selectContentList(boardIndex);
 	}
 }

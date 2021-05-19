@@ -8,6 +8,15 @@ import org.apache.ibatis.annotations.Select;
 import kr.co.whatTodo.beans.BoardListBean;
 
 public interface BoardMapper {
+	//전체 갯수
+	@Select("SELECT COUNT(*) totalCount "
+			+ "FROM CONTENT_TABLE ct, USER_TABLE ut "
+			+ "WHERE ct.CONTENT_BOARD_INDEX = #{boardIndex} "
+			+ "AND ct.CONTENT_WRITER_INDEX = ut.USER_INDEX "
+			+ "ORDER BY ct.CONTENT_INDEX")
+	int selectContentTotalCount(int boardIndex);
+	
+	//게시글 등록
 	@Insert("INSERT INTO CONTENT_TABLE("
 			+ "CONTENT_INDEX, CONTENT_SUBJECT, CONTENT_TEXT, CONTENT_FILE, CONTENT_WRITER_INDEX, CONTENT_BOARD_INDEX,"
 			+ "CONTENT_DATE, CONTENT_CATE_INDEX)"
@@ -15,7 +24,8 @@ public interface BoardMapper {
 			+ "#{writerIndex}, #{boardIndex}, sysdate, #{cateIndex})")
 	void insertContentInfo(BoardListBean boardListBean);
 	
-	@Select("SELECT ct.CONTENT_SUBJECT AS contentSubject, ut.USER_ID AS writerId, "
+	//게시글 조회
+	@Select("SELECT ct.CONTENT_SUBJECT AS contentSubject, ut.USER_ID AS writerId, ct.CONTENT_CATE_INDEX AS cateIndex, "
 			+ "		to_char(ct.CONTENT_DATE, 'YYYYMMDD') AS writeDate "
 			+ "FROM CONTENT_TABLE ct, USER_TABLE ut "
 			+ "WHERE ct.CONTENT_BOARD_INDEX = #{boardIndex} "

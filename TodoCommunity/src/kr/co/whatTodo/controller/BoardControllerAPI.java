@@ -1,7 +1,9 @@
 package kr.co.whatTodo.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -48,8 +50,12 @@ public class BoardControllerAPI {
 	@ResponseBody
 	@PostMapping("/getBoardList")
 	public ResponseEntity<ResponseBean> getBoardList(@RequestBody BoardListBean boardListBean){
+		int totalCount = boardService.getContentTotalCount(boardListBean.getBoardIndex());
+		Map result = new HashMap<String, Object>();
 		List<BoardListBean> boardList = boardService.getContentList(boardListBean.getBoardIndex());
-		ResponseBean success = new ResponseBean("success", true, boardList);
+		result.put("items", boardList);
+		result.put("totalCount", totalCount);
+		ResponseBean success = new ResponseBean("success", true, result);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
 	
