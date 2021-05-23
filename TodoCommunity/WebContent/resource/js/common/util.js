@@ -3,7 +3,7 @@ const util = (function () {
     function method() {
         //private 스코프
         const private = {
-            dateFormat: '10',
+            dateFormat: '10'
         }
 
         //public 스코프
@@ -19,6 +19,63 @@ const util = (function () {
          */
         data.createTempCode = function (str) {
             return (str ? str : '') + new Date().toISOString().substr(18, 5).replace(/[^0-9]/g, "")
+        }
+
+        /**
+         * 메뉴 별 카테고리 리스트 조회
+         */
+        data.getBoardCategory = function () {
+            $.ajax({
+                type: "POST",
+                url: `${constants.REQUEST_URL}/board/getCategoryList`,
+                data: JSON.stringify({
+                    cateType: sessionStorage.getItem('board')
+                }),
+                contentType: 'application/json; UTF-8;',
+                dataType: 'json',
+                success: function (response) {
+                    return response.data;
+                },
+                error: function (response) {
+                    alert("알 수 없는 오류가 발생하였습니다.");
+                }
+            });
+        }
+
+
+        /**
+         * 아이콘 이미지 파일 리턴
+         * @param {Number} index : 카테고리 번호
+         */
+        data.getIconImagePath = function (index) {
+            let iconImagePath = '/TodoCommunity/resource/img/';
+            switch (index) {
+                case 1:
+                    iconImagePath += constants.JS_ICON_FILE;
+                    break;
+                case 2:
+                    iconImagePath += constants.JAVA_ICON_FILE;
+                    break;
+                case 3:
+                    iconImagePath += constants.HTML_ICON_FILE;
+                    break;
+                case 4:
+                    iconImagePath += constants.PHP_ICON_FILE;
+                    break;
+                case 5:
+                    iconImagePath += constants.PYTHON_ICON_FILE;
+                    break;
+                case 6:
+                    iconImagePath += constants.SQL_ICON_FILE;
+                    break;
+                case 7:
+                    iconImagePath += constants.MOBILE_ICON_FILE;
+                    break;
+                case 8:
+                    iconImagePath += constants.ETC_ICON_FILE;
+                    break;
+            }
+            return iconImagePath;
         }
 
         /**
@@ -143,6 +200,20 @@ const util = (function () {
                     return renderPage();
                 }
             }
+        }
+
+        /**
+         * 메뉴 active 클래스 설정
+         * @param {Sting} menu : 메뉴 
+         */
+        ui.setMenuClass =function (menu) {
+            $('#menuList a').each(function(idx, item){
+                const menuType = $(item).attr('type') || '';
+                $(item).removeClass('select');
+                if(menuType && menuType == menu){
+                    return $(item).addClass('select');
+                }
+            });
         }
 
         return {
