@@ -1,5 +1,13 @@
 $(document).ready(function () {
     let reqPageNumber = 1;
+    const boardType = $('#board').attr('type');
+    const boardIndex = boardType == constants.STUDY_BOARD_ID ? 1 : 2;
+    
+    util.ui.setMenuClass(boardType);
+    sessionStorage.setItem('board', JSON.stringify({
+        index : boardIndex,
+        name  : boardType
+    }));
     $.ajax({
         type: "POST",
         url: `${constants.REQUEST_URL}/board/getBoardList`,
@@ -28,7 +36,7 @@ $(document).ready(function () {
         for (let i = 0; i < listArray.length; i++) {
             let $listTemplate = $(template.BOARD_ITEM);
             let postInfo = '글쓴이 : ' + listArray[i].writerId + ' | 작성날짜 : ' + util.date.formatToDate(listArray[i].writeDate);
-            $listTemplate.find('img').attr('src', '/TodoCommunity/resource/img/app_logo.png');
+            $listTemplate.find('img').attr('src', util.data.getIconImagePath(listArray[i].cateIndex));
             $listTemplate.find('.content').text(listArray[i].contentSubject);
             $listTemplate.find('.post-info').text(postInfo);
             $listTemplate.appendTo('.board-list');

@@ -1,6 +1,7 @@
 package kr.co.whatTodo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,7 +14,9 @@ public class BoardController {
 	 * @return : board.jsp
 	 */
 	@GetMapping("/study")
-	public String study() {
+	public String study(Model model) {
+		model.addAttribute("cateType", "study");
+		model.addAttribute("cateName", "스터디");
 		return "board";
 	}
 	
@@ -22,7 +25,9 @@ public class BoardController {
 	 * @return : board.jsp
 	 */
 	@GetMapping("/community")
-	public String community() {
+	public String community(Model model) {
+		model.addAttribute("cateType", "com");
+		model.addAttribute("cateName", "커뮤니티");
 		return "board";
 	}
 	
