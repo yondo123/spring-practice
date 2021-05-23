@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import kr.co.whatTodo.beans.BoardListBean;
+import kr.co.whatTodo.beans.CategoryBean;
 
 public interface BoardMapper {
 	//전체 갯수
@@ -32,4 +33,8 @@ public interface BoardMapper {
 			+ "AND ct.CONTENT_WRITER_INDEX = ut.USER_INDEX "
 			+ "ORDER BY ct.CONTENT_INDEX")
 	List<BoardListBean> selectContentList(int boardIndex);
+	
+	//카테고리 목록 조회
+	@Select("SELECT BOARD_CATE_INDEX AS cateIndex, BOARD_CATE_NAME AS cateName FROM BOARD_CATE_TABLE bct")
+	List<CategoryBean> selectCategoryList();
 }

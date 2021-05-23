@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.whatTodo.beans.BoardListBean;
+import kr.co.whatTodo.beans.CategoryBean;
 import kr.co.whatTodo.beans.UserInfoBean;
 import kr.co.whatTodo.dao.BoardDao;
 
@@ -58,5 +59,14 @@ public class BoardService {
 	// 게시글 목록 조회
 	public List<BoardListBean> getContentList(int boardIndex) {
 		return boardDao.selectContentList(boardIndex);
+	}
+	
+	// 카테고리 목록 조회
+	public List<CategoryBean> getCategoryList(String cateType){
+		if(cateType.equals("study")) {
+			return boardDao.selectCategoryList();
+		}else {
+			return boardDao.selectCategoryList();
+		}
 	}
 }

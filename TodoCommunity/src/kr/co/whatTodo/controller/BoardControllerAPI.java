@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.co.whatTodo.beans.BoardListBean;
+import kr.co.whatTodo.beans.CategoryBean;
 import kr.co.whatTodo.beans.ResponseBean;
 import kr.co.whatTodo.service.BoardService;
 
@@ -35,21 +36,22 @@ public class BoardControllerAPI {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/contentWrite")
-	public ResponseEntity<ResponseBean> contentWrite(@Valid BoardListBean boardListBean, BindingResult res){
+	public ResponseEntity<ResponseBean> contentWrite(@Valid BoardListBean boardListBean, BindingResult res) {
 		if (res.hasErrors()) {
-			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0),Locale.getDefault()), false, null);
+			ResponseBean error = new ResponseBean(
+					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
 		boardService.addPost(boardListBean);
 		ResponseBean success = new ResponseBean("success", true, null);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
-	
-	//게시물 조회
+
+	// 게시물 조회
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/getBoardList")
-	public ResponseEntity<ResponseBean> getBoardList(@RequestBody BoardListBean boardListBean){
+	public ResponseEntity<ResponseBean> getBoardList(@RequestBody BoardListBean boardListBean) {
 		int totalCount = boardService.getContentTotalCount(boardListBean.getBoardIndex());
 		Map result = new HashMap<String, Object>();
 		List<BoardListBean> boardList = boardService.getContentList(boardListBean.getBoardIndex());
@@ -58,5 +60,16 @@ public class BoardControllerAPI {
 		ResponseBean success = new ResponseBean("success", true, result);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
-	
+
+	// 카테고리 조회
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@ResponseBody
+	@PostMapping("/getCategoryList")
+	public ResponseEntity<ResponseBean> getBoardCategory(@RequestBody CategoryBean categoryBean) {
+		List<CategoryBean> categoryList = null;
+		categoryList = boardService.getCategoryList(categoryBean.getCateType());
+		ResponseBean success = new ResponseBean("success", true, categoryList);
+		return new ResponseEntity<>(success, HttpStatus.OK);
+	}
+
 }
