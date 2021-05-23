@@ -32,7 +32,7 @@ pageEncoding="UTF-8"%>
     <section class="board">
         <!-- 상단게시판(좌) -->
         <section class="boardArea board-all">
-            <h3 class="link">자유 게시판</h3>
+            <h3 id="board" class="link" type=${cateType}>${cateName}</h3>
             <ul class="board-list">
             </ul>
         </section>
