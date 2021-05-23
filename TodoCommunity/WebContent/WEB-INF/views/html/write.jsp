@@ -17,6 +17,8 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
     <script src='${path}/js/lib/jquery-3.6.js'></script>
+    <script src='${path}/js/common/template.js'></script>
+    <script src='${path}/js/common/util.js'></script>
     <script src='${path}/js/common/constants.js'></script>
     <script src='${path}/js/write.js'></script>
 </head>
@@ -34,15 +36,7 @@ pageEncoding="UTF-8"%>
             </div>
             <div class="input_container">
                 <h3>Subject</h3>
-                <select class="selectArea">
-                    <option>Python</option>
-                    <option>PHP</option>
-                    <option>Etc</option>
-                    <option>Java</option>
-                    <option>JavaScript</option>
-                    <option>Etc</option>
-                    <option>HTML/CSS</option>
-                    <option>Mobile</option>
+                <select class="selectArea" id="categoryList">
                 </select>
             </div>
             <div class="input_container">
