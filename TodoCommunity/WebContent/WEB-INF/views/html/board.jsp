@@ -33,7 +33,7 @@ pageEncoding="UTF-8"%>
         <!-- 상단게시판(좌) -->
         <section class="boardArea board-all">
             <h3 id="board" class="link" type=${cateType}>${cateName}</h3>
-            <ul class="board-list">
+            <ul class="board-list" id="boardList">
             </ul>
         </section>
     </section>
@@ -44,8 +44,8 @@ pageEncoding="UTF-8"%>
         </section>
 
         <ul class="pagination" id="pagingList">
-            <li class="pageCtrl prevPage"><i class="font-awesome fas fa-arrow-circle-left"></i></li>
-            <li class="pageCtrl nextPage"><i class="font-awesome fas fa-arrow-circle-right"></i></li>
+            <li class="pageCtrl" type="prev"><i class="font-awesome fas fa-arrow-circle-left"></i></li>
+            <li class="pageCtrl" type="next"><i class="font-awesome fas fa-arrow-circle-right"></i></li>
         </ul>        
     </div>
 </body>

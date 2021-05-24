@@ -180,7 +180,7 @@ const util = (function () {
                         if (i <= pagingLength) {
                             const activeClass = (i == reqPage) ? "<li class='active'>" + i + "</li>" : "<li>" + i + "</li>";
                             $(activeClass).attr('pageSeq', i);
-                            $page.find('.nextPage').before(activeClass);
+                            $page.find('.pageCtrl[type=next]').before(activeClass);
                         }
                     }
                 }
