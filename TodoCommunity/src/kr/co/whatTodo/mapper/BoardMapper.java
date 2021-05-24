@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.session.RowBounds;
 
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
@@ -32,7 +33,7 @@ public interface BoardMapper {
 			+ "WHERE ct.CONTENT_BOARD_INDEX = #{boardIndex} "
 			+ "AND ct.CONTENT_WRITER_INDEX = ut.USER_INDEX "
 			+ "ORDER BY ct.CONTENT_INDEX")
-	List<BoardListBean> selectContentList(int boardIndex);
+	List<BoardListBean> selectContentList(int boardIndex, RowBounds rowBounds);
 	
 	//카테고리 목록 조회
 	@Select("SELECT BOARD_CATE_INDEX AS cateIndex, BOARD_CATE_NAME AS cateName FROM BOARD_CATE_TABLE bct")

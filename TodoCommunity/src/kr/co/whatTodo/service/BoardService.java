@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -21,6 +22,9 @@ import kr.co.whatTodo.dao.BoardDao;
 public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Value("${boardListCount}")
+	private int boardListCnt;
 
 	@Value("${filePath}")
 	private String uploadFilePath;
@@ -57,8 +61,10 @@ public class BoardService {
 	}
 
 	// 게시글 목록 조회
-	public List<BoardListBean> getContentList(int boardIndex) {
-		return boardDao.selectContentList(boardIndex);
+	public List<BoardListBean> getContentList(int boardIndex, int reqPage) {
+		int startRow = (reqPage - 1) * boardListCnt;
+		RowBounds rowBounds = new RowBounds(startRow, boardListCnt);
+		return boardDao.selectContentList(boardIndex, rowBounds);
 	}
 	
 	// 카테고리 목록 조회

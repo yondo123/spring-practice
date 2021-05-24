@@ -54,7 +54,7 @@ public class BoardControllerAPI {
 	public ResponseEntity<ResponseBean> getBoardList(@RequestBody BoardListBean boardListBean) {
 		int totalCount = boardService.getContentTotalCount(boardListBean.getBoardIndex());
 		Map result = new HashMap<String, Object>();
-		List<BoardListBean> boardList = boardService.getContentList(boardListBean.getBoardIndex());
+		List<BoardListBean> boardList = boardService.getContentList(boardListBean.getBoardIndex(), boardListBean.getReqPage());
 		result.put("items", boardList);
 		result.put("totalCount", totalCount);
 		ResponseBean success = new ResponseBean("success", true, result);

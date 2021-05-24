@@ -19,6 +19,7 @@ public class BoardListBean {
 	private int boardIndex;
 	private String writeDate;
 	private String writerId;
+	private int reqPage;
 
 	public int getStartRow() {
 		return startRow;
@@ -100,7 +101,6 @@ public class BoardListBean {
 		this.uploadFile = uploadFile;
 	}
 
-
 	public String getWriteDate() {
 		return writeDate;
 	}
@@ -116,5 +116,13 @@ public class BoardListBean {
 	public void setWriterId(String writerId) {
 		this.writerId = writerId;
 	}
-	
+
+	public int getReqPage() {
+		return reqPage;
+	}
+
+	public void setReqPage(int reqPage) {
+		this.reqPage = reqPage;
+	}
+
 }

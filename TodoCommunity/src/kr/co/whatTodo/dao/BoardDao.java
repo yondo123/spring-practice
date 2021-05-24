@@ -2,6 +2,7 @@ package kr.co.whatTodo.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,8 +24,8 @@ public class BoardDao {
 		boardMapper.insertContentInfo(boardListBean);
 	}
 	
-	public List<BoardListBean> selectContentList(int boardIndex) {
-		return boardMapper.selectContentList(boardIndex);
+	public List<BoardListBean> selectContentList(int boardIndex, RowBounds rowBounds) {
+		return boardMapper.selectContentList(boardIndex, rowBounds);
 	}
 	
 	public List<CategoryBean> selectCategoryList(){
