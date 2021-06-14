@@ -1,0 +1,389 @@
+body {
+    background-color: #fff;
+    height: 100vh;
+    margin: 0;
+}
+
+main,
+.todo {
+    padding: 0 3.2rem;
+}
+
+section {
+    border-radius: 0.8rem;
+    border: 0.2rem solid var(--border-color);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+main .board {
+    margin-top: 3.2rem;
+    width: 100%;
+}
+
+main .board:nth-child(1) {
+    margin-right: 3.2rem;
+}
+
+.board {
+    width: 100%;
+    line-height: 0.8;
+}
+
+.board h1 {
+    color: var(--font-color);
+    font-size: 2.4rem;
+    font-weight: 400;
+    margin-left: 3rem;
+}
+
+.board a {
+    text-decoration: none;
+}
+
+.board img {
+    display: block;
+    border: 2px solid var(--border-color);
+    border-radius: 1rem;
+    width: 6rem;
+    height: 6rem;
+}
+
+.board li {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    margin: 1.2rem 0;
+}
+
+
+.board li a {
+    margin-left: 1.2rem;
+    text-decoration: none;
+    color: var(--font-color);
+}
+
+.board h2 {
+    padding: 0;
+    color: var(--main-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.board p {
+    margin: 0;
+    font-size: 1.3rem;
+    padding-top: 0.2rem;
+    white-space: nowrap;
+    width: 42rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 말줄임 적용 */
+}
+
+.todo {
+    margin: 3.2rem 3.2rem;
+}
+
+
+.todo h1 {
+    color: var(--font-color);
+    font-size: 2.4rem;
+    font-weight: 400;
+    margin-left: 0.1rem;
+}
+
+.todo a {
+    text-decoration: none;
+}
+
+.todo table {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.todo table th {
+    padding: 2rem 0;
+    color: var(--main-color);
+    border-bottom: 2px solid var(--border-color);
+    font-size: 2rem;
+    font-weight: 400;
+    text-align: center;
+    padding: 1rem 1rem;
+}
+
+.todo table td {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.todo tbody tr {
+    padding: 1rem 0;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.todo tbody td:nth-child(3),
+.todo thead th:nth-child(3) {
+    text-align: left;
+}
+
+
+.status-done,
+.status-todo,
+.status-doing {
+    display: inline-block;
+    border-radius: 3rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    text-align: center;
+}
+
+.status-done {
+    background-color: #2ecc71;
+}
+
+.status-doing {
+    background-color: #f1c40f;
+}
+
+.status-todo {
+    background-color: var(--err-mesaage-color);
+}
+
+footer {
+    width: 100%;
+    padding: 2rem 0;
+    background-color: var(--input-color);
+    border: 1px solid var(--border-color);
+}
+
+.footer-menu {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-menu li {
+    list-style: none;
+    padding-left: 5rem;
+}
+
+.footer-menu button {
+    font-weight: 500;
+    font-size: 1.3rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.footer-menu p {
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+@media screen and (max-width : 768px) {
+    body {
+        background-color: #fff;
+        height: 100vh;
+        width: 100%;
+        overflow-x: hidden;
+        margin: 0 auto;
+    }
+
+    main,
+    .todo {
+        padding: 0 1.6rem;
+    }
+
+    section {
+        border-radius: 0.8rem;
+        border: 0.2rem solid var(--border-color);
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    main .board {
+        margin-top: 3.2rem;
+        width: 100%;
+    }
+
+    .board {
+        line-height: 0.8;
+    }
+
+    main .board:nth-child(1) {
+        margin-right: 0;
+    }
+    
+    main ol {
+        padding-left: 2rem;
+    }
+
+    .board h1 {
+        color: var(--font-color);
+        font-size: 2rem;
+        font-weight: 400;
+        margin-left: 3rem;
+    }
+
+    .board a {
+        text-decoration: none;
+    }
+
+    .board img {
+        border: 2px solid var(--border-color);
+        border-radius: 1rem;
+        width: 6rem;
+        height: 6rem;
+    }
+
+    .board li {
+        width: 100%;
+        font-size: 1.3rem;
+        list-style: none;
+        display: flex;
+        margin: 1.2rem 0;
+    }
+
+
+    .board li a {
+        width: 100%;
+        margin-left: 1rem;
+        text-decoration: none;
+        color: var(--font-color);
+    }
+
+    .board h2 {
+        color: var(--main-color);
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
+    .board p {
+        margin: 0;
+        font-size: 1.2rem;
+        padding-top: 1rem;
+        width: 74%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* 말줄임 적용 */
+    }
+
+    .todo {
+        margin: 3.2rem 1.6rem;
+    }
+
+    .todo h1 {
+        color: var(--font-color);
+        font-size: 2rem;
+        font-weight: 400;
+        margin-left: 2rem;
+    }
+
+    .todo a {
+        text-decoration: none;
+    }
+
+    .todo table {
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .todo table th {
+        padding: 2rem 0;
+        color: var(--main-color);
+        border-bottom: 2px solid var(--border-color);
+        font-size: 1.8rem;
+        font-weight: 400;
+        text-align: center;
+        padding: 1rem 1rem;
+    }
+
+    .todo table td {
+        padding: 2rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .todo table td:last-child {
+        font-size: 0.8rem;
+        text-align: left;
+    }
+
+    .todo tbody tr {
+        padding: 1rem 0;
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .todo tbody td:nth-child(3),
+    .todo thead th:nth-child(3) {
+        text-align: left;
+    }
+
+
+    .status-done,
+    .status-todo,
+    .status-doing {
+        display: inline-block;
+        border-radius: 2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        text-align: center;
+    }
+
+    .status-done {
+        background-color: #2ecc71;
+    }
+
+    .status-doing {
+        background-color: #f1c40f;
+    }
+
+    .status-todo {
+        background-color: var(--err-mesaage-color);
+    }
+
+    footer {
+        width: 100%;
+        padding: 2rem 0;
+        background-color: var(--input-color);
+        border: 1px solid var(--border-color);
+    }
+
+    .footer-menu {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer-menu li {
+        list-style: none;
+        padding-left: 2rem;
+    }
+
+    .footer-menu button {
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        background: none;
+        padding: 0;
+    }
+
+    .footer-menu p {
+        font-weight: 500;
+        font-size: 1rem;
+    }
+}

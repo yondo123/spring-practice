@@ -11,7 +11,7 @@
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<title>저녁먹고 한거 뭐야!?</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<link rel='stylesheet' type='text/css' media='screen' href='${path}/css/layout.css'>
+	<link rel='stylesheet' type='text/css' media='screen' href='${path}/css/style.css'>
 	<link rel='stylesheet' type='text/css' media='screen' href='${path}/css/sign.css'>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
@@ -22,39 +22,40 @@
 </head>
 
 <body>
-
     <body>
-        <div id="form_wrapper">
-            <div id="form_left">
-                <img src="${path}/img/app_logo.png" />
+        <main class="sign">
+            <h1>회원가입</h1>
+            <div class="app-logo">
+                <img src="${path}/img/app_logo.png" alt="whattodo logo">
             </div>
-            <div id="form_right">
-                <h1>회원가입</h1>
-                <div class="input_container">
-                    <i class="font-awesome far fa-user"></i>
-                    <input placeholder="your name" type="text" name="Email" id="userName" class="inputArea" />
+            <div class="form">
+                <div class="input-container">
+                    <i class="font-awesome far far fa-user"></i>
+                    <input type="text" id="userName" placeholder="your name">
+                    <label for="userId">userName</label>
                 </div>
-                <div class="input_container">
+                <div class="input-container">
                     <i class="font-awesome far fa-id-badge"></i>
-                    <input placeholder="ID" type="text" name="Email" id="userId" class="inputArea" />
+                    <input type="text" id="userId" placeholder="id">
+                    <label for="userId">userId</label>
+                    <strong id="status"></strong>
                 </div>
-				<p id="status" class="error hide"></p>
-                <div class="input_container">
+                <div class="input-container">
                     <i class="font-awesome fas fa-lock"></i>
-                    <input placeholder="Password" type="password" name="userPw" id="userPw"
-                        class="inputArea" />
+                    <input type="password" id="userPw" placeholder="password..">
+                    <label for="userPw">userPassword</label>
                 </div>
-                <div class="input_container">
+                <div class="input-container">
                     <i class="font-awesome fas fa-lock"></i>
-                    <input placeholder="Confirm Password" type="password" name="confirmPw" id="confirmPw"
-                        class="inputArea" />
+                    <input type="password" id="confirmPw" placeholder="confirm your password..">
+                    <label for="userConfirmPw">passwordConfirm</label>
                 </div>
-                <input type="button" value="Sign Up" id="joinBtn" class="inputArea signArea" />
-                <span id="loginBtn">
-                    <a href="#">계정이 있습니다. ➡ </a>
-                </span>
+                <div class="button-area">
+                    <button type="button" class="btn-join" id="joinBtn">회원가입</button>
+                    <button type="button" class="btn-login">로그인</button>
+                </div>
             </div>
-        </div>
+        </main>
     </body>
 </body>
 </html>

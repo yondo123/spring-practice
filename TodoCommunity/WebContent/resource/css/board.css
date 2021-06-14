@@ -1,172 +1,231 @@
-
-/* 게시판 목록 */
-.board {
-    display: flex;
+body {
+    overflow-x: hidden;
+    background-color: #fff;
+    margin: 0 auto;
+    height: 100vh;
 }
 
-.board-all{
-    height: 720px;
+main {
+    position: relative;
+    margin-top: 3.2rem;
+    margin: 1.6rem;
+    padding: 0 1.6rem;
+    border-radius: 0.8rem;
+    border: 0.2rem solid var(--border-color);
 }
 
-.boardArea {
-    width: 100%;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+a {
     padding: 0;
-    border: solid 0.14rem #ddd;
-    border-radius: 11px;
-}
-
-.boardArea li p {
-    line-height: normal;
-    font-size: 16px;
     text-decoration: none;
 }
 
-.boardArea h5{
-    color: #FF9B19;
-    margin-block-start: 1.22;
-    margin-block-end: 1.22em;
+main ol {
+    padding: 0;
+    height: 52rem;
 }
 
-.boardArea li h5,
-p {
-    margin-left: 70px;
-    cursor: pointer; 
+.title {
+    color: var(--font-color);
+    font-size: 2rem;
+    font-weight: 400;
+    padding-left: 1rem;
 }
 
-.boardArea li {
-    border-bottom: 1px solid #efefef;
-    height: 66px;
-    line-height: 0.9rem;
-    list-style: none;
-}
-
-.board .category {
-    margin-bottom: 0 auto;
-    width: 55px;
-    height: 55px;
-    border: solid 1px #ddd;
-    border-radius: 11px;
+.write-button {
     position: absolute;
-    overflow: hidden;
+    top: 1rem;
+    right: 0;
+}
+
+.write-button button {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    margin-right: 14px;
+    background-color: var(--accent-color);
+    color: #fff;
+    border-radius: 12px;
+    border-style: none;
+}
+
+.write-button button:hover {
+    background-color: var(--hover-color);
+    transition: background-color, 750ms;
+    cursor: pointer;
+}
+
+.list-item {
+    margin: 1.2rem 0;
+    list-style: none;
+    display: flex;
+    min-width: 100%;
 }
 
 .category img {
-    overflow: hidden;
+    display: block;
+    border: 2px solid var(--border-color);
+    border-radius: 1rem;
+    width: 6rem;
+    height: 6rem;
+}
+
+.list-detail {
+    padding: 0 1.6rem;
+    width: 80%;
+    line-height: 1.4rem;
+}
+
+.list-detail a {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    flex-direction: column;
 }
 
-.board-list .post-info {
-    color: var(--icon-color);
+.list-detail strong,
+.list-detail p {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-detail strong {
+    margin: 1rem 0;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--font-color);
+}
+
+.list-detail p {
     font-size: 0.8rem;
+    color: var(--font-color);
 }
 
-/* pagination */
-.paginationArea{
-    margin: 10px;
-    text-align: center;
-}
 .pagination {
-    list-style-type: none;
-    display: inline-block;
+    margin: 1rem 0rem;
+    list-style: none;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination li {
-    cursor: pointer;
-    text-align: center;
-    color: var(--icon-color);
-    float: left;
-    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    padding: 0.8rem;
 }
 
-.pagination li.active {
-    background-color:var(--hover-color);
-    color: white;
-    border-radius: 5px;
+.pagination a {
+    font-size: 1rem;
+    color: var(--font-color);
 }
 
-.pagination li:hover:not(.pageCtrl) {
-    background-color: #ddd;
-    border-radius: 5px;
+.pagination .selected {
+    color: var(--accent-color);
+    font-weight: 700;
 }
 
-.pagination .font-awesome {
-    color: var(--hover-color);
-}
-
-.writeArea h3,
-input {
-    display: inline;
-}
-
-.input_container {
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-}
-
-.buttonArea input {
-    float: right;
-    margin: 1.25rem;
-    height: 1.875rem;
-    background-color: var(--accent-color);
-    color: #efefef;
-    /* make the borders more round */
-    border-radius: 30px;
-    border-style: none;
-    width: 6.25rem;
-}
-
-.inputArea {
-    height: 1.3rem;
-    width: 15rem;
-    margin-left: 3.438rem;
-}
-
-.selectArea {
-    margin-left: 1.25rem;
-}
-
-.textArea {
-    margin-bottom: 1.25rem;
-    margin-left: 1.125rem;
-    resize: none;
-    width: 80%;
-    height: 500px
-}
-
-.inputArea, .selectArea, .textArea{
-    padding: 0;
-    border: solid 0.14rem #ddd;
-    border-radius: 11px;
-}
-
-
-/* 반응형 */
-@media screen and (max-width:500px) {
-    .board {
-        display: block;
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+@media all and (min-width:768px) and (max-width:1023px) {
+    main {
+        margin: 3.2rem;
     }
 
-    .board .boardArea {
-        width: auto;
-        margin-top: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
+    .list-detail {
+        padding: 0 1.6rem;
+        width: 90%;
+        line-height: 1.4rem;
     }
 
-    .board-all{
-        height: 100%;
+    .list-detail strong {
+        margin: 0;
+        line-height: normal;
+        font-size: 1.4rem;
     }
 
-    .paginationArea {
-        display: none;
+    .list-detail p {
+        font-size: 1rem;
+        padding-top: 0.2rem;
     }
+
+    main ol {
+        height: 50rem;
+    }
+
+    a {
+        padding-top: 0.8rem;
+    }
+
+    .pagination {
+        margin: 3rem 0rem;
+    }
+
+    .pagination li {
+        width: 4rem;
+        height: 3rem;
+        text-align: center;
+    }
+
+    .pagination a {
+        font-size: 1.2rem;
+    }
+}
+
+/* PC (해상도 1024px)*/
+@media all and (min-width:1024px) {
+    main {
+        margin: 3.2rem;
+    }
+
+    .list-item {
+        margin-top: 1.5rem 0;
+    }
+
+    .list-detail {
+        padding: 0 1.6rem;
+        width: 90%;
+        line-height: 1.4rem;
+    }
+
+    .list-detail strong {
+        margin: 0;
+        line-height: normal;
+        font-size: 1.6rem;
+    }
+
+    .list-detail p {
+        font-size: 1.2rem;
+        padding-top: 0.2rem;
+    }
+
+    main ol {
+        height: 55rem;
+    }
+
+    a {
+        padding-top: 0.8rem;
+    }
+
+    .pagination {
+        margin: 5rem 0rem;
+    }
+
+    .pagination li {
+        width: 5rem;
+        height: 3rem;
+        text-align: center;
+    }
+
+    .pagination a {
+        font-size: 1.6rem;
+    }
+
+    .write-button {
+        position: absolute;
+        top: auto;
+        bottom: -5rem;
+        right: 0;
+    }
+
+    .write-button button {
+        font-size: 1.4rem;
+        padding: 0.8rem 1.6rem;
+    }
+
 }

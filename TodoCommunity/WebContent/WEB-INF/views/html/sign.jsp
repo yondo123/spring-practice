@@ -11,7 +11,7 @@
 	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 	<title>저녁먹고 한거 뭐야!?</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<link rel='stylesheet' type='text/css' media='screen' href='${path}/css/layout.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/style.css'>
 	<link rel='stylesheet' type='text/css' media='screen' href='${path}/css/sign.css'>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
@@ -22,28 +22,30 @@
 </head>
 <body>
     <body>
-        <div id="form_wrapper">
-            <div id="form_left">
-                <img src="${path}/img/app_logo.png" />
+        <main class="sign">
+            <h1>로그인</h1>
+            <div class="app-logo">
+                <img src="${path}/img/app_logo.png" alt="whattodo logo">
             </div>
-            <div id="form_right">
-                <h1>로그인</h1>
-                <div class="input_container">
+            <div class="form">
+                <div class="input-container">
                     <i class="font-awesome far fa-id-badge"></i>
-                    <input placeholder="ID" type="text" name="Email" id="userId" class="inputArea" />
+                    <input type="text" id="userId" placeholder="input your id..">
+                    <label for="userId">userId</label>
+                    <strong class="hide">&ast; id를 입력해주세요.</strong>
                 </div>
-                <div class="input_container">
+                <div class="input-container">
                     <i class="font-awesome fas fa-lock"></i>
-                    <input placeholder="Password" type="password" name="userPw" id="userPw"
-                        class="inputArea" />
+                    <input type="password" id="userPw" placeholder="input your password..">
+                    <label for="userPw">userPassword</label>
+                    <strong class="hide" id="status">&ast;  비밀번호를 다시 확인해주세요.</strong>
                 </div>
-                <p id="status" class="error hide"></p>
-                <input type="button" value="Login" id="loginBtn" class="inputArea signArea" />
-                <span id="signBtn">
-                    <a href="#">회원가입 ➡ </a>
-                </span>
+                <div class="button-area">
+                    <button type="button" class="btn-login" id="loginBtn">로그인</button>
+                    <button type="button" class="btn-join">회원가입</button>
+                </div>
             </div>
-        </div>
+        </main>
     </body>
 </body>
 </html>

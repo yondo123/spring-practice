@@ -10,9 +10,9 @@ pageEncoding="UTF-8"%>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>What-Todo</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/layout.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/board.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/todo.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/header.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='${path}/css/main.css'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
 	<script src='${path}/js/lib/jquery-3.6.js'></script>
@@ -25,100 +25,188 @@ pageEncoding="UTF-8"%>
     <header class="header">
         <jsp:include page="../include/menu.jsp"/>
     </header>
-    <!--board-->
-    <section class="board">
-        <!-- 상단게시판(좌) -->
-        <section class="boardArea">
-            <h3 id="leftTitle" class="btnBoard link">스터디</h3>
-            <ul class="board-list">
-                <li class="post">
-                    <div class="category"><img src="${path}/img/app_logo.png"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+    <!-- main -->
+    <main>
+        <section class="board">
+            <a href="#">
+                <h1>스터디</h1>
+            </a>
+            <ol>
+                <li>
+                    <img src="../img/Html_logo.png" alt="html">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+                <li>
+                    <img src="../img/Html_logo.png" alt="html">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+                <li>
+                    <img src="../img/Html_logo.png" alt="html">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+                <li>
+                    <img src="../img/Html_logo.png" alt="html">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-            </ul>
+                <li>
+                    <img src="../img/Html_logo.png" alt="html">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
+                </li>
+            </ol>
         </section>
-        <!-- 하단게시판(우) -->
-        <section class="boardArea">
-            <h3 id="rightTitle" class="btnBoard link">커뮤니티</h3>
-            <ul class="board-list">
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+        <section class="board">
+            <a href="#">
+                <h1>커뮤니티</h1>
+            </a>
+            <ol>
+                <li>
+                    <img src="../img/JS_logo.png" alt="javascript">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+                <li>
+                    <img src="../img/JS_logo.png" alt="javascript">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+                <li>
+                    <img src="../img/JS_logo.png" alt="javascript">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-                <li class="post">
-                    <div class="category"></div>
-                    <h5 class="title">오늘 공부 후기(1)</h5>
-                    <p>공부내용 내용 내용 내용 내용</p>
+                <li>
+                    <img src="../img/JS_logo.png" alt="javascript">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
                 </li>
-            </ul>
+                <li>
+                    <img src="../img/JS_logo.png" alt="javascript">
+                    <a href="#">
+                        <h2>질문 사항 입니다.</h2>
+                        <p>내용 내용 내용 내용 내용 내용 내용 내용 내용 내용내용 내용 내용 내용 내용 내용 내용 내용 내용 내용내용 내용 내용 내용 내용 내용 내용 내용 내용 내용내용 내용 내용 내용 내용 내용 내용 내용 내용 내용</p>
+                    </a>
+                </li>
+            </ol>
         </section>
-    </section>
-    <!--Todo List-->
-    <!--flag 1 :  &bigotimes; flag 0 :&bigodot;-->
-    <section class="mainTodo">
-        <h3 class="btnBoard link">Todo</h3>
-        <table class="todo-list">
+    </main>
+    <section class="todo">
+        <a href="#">
+            <h1>Todo</h1>
+        </a>
+        <table>
             <colgroup>
                 <col width="10%" />
                 <col width="20%" />
-                <col width="50%" />
+                <col width="60%" />
                 <col width="20%" />
             </colgroup>
             <thead>
                 <tr>
-                    <th wi>flag</th>
-                    <th>writer</th>
-                    <th>item</th>
-                    <th>date</th>
+                    <th rowspan="col">status</th>
+                    <th rowspan="col">writer</th>
+                    <th rowspan="col">item</th>
+                    <th rowspan="col">date</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><i class="font-awesome fas fa-check-circle done"></i></td>
-                    <td>admin</td>
-                    <td>test data!</td>
-                    <td>2021/03/04</td>
+                    <td>
+                        <span class="status-done"></span>
+                    </td>
+                    <td>
+                        admin
+                    </td>
+                    <td>
+                        vue study..
+                    </td>
+                    <td>
+                        2020. 06. 19
+                    </td>
                 </tr>
-                <tr class="completed">
-                    <td><i class="font-awesome far fa-check-circle"></i></td>
-                    <td>admin</td>
-                    <td>test data!</td>
-                    <td>2021/03/05</td>
+                <tr>
+                    <td>
+                        <span class="status-doing"></span>
+                    </td>
+                    <td>
+                        admin
+                    </td>
+                    <td>
+                        vue study..
+                    </td>
+                    <td>
+                        2020. 06. 19
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="status-done"></span>
+                    </td>
+                    <td>
+                        admin
+                    </td>
+                    <td>
+                        vue study..
+                    </td>
+                    <td>
+                        2020. 06. 19
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="status-done"></span>
+                    </td>
+                    <td>
+                        admin
+                    </td>
+                    <td>
+                        vue study..
+                    </td>
+                    <td>
+                        2020. 06. 19
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="status-todo"></span>
+                    </td>
+                    <td>
+                        admin
+                    </td>
+                    <td>
+                        vue study..
+                    </td>
+                    <td>
+                        2020. 06. 19
+                    </td>
                 </tr>
             </tbody>
         </table>
     </section>
     <!--footer-->
-    <footer>
         <jsp:include page="../include/footer.jsp"></jsp:include>
-    </footer>
 </body>
 
 </html>

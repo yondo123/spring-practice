@@ -1,0 +1,30 @@
+:root {
+    --main-color : #FF9B19;
+    --accent-color : #6900FF;
+    --hover-color : #A40CE8;
+    --font-color : #222;
+    --input-color : #E5E5E5; 
+    --input-hover-color : #EAEAEA;
+    --icon-color : #6B6B6B;
+    --border-color : #f5f6fa;
+    --err-mesaage-color : #ee5253;
+    --clear-message-color : #1dd1a1;
+}
+
+html {
+    font-size: 10px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* font-awesome */
+.font-awesome {
+    color: var(--icon-color);
+}
+
+/* hide */
+.hide {
+    display: none;
+}
