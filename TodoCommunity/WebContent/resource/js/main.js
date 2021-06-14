@@ -1,3 +1,4 @@
 document.addEventListener('DOMContentLoaded',function () {
-    alert('page hi~roo~')
+    $('#leftTitle').text(constants.LEFT_BOARD);
+    $('#rightTitle').text(constants.RIGHT_BOARD);
 });

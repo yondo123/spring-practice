@@ -1,14 +1,9 @@
 package kr.co.whatTodo.controller;
 
-import java.util.Map;
-
-import javax.validation.Valid;
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.whatTodo.beans.UserInfoBean;
@@ -16,23 +11,34 @@ import kr.co.whatTodo.beans.UserInfoBean;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	// 로그인
+	@Resource(name = "loginUserInfoBean")
+	private UserInfoBean loginUserInfo;
+	
+	/**
+	 * @desc : 로그인
+	 * @return : sign.jsp
+	 */
 	@GetMapping("/sign")
 	public String login() {
 		return "sign";
 	}
 
-	// 회원가입
+	/**
+	 * @desc : 회원가입
+	 * @return : join.jsp 
+	 */
 	@GetMapping("/join")
 	public String join() {
 		return "join";
 	}
-
-
-	// 로그아웃
-
-	// 로그인(Service)
-
-	// 로그아웃(Service)
-
+	
+	/**
+	 * @desc : 로그아웃
+	 * @return : main.jsp
+	 */
+	@GetMapping("/logout")
+	public String logout() {
+		loginUserInfo.setIsLogin(false);
+		return "main";
+	}
 }

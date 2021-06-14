@@ -14,4 +14,8 @@ public interface UserMapper {
 	@Insert("INSERT INTO USER_TABLE (USER_INDEX, USER_NAME, USER_ID, USER_PW) "
 			+ "VALUES (USER_SEQ.nextval, #{userName}, #{userId}, #{userPw})")
 	void addUser(UserInfoBean userInfoBean);
+
+	// 로그인
+	@Select("SELECT USER_INDEX as userIndex, USER_NAME as userName, USER_ID as userId FROM USER_TABLE WHERE USER_ID = #{userId} AND USER_PW = #{userPw}")
+	UserInfoBean login(UserInfoBean userInfoBean);
 }

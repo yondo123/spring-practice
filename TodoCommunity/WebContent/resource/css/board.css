@@ -1,9 +1,10 @@
+
 /* 게시판 목록 */
 .board {
     display: flex;
 }
 
-.board-all {
+.board-all{
     height: 720px;
 }
 
@@ -17,18 +18,13 @@
     border-radius: 11px;
 }
 
-.board-list .post-info {
-    color: var(--icon-color);
-    font-size: 0.8rem;
-}
-
 .boardArea li p {
     line-height: normal;
     font-size: 16px;
     text-decoration: none;
 }
 
-.boardArea h5 {
+.boardArea h5{
     color: #FF9B19;
     margin-block-start: 1.22;
     margin-block-end: 1.22em;
@@ -37,6 +33,7 @@
 .boardArea li h5,
 p {
     margin-left: 70px;
+    cursor: pointer; 
 }
 
 .boardArea li {
@@ -47,12 +44,13 @@ p {
 }
 
 .board .category {
-    margin-bottom: 20px;
+    margin-bottom: 0 auto;
     width: 55px;
     height: 55px;
     border: solid 1px #ddd;
     border-radius: 11px;
     position: absolute;
+    overflow: hidden;
 }
 
 .category img {
@@ -60,35 +58,41 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 55px;
-    height: 55px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.board-list .post-info {
+    color: var(--icon-color);
+    font-size: 0.8rem;
 }
 
 /* pagination */
-.paginationArea {
+.paginationArea{
     margin: 10px;
     text-align: center;
 }
-
 .pagination {
+    list-style-type: none;
     display: inline-block;
 }
 
-.pagination a {
+.pagination li {
+    cursor: pointer;
     text-align: center;
     color: var(--icon-color);
     float: left;
     padding: 8px 16px;
-    text-decoration: none;
 }
 
-.pagination a.active {
-    background-color: var(--hover-color);
+.pagination li.active {
+    background-color:var(--hover-color);
     color: white;
     border-radius: 5px;
 }
 
-.pagination a:hover:not(.active) {
+.pagination li:hover:not(.pageCtrl) {
     background-color: #ddd;
     border-radius: 5px;
 }
@@ -144,12 +148,9 @@ input {
     border-radius: 11px;
 }
 
+
 /* 반응형 */
 @media screen and (max-width:500px) {
-    .paginationArea {
-        display: none;
-    }
-
     .board {
         display: block;
     }
@@ -161,7 +162,11 @@ input {
         margin-right: 10px;
     }
 
-    .board-all {
+    .board-all{
         height: 100%;
+    }
+
+    .paginationArea {
+        display: none;
     }
 }
