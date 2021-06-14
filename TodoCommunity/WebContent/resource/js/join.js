@@ -37,6 +37,7 @@ $(document).ready(function () {
     $('#userId').on('blur', function(){
         const userId = $(this).val();
         const $status = $('#status'); 
+        let messasge = '';
         if(userId.trim().length > 0){
             $.ajax({
                 type:"GET",
@@ -46,21 +47,18 @@ $(document).ready(function () {
                     console.log(response);
                     if(response.result){
                         enableJoin = true;
-                        $status.removeClass('hide').addClass('success').text("사용하실 수 있는 ID 입니다.");
-                        if(!$status.hasClass('error')){
-                            $status.addClass('success');
-                        }
+                        messasge = '사용하실 수 있는 ID 입니다.';
+                        $status.attr('class', 'clear-text');
                     }else{
                         enableJoin = false;
-                        $status.removeClass('hide').addClass('error').text('이미 존재하는 아이디 입니다.');
-                        if($status.hasClass('success')){
-                            $status.removeClass('success');
-                        }
+                        messasge = '이미 존재하는 아이디 입니다.';
+                        $status.attr('class', 'error-text');
                     }
+                    return $status.text(messasge).show();
                 }
             });
         }else{
-            $status.addClass('hide');
+            return $status.hide();
         }
     });
 });
