@@ -48,34 +48,46 @@ const util = (function () {
          * @param {Number} index : 카테고리 번호
          */
         data.getIconImagePath = function (index) {
+            let iconImage = {
+                path : '/TodoCommunity/resource/img/',
+                name : ''
+            };
             let iconImagePath = '/TodoCommunity/resource/img/';
             switch (index) {
                 case 1:
-                    iconImagePath += constants.JS_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.JS_ICON_FILE;
+                    iconImage.name = constants.JS_ICON_FILE;
                     break;
                 case 2:
-                    iconImagePath += constants.JAVA_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.JAVA_ICON_FILE;
+                    iconImage.name = constants.JAVA_ICON_FILE;
                     break;
                 case 3:
-                    iconImagePath += constants.HTML_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.HTML_ICON_FILE;
+                    iconImage.name = constants.HTML_ICON_FILE;
                     break;
                 case 4:
-                    iconImagePath += constants.PHP_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.PHP_ICON_FILE;
+                    iconImage.name = constants.PHP_ICON_FILE;
                     break;
                 case 5:
-                    iconImagePath += constants.PYTHON_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.PYTHON_ICON_FILE;
+                    iconImage.name = constants.PYTHON_ICON_FILE;
                     break;
                 case 6:
-                    iconImagePath += constants.SQL_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.SQL_ICON_FILE;
+                    iconImage.name = constants.SQL_ICON_FILE;
                     break;
                 case 7:
-                    iconImagePath += constants.MOBILE_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.MOBILE_ICON_FILE;
+                    iconImage.name = constants.MOBILE_ICON_FILE;
                     break;
                 case 8:
-                    iconImagePath += constants.ETC_ICON_FILE;
+                    iconImage.path = iconImagePath + constants.ETC_ICON_FILE;
+                    iconImage.name = constants.ETC_ICON_FILE;
                     break;
             }
-            return iconImagePath;
+            return iconImage;
         }
 
         /**
@@ -167,8 +179,8 @@ const util = (function () {
             const reqPage = Number(param.reqPage);
             const $page = param.page;
             const $seqPage = $page.find('li').not('.pageCtrl'); //실제 페이지 영역
-            const firstPage = Number($seqPage.first().attr('pageSeq')) ? Number($seqPage.first().attr('pageSeq')) : 0;
-            const lastPage = Number($seqPage.last().attr('pageSeq')) ? Number($seqPage.last().attr('pageSeq')) : 0;
+            const firstPage = Number($seqPage.first().text()) || 0;
+            const lastPage = Number($seqPage.last().text()) || 0;
 
             if (listCount > 0 && typeof loopCount == 'number' && $page.length && typeof reqPage == 'number') {
                 //실제 페이지 그리는 함수
@@ -178,7 +190,7 @@ const util = (function () {
 
                     for (let i = startIndex; i < startIndex + loopCount; i++) {
                         if (i <= pagingLength) {
-                            const activeClass = (i == reqPage) ? "<li class='active'>" + i + "</li>" : "<li>" + i + "</li>";
+                            const activeClass = (i == reqPage) ? "<li class='selected'>" + i + "</li>" : "<li>" + i + "</li>";
                             $(activeClass).attr('pageSeq', i);
                             $page.find('.pageCtrl[type=next]').before(activeClass);
                         }
@@ -191,8 +203,8 @@ const util = (function () {
 
                 if (firstPage > 0 && lastPage > 0) { //페이지 영역 존재 여부 
                     if (reqPage >= firstPage && reqPage <= lastPage && reqPage <= pagingLength) { //요청 번호가 이미 페이지에 존재
-                        $seqPage.removeClass('active'); //기존 select class 제거
-                        $page.find('li [pageSeq =' + reqPage + ']').addClass('active');
+                        $seqPage.removeClass('selected'); //기존 select class 제거
+                        $page.find('li [pageSeq =' + reqPage + ']').addClass('selected');
                     } else {
                         return renderPage();
                     }
