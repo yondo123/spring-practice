@@ -18,7 +18,7 @@ $(document).ready(function () {
      */
     $('#pagingList').on('click', 'li', function () {
         if($(this).hasClass('pageCtrl')){
-            const targetPage = Number($('#pagingList').find('.active').text());
+            const targetPage = Number($('#pagingList').find('.selected').text());
             const moveType = $(this).attr('type');
             const $seqPage = $('#pagingList').find('li').not('.pageCtrl');
             if(moveType === 'prev'){
@@ -39,12 +39,12 @@ $(document).ready(function () {
      */
     function getBoardList(){
         $.ajax({
-            type: "POST",
-            url: `${constants.REQUEST_URL}/board/getBoardList`,
-            data: JSON.stringify({
-                boardIndex: boardIndex,
+            type: "GET",
+            url: `${constants.REQUEST_URL}/board/list`,
+            data: {
+                boardIndex: 1,
                 reqPage: reqPageNumber
-            }),
+            },
             contentType: 'application/json; UTF-8;',
             dataType: 'json',
             success: function (response) {
@@ -66,13 +66,15 @@ $(document).ready(function () {
     function renderBoardList(data) {
         $('#boardList').empty();
         const listArray = data.items;
-        for (let i = 0; i < listArray.length; i++) {
+        const listSize = listArray.length;
+        for (let i = 0; i < listSize; i++) {
             let $listTemplate = $(template.BOARD_ITEM);
+            let icon = util.data.getIconImagePath(listArray[i].cateIndex);
             let postInfo = '글쓴이 : ' + listArray[i].writerId + ' | 작성날짜 : ' + util.date.formatToDate(listArray[i].writeDate);
-            $listTemplate.find('img').attr('src', util.data.getIconImagePath(listArray[i].cateIndex));
+            $listTemplate.find('img').attr('src', icon.path).attr('alt', icon.name);
             $listTemplate.find('.content').text(listArray[i].contentSubject);
-            $listTemplate.find('.post-info').text(postInfo);
-            $listTemplate.appendTo('.board-list');
+            $listTemplate.find('.detail').text(postInfo);
+            $listTemplate.appendTo('#boardList');
         }
 
         util.ui.setPagingArea({
@@ -81,6 +83,6 @@ $(document).ready(function () {
             loopCnt : constants.PAGINATION_COUNT,
             reqPage : reqPageNumber,
             page    : $('#pagingList')
-        })
+        });
     }
 });

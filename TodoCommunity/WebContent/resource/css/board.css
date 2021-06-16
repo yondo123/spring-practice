@@ -107,13 +107,11 @@ main ol {
 }
 
 .pagination li {
-    border: 1px solid var(--border-color);
-    padding: 0.8rem;
-}
-
-.pagination a {
     font-size: 1rem;
     color: var(--font-color);
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    padding: 0.8rem;
 }
 
 .pagination .selected {
@@ -157,13 +155,11 @@ main ol {
     }
 
     .pagination li {
+        cursor: pointer;
+        font-size: 1.2rem;
         width: 4rem;
         height: 3rem;
         text-align: center;
-    }
-
-    .pagination a {
-        font-size: 1.2rem;
     }
 }
 
@@ -207,13 +203,11 @@ main ol {
     }
 
     .pagination li {
+        cursor: pointer;
+        font-size: 1.2rem;
         width: 5rem;
         height: 3rem;
         text-align: center;
-    }
-
-    .pagination a {
-        font-size: 1.6rem;
     }
 
     .write-button {
