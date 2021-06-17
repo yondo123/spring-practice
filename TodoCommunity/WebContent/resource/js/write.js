@@ -3,17 +3,42 @@ $(document).ready(function () {
     const boardInfo = JSON.parse(sessionStorage.getItem('board'));
     getCategoryList().then(setCategoryList);
 
+    $('#summernote').summernote({
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['insert', ['link', 'picture']],
+        ],
+        focus: true, 
+        lang: "ko-KR", 
+        placeholder: '최대 1200자까지 쓸 수 있습니다', 
+        callbacks: {
+            onKeyup: function (e) {
+                console.log(e.currentTarget.innerText.length);
+            },
+            onPaste: function (e) {
+                console.log(e.currentTarget.innerText.length);
+            },
+            onImageUpload: function (file) {
+                return uploadImage(file[0]);
+            }
+        }
+    });
+
     /**
      * 카테고리 목록 조회
      */
     function getCategoryList(){
         return new Promise(function (resolve, reject) {
             $.ajax({
-                type: "POST",
-                url: `${constants.REQUEST_URL}/board/getCategoryList`,
-                data: JSON.stringify({
+                type: "GET",
+                url: `${constants.REQUEST_URL}/board/category`,
+                data: {
                     cateType: boardInfo.name
-                }),
+                },
                 contentType: 'application/json; UTF-8;',
                 dataType: 'json',
                 success: function (response) {
@@ -32,8 +57,34 @@ $(document).ready(function () {
      */
     function setCategoryList(data) {
         for (let i = 0; i < data.length; i++) {
-            $('#categoryList').append(`<option type=${data[i].cateIndex}>${data[i].cateName}</option>`);
+            $('#category').append(`<option type=${data[i].cateIndex}>${data[i].cateName}</option>`);
         }
+    }
+
+    /**
+     * 단일 이미지 업로드
+     * @param {Object} file 
+     */
+    function uploadImage(file){
+        const reqData = new FormData();
+        reqData.append("uploadFile", file);
+        $.ajax({
+            type: "POST",
+            url: `${constants.REQUEST_URL}/board/image`,
+            data: reqData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.result) {
+                    alert('성공적으로 글을 등록하였습니다.')
+                } else {
+                    alert("업로드에 실패하였습니다.");
+                }
+            },
+            error: function (response) {
+                alert("업로드에 실패하였습니다.");
+            }
+        });
     }
 
     /**
@@ -41,7 +92,7 @@ $(document).ready(function () {
      */
     $('#btnWrite').click(function () {
         let reqData = new FormData();
-        const $selectedCategory = $('#categoryList option:selected');
+        const $selectedCategory = $('#category option:selected');
         const file = $('#imageFile')[0].files[0];
         const subject = $('#title').val();
         const content = $('#content').val();

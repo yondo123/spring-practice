@@ -1,0 +1,177 @@
+body {
+    overflow: scroll;
+    background-color: #fff;
+    margin: 0 auto;
+    height: 100vh;
+}
+
+main {
+    margin-top: 3.2rem;
+    margin: 1.6rem;
+    padding: 0 1.6rem;
+    border-radius: 0.8rem;
+    border: 0.2rem solid var(--border-color);
+}
+
+.post-info {
+    display: flex;
+    align-items: center;
+    border-bottom: 0.2rem solid var(--border-color);
+}
+
+.post-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.heading {
+    color: var(--font-color);
+    font-size: 2rem;
+    font-weight: 400;
+    padding-left: 1rem;
+}
+
+.board-type {
+    color: var(--icon-color);
+    font-size: 1.6rem;
+    font-weight: 400;
+    padding-left: 1rem;
+    padding-top: 0.7rem;
+}
+
+.subject,
+.category,
+.content {
+    font-size: 1.2rem;
+    color: var(--main-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+}
+
+.post-detail dd,
+dl {
+    margin: 0;
+}
+
+.post-detail input[type=text],
+.post-detail select,
+.summernote {
+    margin-left: 1rem;
+}
+
+.post-detail input[type=text] {
+    padding: 0 0.5rem;
+    border-style: none;
+    border: 0.2rem solid var(--border-color);
+    border-radius: 1rem;
+}
+
+.post-detail label {
+    display: none;
+}
+
+.post-detail select {
+    width: 16rem;
+    padding: 0 0.5rem;
+    border-radius: 1rem;
+    border-color: var(--border-color);
+    color: var(--font-color);
+}
+
+.post-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1.6rem 0;
+}
+
+.post-buttons button {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.2rem;
+    margin-right: 1rem;
+    background-color: var(--accent-color);
+    color: #fff;
+    border-radius: 12px;
+    border-style: none;
+}
+
+.post-buttons button:hover {
+    background-color: var(--hover-color);
+    transition: background-color, 750ms;
+    cursor: pointer;
+}
+
+.note-editable {
+    min-height: 35rem;
+}
+
+/* Tablet */
+@media all and (min-width:768px) and (max-width:1023px) {
+    main {
+        margin: 3.2rem;
+    }
+}
+
+/* Desktop */
+@media all and (min-width:1024px) {
+    main {
+        position: relative;
+        margin: 3.2rem;
+        padding: 0 5rem;
+    }
+
+    .post {
+        margin : 5rem 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    dl {
+        max-width: 96rem;
+    }
+
+    .post-detail {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .post-detail dt{
+        margin-right: 10rem;
+    }
+
+    .note-editable {
+        min-width: 70rem;
+        min-height: 70rem;
+        max-height: 70rem;
+    }
+
+    .subject,
+    .category,
+    .content {
+        width: 10rem;
+        font-size: 1.6rem;
+        padding-left: 1rem;
+    }
+
+    .post-detail input[type=text] {
+        width: 67rem;
+        height: 3rem;
+    }
+
+    .post-detail select {
+        height: 3rem;
+    }
+
+    .post-buttons {
+        position: absolute;
+        top: -2.3rem;
+        right: 5rem;
+        display: flex;
+        justify-content: center;
+        margin: 3.2rem 0;
+    }
+
+    .post-buttons button {
+        font-size: 1.4rem;
+        padding: 0.8rem 1.6rem;
+    }
+}
