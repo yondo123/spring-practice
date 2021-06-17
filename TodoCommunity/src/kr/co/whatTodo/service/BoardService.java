@@ -33,28 +33,33 @@ public class BoardService {
 	private UserInfoBean userInfoBean;
 
 	// 파일 처리
-	private String fileProcessing(MultipartFile uploadFile) {
+	private String fileProcessing(MultipartFile uploadFile, Boolean temporary) {
 		String fileName = System.currentTimeMillis() + "_" + uploadFile.getOriginalFilename();
+		String directory = temporary ? "/temporary/" : "/"; 
 		try {
-			uploadFile.transferTo(new File(uploadFilePath + "/" + fileName));
+			uploadFile.transferTo(new File(uploadFilePath + directory + fileName));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return fileName;
 	}
+	
+	// 이미지 파일 업로드
+	public void addImageFile(MultipartFile imageFile) {
+		fileProcessing(imageFile, true);
+	}
 
 	// 게시판 전체 갯수
 	public int getContentTotalCount(int boardIndex) {
 		return boardDao.selectContentTotalCount(boardIndex);
 	}
-
 	// 게시판 글 쓰기
 	public void addPost(BoardListBean boardListBean) {
 
 		MultipartFile uploadFile = boardListBean.getUploadFile();
 		if (uploadFile != null && uploadFile.getSize() > 0) {
-			boardListBean.setFile(fileProcessing(uploadFile));
+			boardListBean.setFile(fileProcessing(uploadFile, false));
 		}
 		boardListBean.setWriterIndex(userInfoBean.getUserIndex());
 		boardDao.insertContentInfo(boardListBean);

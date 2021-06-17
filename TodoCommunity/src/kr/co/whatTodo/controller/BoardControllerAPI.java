@@ -12,11 +12,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
@@ -31,6 +35,22 @@ public class BoardControllerAPI {
 	private BoardService boardService;
 	@Autowired
 	private MessageSource errorMessage;
+
+	// 이미지 파일 등록
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@ResponseBody
+	@PostMapping("/image")
+	public ResponseEntity<ResponseBean> image(BoardListBean boardListBean) {
+		MultipartFile imageFile = boardListBean.getUploadFile();
+		if (imageFile == null) {
+			ResponseBean error = new ResponseBean("file empty", false, null);
+			return new ResponseEntity<>(error, HttpStatus.OK);
+		}
+		boardService.addImageFile(imageFile);
+		ResponseBean success = new ResponseBean("success", true, null);
+		return new ResponseEntity<>(success, HttpStatus.OK);
+	}
+
 
 	// 게시글 등록
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -50,11 +70,12 @@ public class BoardControllerAPI {
 	// 게시물 조회
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
-	@PostMapping("/getBoardList")
-	public ResponseEntity<ResponseBean> getBoardList(@RequestBody BoardListBean boardListBean) {
-		int totalCount = boardService.getContentTotalCount(boardListBean.getBoardIndex());
+	@GetMapping("/list")
+	public ResponseEntity<ResponseBean> getBoardList(@RequestParam(value = "boardIndex") int boardIndex,
+			@RequestParam(value = "reqPage") int reqPage) {
+		int totalCount = boardService.getContentTotalCount(boardIndex);
 		Map result = new HashMap<String, Object>();
-		List<BoardListBean> boardList = boardService.getContentList(boardListBean.getBoardIndex(), boardListBean.getReqPage());
+		List<BoardListBean> boardList = boardService.getContentList(boardIndex, reqPage);
 		result.put("items", boardList);
 		result.put("totalCount", totalCount);
 		ResponseBean success = new ResponseBean("success", true, result);
@@ -64,10 +85,10 @@ public class BoardControllerAPI {
 	// 카테고리 조회
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
-	@PostMapping("/getCategoryList")
-	public ResponseEntity<ResponseBean> getBoardCategory(@RequestBody CategoryBean categoryBean) {
+	@GetMapping("/category")
+	public ResponseEntity<ResponseBean> getBoardCategory(@RequestParam(value = "cateType") String cateType) {
 		List<CategoryBean> categoryList = null;
-		categoryList = boardService.getCategoryList(categoryBean.getCateType());
+		categoryList = boardService.getCategoryList(cateType);
 		ResponseBean success = new ResponseBean("success", true, categoryList);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
