@@ -1,4 +1,7 @@
-//util.js
+/**
+ * @author : yondo123@gmail.com
+ * @desc   : utility socope
+ */
 const util = (function () {
     function method() {
         //private 스코프
@@ -18,7 +21,7 @@ const util = (function () {
          * @returns 
          */
         data.createTempCode = function (str) {
-            return (str ? str : '') + new Date().toISOString().substr(18, 5).replace(/[^0-9]/g, "")
+            return (str ? str : '') + new Date().toISOString().substr(18, 5).replace(/[^0-9]/g, "");
         }
 
         /**
@@ -179,8 +182,8 @@ const util = (function () {
             const reqPage = Number(param.reqPage);
             const $page = param.page;
             const $seqPage = $page.find('li').not('.pageCtrl'); //실제 페이지 영역
-            const firstPage = Number($seqPage.first().text()) || 0;
-            const lastPage = Number($seqPage.last().text()) || 0;
+            const firstPage = Number($seqPage.first().attr('pageSeq')) || 0;
+            const lastPage = Number($seqPage.last().attr('pageSeq')) || 0;
 
             if (listCount > 0 && typeof loopCount == 'number' && $page.length && typeof reqPage == 'number') {
                 //실제 페이지 그리는 함수
@@ -223,9 +226,21 @@ const util = (function () {
                 const menuType = $(item).attr('type') || '';
                 $(item).removeClass('select');
                 if(menuType && menuType == menu){
-                    return $(item).addClass('select');
+                    return $(item).closest('li').addClass('select');
                 }
             });
+        }
+
+        /**
+         * 페이지 이동
+         * @param {String} path : URL 경로 
+         */
+        ui.locatePage = function (path) {
+            if(path.length){
+                const hrefPos = window.location.href.lastIndexOf('/') + 1;
+                let locatePath = window.location.href.substr(0, hrefPos) + path;
+                return window.location.href = locatePath;
+            }
         }
 
         return {

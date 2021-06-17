@@ -35,6 +35,13 @@ $(document).ready(function () {
     });
 
     /**
+     * 글쓰기 페이지 이동
+     */
+    $('#btnWrite').click(function () {
+       return util.ui.locatePage('write');
+    });
+
+    /**
      * 게시글 조회
      */
     function getBoardList(){
@@ -42,7 +49,7 @@ $(document).ready(function () {
             type: "GET",
             url: `${constants.REQUEST_URL}/board/list`,
             data: {
-                boardIndex: 1,
+                boardIndex: boardIndex,
                 reqPage: reqPageNumber
             },
             contentType: 'application/json; UTF-8;',

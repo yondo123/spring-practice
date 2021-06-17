@@ -9,7 +9,7 @@
 		<img src="${path}/img/app_logo.png" alt="logo">
 	</div>
 	<div class="app-header">
-		<a href="#">
+		<a href="${root }/">
 			<h1>WhatTodo</h1>
 			<strong>당신의 할 일을 공유해보세요.</strong>
 		</a>
@@ -19,9 +19,6 @@
 					<c:when test="${loginUserInfo.isLogin==true}">
 						<li>
 							<a href="${root }/user/logout">로그아웃</a>
-						</li>
-						<li>
-							<a href="${root }/board/write">글쓰기 테스트</a>
 						</li>
 					</c:when>
 					<c:otherwise>
