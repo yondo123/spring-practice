@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <footer>
 	<ul class="footer-menu">
-		<li><button type="button">what todo</button></li>
+		<li><button type="button">서비스 소개</button></li>
 		<li><p>본 웹 페이지는 chrome 브라우저에 최적화 되어 있습니다.</p></li>
 	</ul>
 </footer>
