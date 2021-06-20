@@ -2,6 +2,7 @@ package kr.co.whatTodo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.context.annotation.SessionScope;
 
 import kr.co.whatTodo.beans.UserInfoBean;
@@ -14,3 +15,4 @@ public class RootAppContext {
 		return new UserInfoBean();
 	}
 }
+ 

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import kr.co.whatTodo.batch.ScheduleRepository;
 import kr.co.whatTodo.beans.UserInfoBean;
 import kr.co.whatTodo.interceptor.MenuInterceptor;
 import kr.co.whatTodo.mapper.BoardMapper;
@@ -31,6 +33,8 @@ import kr.co.whatTodo.service.MenuService;
 
 //Spring MVC Project 설정
 @Configuration
+//scheduling 
+@EnableScheduling
 //annotation-driven
 @EnableWebMvc
 //component-scan
@@ -51,12 +55,18 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Value("${db.password}")
 	private String db_password;
-	
+
 	@Resource(name = "loginUserInfoBean")
 	private UserInfoBean userInfoBean;
 
 	@Autowired
 	private MenuService menuService;
+
+	// scheduling
+	@Bean
+	public ScheduleRepository scheduleRepository() {
+		return new ScheduleRepository();
+	}
 
 	// Controller 반환 view
 	@Override
@@ -81,7 +91,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		source.setPassword(db_password);
 		return source;
 	}
-	
+
 	@Bean
 	public SqlSessionFactory factory(BasicDataSource source) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
@@ -104,14 +114,13 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factoryBean;
 	}
 
-	
 	@Bean
 	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	/**
 	 * @desc : 메뉴 인터셉터
 	 */
@@ -123,25 +132,25 @@ public class ServletAppContext implements WebMvcConfigurer {
 		InterceptorRegistration reg = registry.addInterceptor(menuInterceptor);
 		reg.addPathPatterns("/**"); // all requests
 	}
-	
+
 	/**
-	 * @desc : 메세지 프로퍼티를 위한 새로운 Bean 생성 
+	 * @desc : 메세지 프로퍼티를 위한 새로운 Bean 생성
 	 */
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
-	
+
 	/**
 	 * @desc : 에러메시지 정의 프로퍼티
 	 */
-	@Bean 
+	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {
 		ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
 		res.setBasenames("/WEB-INF/properties/errorMessage");
 		return res;
 	}
-	
+
 	/**
 	 * multipasrt Resolver Bean 등록
 	 */
