@@ -24,6 +24,10 @@ public class BoardDao {
 		boardMapper.insertContentInfo(boardListBean);
 	}
 	
+	public void insertDumpImage(int uploaderIndex, String imageFileName) {
+		boardMapper.insertDumpImage(uploaderIndex, imageFileName);
+	}
+	
 	public List<BoardListBean> selectContentList(int boardIndex, RowBounds rowBounds) {
 		return boardMapper.selectContentList(boardIndex, rowBounds);
 	}

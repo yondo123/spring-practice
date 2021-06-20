@@ -22,7 +22,7 @@ import kr.co.whatTodo.dao.BoardDao;
 public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
-	
+
 	@Value("${boardListCount}")
 	private int boardListCnt;
 
@@ -35,25 +35,37 @@ public class BoardService {
 	// 파일 처리
 	private String fileProcessing(MultipartFile uploadFile, Boolean temporary) {
 		String fileName = System.currentTimeMillis() + "_" + uploadFile.getOriginalFilename();
-		String directory = temporary ? "/temporary/" : "/"; 
+		String directory = temporary ? uploadFilePath + File.separator + "temporary" : uploadFilePath;
+		File uploadDir = new File(directory);
 		try {
-			uploadFile.transferTo(new File(uploadFilePath + directory + fileName));
+			if (!uploadDir.exists()) {
+				try {
+					uploadDir.mkdir();
+				} catch (Exception e) {
+					e.getStackTrace();
+				}
+			}
+			uploadFile.transferTo(new File(directory + File.separator + fileName));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return fileName;
 	}
-	
+
 	// 이미지 파일 업로드
-	public void addImageFile(MultipartFile imageFile) {
-		fileProcessing(imageFile, true);
+	public String addImageFile(MultipartFile imageFile) {
+		String imageName = fileProcessing(imageFile, true);
+		int userIndex = userInfoBean.getUserIndex();
+		boardDao.insertDumpImage(userIndex, imageName);
+		return imageName;
 	}
 
 	// 게시판 전체 갯수
 	public int getContentTotalCount(int boardIndex) {
 		return boardDao.selectContentTotalCount(boardIndex);
 	}
+
 	// 게시판 글 쓰기
 	public void addPost(BoardListBean boardListBean) {
 
@@ -71,12 +83,12 @@ public class BoardService {
 		RowBounds rowBounds = new RowBounds(startRow, boardListCnt);
 		return boardDao.selectContentList(boardIndex, rowBounds);
 	}
-	
+
 	// 카테고리 목록 조회
-	public List<CategoryBean> getCategoryList(String cateType){
-		if(cateType.equals("study")) {
+	public List<CategoryBean> getCategoryList(String cateType) {
+		if (cateType.equals("study")) {
 			return boardDao.selectCategoryList();
-		}else {
+		} else {
 			return boardDao.selectCategoryList();
 		}
 	}

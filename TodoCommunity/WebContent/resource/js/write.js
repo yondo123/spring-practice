@@ -62,8 +62,17 @@ $(document).ready(function () {
     }
 
     /**
+     * 이미지 파일 에디터 삽입
+     * @param {String} imageUrl : 이미지 URL
+     * @param {Object} $editor  : 에디터 
+     */
+    function insertImage(imageUrl, $editor){
+        return $editor.summernote('insertImage', imageUrl);
+    }
+
+    /**
      * 단일 이미지 업로드
-     * @param {Object} file 
+     * @param {Object} file : upload File
      */
     function uploadImage(file){
         const reqData = new FormData();
@@ -76,13 +85,13 @@ $(document).ready(function () {
             contentType: false,
             success: function (response) {
                 if (response.result) {
-                    alert('성공적으로 글을 등록하였습니다.')
+                    return insertImage(constants.REQUEST_URL + constants.TEMP_IMAGE_URL + response.data, $('#summernote'));
                 } else {
-                    alert("업로드에 실패하였습니다.");
+                    alert('이미지 파일 업로드에 실패하였습니다.\n잠시후 다시 시도해주세요.');
                 }
             },
             error: function (response) {
-                alert("업로드에 실패하였습니다.");
+                alert('이미지 파일 업로드에 실패하였습니다.\n잠시후 다시 시도해주세요.');
             }
         });
     }

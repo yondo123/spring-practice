@@ -1,6 +1,7 @@
 const constants = {
     /** constants string */
     REQUEST_URL         : "/TodoCommunity",
+    TEMP_IMAGE_URL       : "/resource/uploadFiles/temporary/",
     LEFT_BOARD          : "스터디",
     RIGHT_BOARD         : "커뮤니티",
     STUDY_BOARD_ID      : "study",

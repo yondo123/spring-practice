@@ -1,5 +1,6 @@
 package kr.co.whatTodo.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -46,8 +47,8 @@ public class BoardControllerAPI {
 			ResponseBean error = new ResponseBean("file empty", false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
-		boardService.addImageFile(imageFile);
-		ResponseBean success = new ResponseBean("success", true, null);
+		String imageName = boardService.addImageFile(imageFile);
+		ResponseBean success = new ResponseBean("success", true, imageName);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
 
