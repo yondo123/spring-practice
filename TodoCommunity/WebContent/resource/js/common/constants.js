@@ -1,9 +1,11 @@
 const constants = {
     /** constants string */
     REQUEST_URL         : "/TodoCommunity",
-    TEMP_IMAGE_URL       : "/resource/uploadFiles/temporary/",
-    LEFT_BOARD          : "스터디",
-    RIGHT_BOARD         : "커뮤니티",
+    TEMP_IMAGE_URL      : "/resource/uploadFiles/temporary/",
+    COMM_IMAGE_URL      : "/resource/uplaodFiles/community/",
+    STDY_IMAGE_URL      : "/resource/uploadFiles/study/",
+    STUDY_BOARD         : "스터디",
+    COMMUNITY_BOARD     : "커뮤니티",
     STUDY_BOARD_ID      : "study",
     COMMUNITY_BOARD_ID  : "com",
     /** item count */
