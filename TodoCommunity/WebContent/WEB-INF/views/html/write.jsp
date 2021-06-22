@@ -34,7 +34,7 @@ pageEncoding="UTF-8"%>
     <main>
         <div class="post-info">
             <h1 class="heading">글쓰기</h1>
-            <strong class="board-type">스터디 게시판</strong>
+            <strong class="board-type" id="boardHeading"></strong>
         </div>
         <div class="post">
             <dl>
@@ -62,8 +62,8 @@ pageEncoding="UTF-8"%>
             </dl>
         </div>
         <div class="post-buttons">
-            <button type="button" id="btnWrte">글쓰기</button>
-            <button type="button" id="btnCancle">취소</button>
+            <button type="button" id="btnWrite">글쓰기</button>
+            <button type="button" id="btnCancel">취소</button>
         </div>
     </main>
 <!-- 

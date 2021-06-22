@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +43,15 @@ public class BoardControllerAPI {
 	// 이미지 파일 등록
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
-	@PostMapping("/image")
-	public ResponseEntity<ResponseBean> image(BoardListBean boardListBean) {
+	@PostMapping("/image") 
+	public ResponseEntity<ResponseBean> image(BoardListBean boardListBean, HttpServletRequest req) {
 		MultipartFile imageFile = boardListBean.getUploadFile();
 		if (imageFile == null) {
 			ResponseBean error = new ResponseBean("file empty", false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
 		String imageName = boardService.addImageFile(imageFile);
+		HttpSession session = req.getSession();
 		ResponseBean success = new ResponseBean("success", true, imageName);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
@@ -57,7 +61,7 @@ public class BoardControllerAPI {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/contentWrite")
-	public ResponseEntity<ResponseBean> contentWrite(@Valid BoardListBean boardListBean, BindingResult res) {
+	public ResponseEntity<ResponseBean> contentWrite(@Valid @RequestBody BoardListBean boardListBean, BindingResult res) {
 		if (res.hasErrors()) {
 			ResponseBean error = new ResponseBean(
 					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);

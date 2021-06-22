@@ -1,8 +1,28 @@
 $(document).ready(function () {
     //카테고리 셋팅
     const boardInfo = JSON.parse(sessionStorage.getItem('board'));
+    const boardType = boardInfo.name;
+    let contentLength = 0;
+    let fileSize = 0;
+
+    util.ui.setMenuClass(boardType);
     getCategoryList().then(setCategoryList);
 
+    /**
+     * 게시판 텍스트 명시
+     */
+    $('#boardHeading').text(function () {
+        const fixText = '게시판';
+        if(boardInfo.index === 1){
+            return constants.STUDY_BOARD + fixText;
+        }else{
+            return constants.COMMUNITY_BOARD + fixText;
+        }
+    });
+
+    /**
+     * init summernote
+     */
     $('#summernote').summernote({
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -17,12 +37,13 @@ $(document).ready(function () {
         placeholder: '최대 1200자까지 쓸 수 있습니다', 
         callbacks: {
             onKeyup: function (e) {
-                console.log(e.currentTarget.innerText.length);
+                return contentLength = e.currentTarget.innerText.length;
             },
             onPaste: function (e) {
-                console.log(e.currentTarget.innerText.length);
+                return contentLength = e.currentTarget.innerText.length;
             },
             onImageUpload: function (file) {
+                contentLength+=1;
                 return uploadImage(file[0]);
             }
         }
@@ -49,6 +70,23 @@ $(document).ready(function () {
                 }
             });
         });
+    }
+
+    /**
+     * 본문 내용 검사
+     * @param {String} subject : 제목 
+     * @returns {Boolean} : validate 결과
+     */
+    function validateContent(title) {
+        if(!contentLength || !title.length){
+            alert('제목과 내용을 입력해주세요.');
+            return false;
+        }else if(contentLength > 5000){
+            alert('본문 내용은 최대 5000자 까지 가능합니다.');
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
@@ -100,32 +138,24 @@ $(document).ready(function () {
      * post 등록 이벤트
      */
     $('#btnWrite').click(function () {
-        let reqData = new FormData();
+        const postData = {};
         const $selectedCategory = $('#category option:selected');
-        const file = $('#imageFile')[0].files[0];
         const subject = $('#title').val();
-        const content = $('#content').val();
+        const content = $("#summernote").summernote('code');
         const cateIndex = Number($selectedCategory.attr('type'));
 
+        postData.contentContext = content;
+        postData.contentSubject = subject;
+        postData.cateIndex = cateIndex;
+        postData.boardIndex = boardInfo.index;
 
-        reqData.append('contentText', content);
-        reqData.append('contentSubject', subject);
-        reqData.append('cateIndex', cateIndex);
-        reqData.append('boardIndex', boardInfo.index);
-
-        if (file) {
-            reqData.append('uploadFile', file);
-        }
-
-        if (subject.length < 1 || content.length < 1) {
-            alert("제목과 내용을 입력해주세요.");
-        } else {
+        if (validateContent(subject)) {
             $.ajax({
                 type: "POST",
                 url: `${constants.REQUEST_URL}/board/contentWrite`,
-                data: reqData,
-                processData: false,
-                contentType: false,
+                data: JSON.stringify(postData),
+                contentType: 'application/json; UTF-8;',
+                dataType: 'json',
                 success: function (response) {
                     if (response.result) {
                         alert('성공적으로 글을 등록하였습니다.')

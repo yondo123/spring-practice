@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.type.JdbcType;
 
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
@@ -24,10 +28,10 @@ public interface BoardMapper {
 
 	// 게시글 등록
 	@Insert("INSERT INTO CONTENT_TABLE("
-			+ "CONTENT_INDEX, CONTENT_SUBJECT, CONTENT_TEXT, CONTENT_FILE, CONTENT_WRITER_INDEX, CONTENT_BOARD_INDEX,"
+			+ "CONTENT_INDEX, CONTENT_SUBJECT, CONTENT_FILE, CONTENT_WRITER_INDEX, CONTENT_CONTEXT, CONTENT_BOARD_INDEX,"
 			+ "CONTENT_DATE, CONTENT_CATE_INDEX)"
-			+ "VALUES (CONTENT_SEQ.NEXTVAL, #{contentSubject}, #{contentText}, #{file, jdbcType=VARCHAR},"
-			+ "#{writerIndex}, #{boardIndex}, sysdate, #{cateIndex})")
+			+ "VALUES (CONTENT_SEQ.NEXTVAL, #{contentSubject}, #{file, jdbcType=VARCHAR},"
+			+ "#{writerIndex}, #{contentContext, jdbcType=CLOB} ,#{boardIndex}, sysdate, #{cateIndex})")
 	void insertContentInfo(BoardListBean boardListBean);
 
 	// 게시글 조회

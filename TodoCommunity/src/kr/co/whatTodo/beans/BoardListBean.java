@@ -9,9 +9,9 @@ public class BoardListBean {
 	private int endRow;
 	private int contentIndex;
 	private int cateIndex;
+	private String contentContext;
 	@NotBlank
 	private String contentSubject;
-	@NotBlank
 	private String contentText;
 	private String file;
 	private MultipartFile uploadFile = null;
@@ -125,4 +125,11 @@ public class BoardListBean {
 		this.reqPage = reqPage;
 	}
 
+	public String getContentContext() {
+		return contentContext;
+	}
+
+	public void setContentContext(String contentContext) {
+		this.contentContext = contentContext;
+	}
 }

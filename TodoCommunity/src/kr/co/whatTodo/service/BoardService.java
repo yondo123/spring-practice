@@ -34,7 +34,7 @@ public class BoardService {
 
 	// 파일 처리
 	private String fileProcessing(MultipartFile uploadFile, Boolean temporary) {
-		String fileName = System.currentTimeMillis() + "_" + uploadFile.getOriginalFilename();
+		String fileName = System.currentTimeMillis() + "_" + userInfoBean.getUserIndex();
 		String directory = temporary ? uploadFilePath + File.separator + "temporary" : uploadFilePath;
 		File uploadDir = new File(directory);
 		try {
@@ -52,6 +52,11 @@ public class BoardService {
 
 		return fileName;
 	}
+	
+	// 임시파일 이동
+	private void moveFile() {
+		
+	}
 
 	// 이미지 파일 업로드
 	public String addImageFile(MultipartFile imageFile) {
@@ -68,11 +73,6 @@ public class BoardService {
 
 	// 게시판 글 쓰기
 	public void addPost(BoardListBean boardListBean) {
-
-		MultipartFile uploadFile = boardListBean.getUploadFile();
-		if (uploadFile != null && uploadFile.getSize() > 0) {
-			boardListBean.setFile(fileProcessing(uploadFile, false));
-		}
 		boardListBean.setWriterIndex(userInfoBean.getUserIndex());
 		boardDao.insertContentInfo(boardListBean);
 	}
