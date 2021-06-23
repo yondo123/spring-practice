@@ -143,11 +143,13 @@ $(document).ready(function () {
         const subject = $('#title').val();
         const content = $("#summernote").summernote('code');
         const cateIndex = Number($selectedCategory.attr('type'));
+        const uploadImageList = util.data.extractImageName(content);
 
-        postData.contentContext = content;
-        postData.contentSubject = subject;
-        postData.cateIndex = cateIndex;
-        postData.boardIndex = boardInfo.index;
+        postData.contentContext = content;      //게시글
+        postData.contentSubject = subject;      //제목
+        postData.cateIndex = cateIndex;         //카테고리
+        postData.boardIndex = boardInfo.index;  //게시판 타입
+        postData.uploadImageList = uploadImageList; //업로드 이미지
 
         if (validateContent(subject)) {
             $.ajax({

@@ -35,4 +35,8 @@ public class BoardDao {
 	public List<CategoryBean> selectCategoryList(){
 		return boardMapper.selectCategoryList();
 	}
+	
+	public String selectUploadFilePath(String fileName) {
+		return boardMapper.selectUploadFilePath(fileName);
+	}
 }

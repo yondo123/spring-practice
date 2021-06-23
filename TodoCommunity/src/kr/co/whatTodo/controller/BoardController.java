@@ -1,5 +1,10 @@
 package kr.co.whatTodo.controller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +41,9 @@ public class BoardController {
 	 * @return : write.jsp
 	 */
 	@GetMapping("/write")
-	public String write() {
+	public String write(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.setAttribute("temp_image", new ArrayList<String>());
 		return "write";
 	}
 }

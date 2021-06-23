@@ -1,6 +1,6 @@
 /**
  * @author : yondo123@gmail.com
- * @desc   : utility socope
+ * @desc   : what-todo utility socope
  */
 const util = (function () {
     function method() {
@@ -52,8 +52,8 @@ const util = (function () {
          */
         data.getIconImagePath = function (index) {
             let iconImage = {
-                path : '/TodoCommunity/resource/img/',
-                name : ''
+                path: '/TodoCommunity/resource/img/',
+                name: ''
             };
             let iconImagePath = '/TodoCommunity/resource/img/';
             switch (index) {
@@ -91,6 +91,24 @@ const util = (function () {
                     break;
             }
             return iconImage;
+        }
+
+        /**
+         * 이미지 이름 추출
+         * @param {String} source : parse HTML
+         * @return {Array} imageSourceList : 이미지 이름 변환 배열 
+         */
+        data.extractImageName = function (source) {
+            if (typeof source === 'string' && source.length > 0) {
+                const regex = /<img src="\/TodoCommunity\/resource\/uploadFiles\/temporary\/.*?\"/g;
+                const imageSourceList = source.match(regex);
+                imageSourceList.forEach((item, index, arr) => {
+                    const startPos = item.lastIndexOf('/') + 1;
+                    const endPos = (item.length - 1) - startPos;
+                    arr[index] = item.substr(startPos, endPos);
+                });
+                return imageSourceList;
+            }
         }
 
         /**
@@ -158,7 +176,7 @@ const util = (function () {
          */
         ui.addSelectMenuClass = function (menu) {
             $('#menuList a').each(function (idx, item) {
-                if($(item).attr('type') == menu){
+                if ($(item).attr('type') == menu) {
                     $(item).addClass('select');
                     return $(item).siblings().removeClass('select');
                 }
@@ -221,11 +239,11 @@ const util = (function () {
          * 메뉴 active 클래스 설정
          * @param {Sting} menu : 메뉴 
          */
-        ui.setMenuClass =function (menu) {
-            $('#menuList a').each(function(idx, item){
+        ui.setMenuClass = function (menu) {
+            $('#menuList a').each(function (idx, item) {
                 const menuType = $(item).attr('type') || '';
                 $(item).removeClass('select');
-                if(menuType && menuType == menu){
+                if (menuType && menuType == menu) {
                     return $(item).closest('li').addClass('select');
                 }
             });
@@ -236,7 +254,7 @@ const util = (function () {
          * @param {String} path : URL 경로 
          */
         ui.locatePage = function (path) {
-            if(path.length){
+            if (path.length) {
                 const hrefPos = window.location.href.lastIndexOf('/') + 1;
                 let locatePath = window.location.href.substr(0, hrefPos) + path;
                 return window.location.href = locatePath;

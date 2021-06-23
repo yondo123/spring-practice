@@ -20,6 +20,10 @@ public interface BoardMapper {
 			+ "WHERE ct.CONTENT_BOARD_INDEX = #{boardIndex} " + "AND ct.CONTENT_WRITER_INDEX = ut.USER_INDEX "
 			+ "ORDER BY ct.CONTENT_INDEX")
 	int selectContentTotalCount(int boardIndex);
+	
+	// 임시 파일 조회
+	@Select("SELECT IMAGE_FILE FROM DUMP_IMAGE_TABLE WHERE IMAGE_FILE LIKE '%'||#{fileName}||'%'")
+	String selectUploadFilePath(@Param("fileName") String fileName);
 
 	// 임시 이미지 등록
 	@Insert("INSERT INTO DUMP_IMAGE_TABLE(" + "IMAGE_INDEX, IMAGE_FILE, UPLOAD_DATE, UPLOADER_INDEX) "

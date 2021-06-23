@@ -1,3 +1,5 @@
+
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -29,12 +31,21 @@
 	</build>
 	<!-- 라이브러리 버전 프로퍼티 -->
 	<properties>
+		<org.springframework.batch-version>4.3.3</org.springframework.batch-version>
 		<javax.servlet-version>4.0.1</javax.servlet-version>
 		<javax.servlet.jsp-version>2.3.3</javax.servlet.jsp-version>
 		<org.springframework-version>5.2.2.RELEASE</org.springframework-version>
 		<org.springframework-version-4>4.3.30.RELEASE</org.springframework-version-4>
+		<commons-io-version>2.6</commons-io-version>
+
 	</properties>
 	<dependencies>
+		<!-- Spring batch -->
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+			<version>${org.springframework.batch-version}</version>
+		</dependency>
 		<!-- Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -105,7 +116,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.1.6.Final</version>
 		</dependency>
-		
+
 		<!-- Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -113,5 +124,12 @@
 			<version>2.9.8</version>
 		</dependency>
 
+
+		<!-- commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io-version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,12 +1,12 @@
 package kr.co.whatTodo.controller;
 
-import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,12 +45,16 @@ public class BoardControllerAPI {
 	@PostMapping("/image") 
 	public ResponseEntity<ResponseBean> image(BoardListBean boardListBean, HttpServletRequest req) {
 		MultipartFile imageFile = boardListBean.getUploadFile();
+		HttpSession session = req.getSession();
+		
 		if (imageFile == null) {
 			ResponseBean error = new ResponseBean("file empty", false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
+		
 		String imageName = boardService.addImageFile(imageFile);
-		HttpSession session = req.getSession();
+		ArrayList<String> tempImageList = (ArrayList) session.getAttribute("temp_image");
+		tempImageList.add(imageName);
 		ResponseBean success = new ResponseBean("success", true, imageName);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
@@ -61,13 +64,15 @@ public class BoardControllerAPI {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/contentWrite")
-	public ResponseEntity<ResponseBean> contentWrite(@Valid @RequestBody BoardListBean boardListBean, BindingResult res) {
+	public ResponseEntity<ResponseBean> contentWrite(@Valid @RequestBody BoardListBean boardListBean, BindingResult res, HttpServletRequest req) {
+		HttpSession session = req.getSession();
 		if (res.hasErrors()) {
 			ResponseBean error = new ResponseBean(
 					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
-		boardService.addPost(boardListBean);
+		
+		boardService.addPost(boardListBean,(ArrayList) session.getAttribute("temp_image"));
 		ResponseBean success = new ResponseBean("success", true, null);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}

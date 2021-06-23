@@ -1,8 +1,10 @@
 package kr.co.whatTodo.controller;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +68,7 @@ public class RestControllerAPI {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@PostMapping("/user/signin")
-	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res) {
+	public ResponseEntity<ResponseBean> signin(@Valid @RequestBody UserInfoBean loginUserInfoBean, BindingResult res, HttpSession session) {
 		if (res.hasErrors()) {
 			ResponseBean error = new ResponseBean(
 					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
@@ -75,6 +77,11 @@ public class RestControllerAPI {
 		userService.login(loginUserInfoBean);
 		// 로그인 성공유무
 		if (loginUserInfo.getIsLogin()) {
+			ArrayList<String> list = (ArrayList)session.getAttribute("temp_image");
+			if(list == null) {
+				list = new ArrayList<String>();
+				session.setAttribute("temp_image", list);
+			}
 			ResponseBean success = new ResponseBean("success", true, null);
 			return new ResponseEntity<>(success, HttpStatus.OK);
 		} else {

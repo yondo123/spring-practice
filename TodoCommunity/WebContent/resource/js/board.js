@@ -1,6 +1,7 @@
 $(document).ready(function () {
     let reqPageNumber = 1;
     let totalPageCount = 0;
+    let tempImageList = [];
     const boardType = $('#board').attr('type');
     const boardIndex = boardType == constants.STUDY_BOARD_ID ? 1 : 2;
     
@@ -49,7 +50,7 @@ $(document).ready(function () {
             type: "GET",
             url: `${constants.REQUEST_URL}/board/list`,
             data: {
-                boardIndex: boardIndex,
+                boardIndex: 1,
                 reqPage: reqPageNumber
             },
             contentType: 'application/json; UTF-8;',

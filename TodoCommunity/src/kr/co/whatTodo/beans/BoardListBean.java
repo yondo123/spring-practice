@@ -1,5 +1,7 @@
 package kr.co.whatTodo.beans;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +14,6 @@ public class BoardListBean {
 	private String contentContext;
 	@NotBlank
 	private String contentSubject;
-	private String contentText;
 	private String file;
 	private MultipartFile uploadFile = null;
 	private int writerIndex;
@@ -20,6 +21,7 @@ public class BoardListBean {
 	private String writeDate;
 	private String writerId;
 	private int reqPage;
+	private List<String> uploadImageList;
 
 	public int getStartRow() {
 		return startRow;
@@ -59,14 +61,6 @@ public class BoardListBean {
 
 	public void setContentSubject(String contentSubject) {
 		this.contentSubject = contentSubject;
-	}
-
-	public String getContentText() {
-		return contentText;
-	}
-
-	public void setContentText(String contentText) {
-		this.contentText = contentText;
 	}
 
 	public String getFile() {
@@ -132,4 +126,13 @@ public class BoardListBean {
 	public void setContentContext(String contentContext) {
 		this.contentContext = contentContext;
 	}
+
+	public List<String> getUploadImageList() {
+		return uploadImageList;
+	}
+
+	public void setUploadImageList(List<String> uploadImageList) {
+		this.uploadImageList = uploadImageList;
+	}
+
 }
