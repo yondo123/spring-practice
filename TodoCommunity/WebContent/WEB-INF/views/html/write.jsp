@@ -66,34 +66,6 @@ pageEncoding="UTF-8"%>
             <button type="button" id="btnCancel">취소</button>
         </div>
     </main>
-<!-- 
-
-    <section class="board">
-        <section class="boardArea writeArea">
-            <div class="input_container">
-                <h3>Title</h3>
-                <input type="text" class="inputArea" id="title"/>
-            </div>
-            <div class="input_container">
-                <h3>Subject</h3>
-                <select class="selectArea" id="categoryList">
-                </select>
-            </div>
-            <div class="input_container">
-                <h3>Image</h3>
-                <input type="file" class="inputArea" id="imageFile"/>
-            </div>
-            <div class="input_container">
-                <h3>Content</h3>
-                <textarea class="textArea" id="content"></textarea>
-            </div>
-        </section>
-    </section>
-    <section class="buttonArea">
-        <input type="button" value="취소" id="btnCancle">
-        <input type="button" value="등록" id="btnWrite">
-    </section> -->
-    <!--footer-->
     <jsp:include page="../include/footer.jsp"></jsp:include>
 </body>
 </html>

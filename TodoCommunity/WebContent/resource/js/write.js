@@ -3,7 +3,6 @@ $(document).ready(function () {
     const boardInfo = JSON.parse(sessionStorage.getItem('board'));
     const boardType = boardInfo.name;
     let contentLength = 0;
-    let fileSize = 0;
 
     util.ui.setMenuClass(boardType);
     getCategoryList().then(setCategoryList);
