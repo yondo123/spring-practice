@@ -39,6 +39,8 @@ main {
     padding-top: 0.7rem;
 }
 
+.writer,
+.date,
 .subject,
 .category,
 .content {
@@ -47,7 +49,6 @@ main {
     padding-left: 1rem;
     margin: 1rem 0;
 }
-
 .post-detail dd,
 dl {
     margin: 0;
@@ -100,6 +101,15 @@ dl {
     cursor: pointer;
 }
 
+.post-cap {
+    display: block;
+    font-size: 1.4rem;
+    padding: 0 0.5rem;
+    color: var(--font-color);
+    padding-left: 1rem;
+    margin: 1rem 0;
+}
+
 .note-editable {
     min-height: 35rem;
 }
@@ -144,6 +154,8 @@ dl {
         max-height: 70rem;
     }
 
+    .writer,
+    .date,
     .subject,
     .category,
     .content {
@@ -151,6 +163,7 @@ dl {
         font-size: 1.6rem;
         padding-left: 1rem;
     }
+
 
     .post-detail input[type=text] {
         width: 67rem;

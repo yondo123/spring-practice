@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
+import kr.co.whatTodo.beans.PostBean;
 import kr.co.whatTodo.mapper.BoardMapper;
 
 @Repository
@@ -38,5 +39,9 @@ public class BoardDao {
 	
 	public String selectUploadFilePath(String fileName) {
 		return boardMapper.selectUploadFilePath(fileName);
+	}
+	
+	public PostBean selectPostInfo(int contentIndex, int cateIndex) {
+		return boardMapper.selectPostInfo(contentIndex, cateIndex);
 	}
 }

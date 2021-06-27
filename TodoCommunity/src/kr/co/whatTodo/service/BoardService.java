@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
+import kr.co.whatTodo.beans.PostBean;
 import kr.co.whatTodo.beans.UserInfoBean;
 import kr.co.whatTodo.dao.BoardDao;
 
@@ -99,6 +100,11 @@ public class BoardService {
 		int startRow = (reqPage - 1) * boardListCnt;
 		RowBounds rowBounds = new RowBounds(startRow, boardListCnt);
 		return boardDao.selectContentList(boardIndex, rowBounds);
+	}
+	
+	// 게시글 상세 조회
+	public PostBean getPostInfo(int contentIndex, int cateIndex) {
+		return boardDao.selectPostInfo(contentIndex, cateIndex);
 	}
 
 	// 카테고리 목록 조회

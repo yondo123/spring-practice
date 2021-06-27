@@ -1,7 +1,6 @@
 $(document).ready(function () {
     let reqPageNumber = 1;
     let totalPageCount = 0;
-    let tempImageList = [];
     const boardType = $('#board').attr('type');
     const boardIndex = boardType == constants.STUDY_BOARD_ID ? 1 : 2;
     
@@ -50,12 +49,13 @@ $(document).ready(function () {
             type: "GET",
             url: `${constants.REQUEST_URL}/board/list`,
             data: {
-                boardIndex: 1,
+                boardIndex: boardIndex,
                 reqPage: reqPageNumber
             },
             contentType: 'application/json; UTF-8;',
             dataType: 'json',
             success: function (response) {
+                console.log(response.data);
                 if (response.result) {
                     totalPageCount = response.data.totalCount;
                     return renderBoardList(response.data)
@@ -75,11 +75,13 @@ $(document).ready(function () {
         $('#boardList').empty();
         const listArray = data.items;
         const listSize = listArray.length;
+
         for (let i = 0; i < listSize; i++) {
             let $listTemplate = $(template.BOARD_ITEM);
             let icon = util.data.getIconImagePath(listArray[i].cateIndex);
             let postInfo = '글쓴이 : ' + listArray[i].writerId + ' | 작성날짜 : ' + util.date.formatToDate(listArray[i].writeDate);
             $listTemplate.find('img').attr('src', icon.path).attr('alt', icon.name);
+            $listTemplate.find('a').attr('href', `${constants.POST_URL}contentIndex=${listArray[i].contentIndex}&cateIndex=${listArray[i].cateIndex}` );
             $listTemplate.find('.content').text(listArray[i].contentSubject);
             $listTemplate.find('.detail').text(postInfo);
             $listTemplate.appendTo('#boardList');

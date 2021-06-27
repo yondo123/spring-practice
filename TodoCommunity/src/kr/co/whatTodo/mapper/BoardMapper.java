@@ -13,6 +13,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
+import kr.co.whatTodo.beans.PostBean;
 
 public interface BoardMapper {
 	// 전체 갯수
@@ -39,7 +40,7 @@ public interface BoardMapper {
 	void insertContentInfo(BoardListBean boardListBean);
 
 	// 게시글 조회
-	@Select("SELECT ct.CONTENT_SUBJECT AS contentSubject, ut.USER_ID AS writerId, ct.CONTENT_CATE_INDEX AS cateIndex, "
+	@Select("SELECT ct.CONTENT_INDEX AS contentIndex, ct.CONTENT_BOARD_INDEX AS boardIndex ,ct.CONTENT_SUBJECT AS contentSubject, ut.USER_ID AS writerId, ct.CONTENT_CATE_INDEX AS cateIndex, "
 			+ "		to_char(ct.CONTENT_DATE, 'YYYYMMDD') AS writeDate " + "FROM CONTENT_TABLE ct, USER_TABLE ut "
 			+ "WHERE ct.CONTENT_BOARD_INDEX = #{boardIndex} " + "AND ct.CONTENT_WRITER_INDEX = ut.USER_INDEX "
 			+ "ORDER BY ct.CONTENT_INDEX")
@@ -48,4 +49,11 @@ public interface BoardMapper {
 	// 카테고리 목록 조회
 	@Select("SELECT BOARD_CATE_INDEX AS cateIndex, BOARD_CATE_NAME AS cateName FROM BOARD_CATE_TABLE bct")
 	List<CategoryBean> selectCategoryList();
+	
+	// 게시글 상세 조회
+	@Select("SELECT ut.USER_NAME AS userName, to_char(ct.CONTENT_DATE, 'YYYY.MM.DD') AS writeDate, ct.CONTENT_CONTEXT AS contentContext, BCT.BOARD_CATE_NAME AS cateName, ct.CONTENT_SUBJECT AS contentSubject "
+			+ "FROM "
+			+ "	CONTENT_TABLE ct, USER_TABLE ut, BOARD_CATE_TABLE bct "
+			+ "WHERE ct.CONTENT_WRITER_INDEX  = ut.USER_INDEX  AND CONTENT_INDEX = #{contentIndex} AND bct.BOARD_CATE_INDEX = #{cateIndex}")
+	PostBean selectPostInfo(@Param("contentIndex") int contentIndex, @Param("cateIndex") int cateIndex);
 }
