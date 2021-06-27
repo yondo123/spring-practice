@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
@@ -59,14 +59,13 @@ public class BoardService {
 	private void moveFile(String imagePath) {
 		String tempPath = uploadFilePath + File.separator + "temporary" + File.separator + imagePath;
 		String uploadPath = uploadFilePath + File.separator + imagePath;
-		File targetFile = new File(tempPath);
-		File moveToFile = new File(uploadPath);
+		File targetFile = FileUtils.getFile(tempPath);
+		File moveToFile = FileUtils.getFile(uploadPath);
 		try {
-			org.apache.commons.io.FileUtils.moveDirectoryToDirectory(targetFile, moveToFile, true);
+			FileUtils.moveFile(targetFile, moveToFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("DETECT>>"+imagePath);
 	}
 
 	// 이미지 파일 업로드
@@ -84,7 +83,6 @@ public class BoardService {
 
 	// 게시판 글 쓰기
 	public void addPost(BoardListBean boardListBean, ArrayList<String> sessionTempImage) {
-		ArrayList<String> saveList = new ArrayList<String>();
 		for(String uploadImage : boardListBean.getUploadImageList()) {
 			if(sessionTempImage.contains(uploadImage)) {
 				String tempFilePath = boardDao.selectUploadFilePath(uploadImage);
