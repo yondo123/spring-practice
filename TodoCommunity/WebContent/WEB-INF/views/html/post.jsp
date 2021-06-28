@@ -72,8 +72,10 @@ pageEncoding="UTF-8"%>
             </dl>
         </div>
         <div class="post-buttons">
-            <button type="button" id="btnModify">수정</button>
-            <button type="button" id="btnRemove">삭제</button>
+        	<c:if test="${loginUser.userIndex == post.writerIndex}">
+        	    <button type="button" id="btnModify">수정</button>
+           		<button type="button" id="btnRemove">삭제</button>
+        	</c:if>
             <button type="button" id="btnBoard" type="${post.boardIndex}">목록</button>
         </div>
     </main>
@@ -85,5 +87,6 @@ pageEncoding="UTF-8"%>
     $edit.summernote('code', '<c:out value="${post.contentContext}" escapeXml="false"/>');
     $edit.summernote('disable');
     $('.note-editable').css('background-color', '#fff');
+    $('.post').data('postId', '<c:out value="${post.contentIndex}"/>');
 </script>
 </html>
