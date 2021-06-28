@@ -1,14 +1,20 @@
 package kr.co.whatTodo.beans;
 
+import javax.validation.constraints.Min;
+
 public class PostBean {
 	private int boardIndex;
 	private String userName;
 	private int userIndex;
 	private String writeDate;
+	@Min(1)
+	private int writerIndex;
 	private String cateName;
 	private int cateIndex;
 	private String contentSubject;
 	private String contentContext;
+	@Min(1)
+	private int contentIndex;
 
 	public String getUserName() {
 		return userName;
@@ -72,6 +78,22 @@ public class PostBean {
 
 	public void setBoardIndex(int boardIndex) {
 		this.boardIndex = boardIndex;
+	}
+
+	public int getContentIndex() {
+		return contentIndex;
+	}
+
+	public void setContentIndex(int contentIndex) {
+		this.contentIndex = contentIndex;
+	}
+
+	public int getWriterIndex() {
+		return writerIndex;
+	}
+
+	public void setWriterIndex(int writerIndex) {
+		this.writerIndex = writerIndex;
 	}
 
 }

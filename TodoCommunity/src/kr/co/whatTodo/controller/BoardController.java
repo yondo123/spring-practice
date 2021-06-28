@@ -2,6 +2,7 @@ package kr.co.whatTodo.controller;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.PostBean;
+import kr.co.whatTodo.beans.UserInfoBean;
 import kr.co.whatTodo.service.BoardService;
 
 @Controller
@@ -22,6 +23,9 @@ import kr.co.whatTodo.service.BoardService;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
+	
+	@Resource(name = "loginUserInfoBean")
+	private UserInfoBean userInfoBean;
 	
 	/**
 	 * @desc   : 스터디 게시판 
@@ -66,6 +70,7 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView("/post");
 		PostBean postBean = boardService.getPostInfo(contentIndex, cateIndex);
 		mv.addObject("post", postBean);
+		mv.addObject("loginUser", userInfoBean);
 		return mv;
 	}
 }
