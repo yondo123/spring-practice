@@ -26,9 +26,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import kr.co.whatTodo.batch.ScheduleRepository;
 import kr.co.whatTodo.beans.UserInfoBean;
 import kr.co.whatTodo.interceptor.MenuInterceptor;
+import kr.co.whatTodo.interceptor.PostInterceptor;
 import kr.co.whatTodo.mapper.BoardMapper;
 import kr.co.whatTodo.mapper.MenuMapper;
 import kr.co.whatTodo.mapper.UserMapper;
+import kr.co.whatTodo.service.BoardService;
 import kr.co.whatTodo.service.MenuService;
 
 //Spring MVC Project 설정
@@ -61,6 +63,9 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Autowired
 	private MenuService menuService;
+	
+	@Autowired
+	private BoardService BoardService;
 
 	// scheduling
 	@Bean
@@ -122,15 +127,19 @@ public class ServletAppContext implements WebMvcConfigurer {
 	}
 
 	/**
-	 * @desc : 메뉴 인터셉터
+	 * @desc : Interceptors
 	 */
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
 
 		MenuInterceptor menuInterceptor = new MenuInterceptor(menuService, userInfoBean);
-		InterceptorRegistration reg = registry.addInterceptor(menuInterceptor);
-		reg.addPathPatterns("/**"); // all requests
+		InterceptorRegistration menuReg = registry.addInterceptor(menuInterceptor);
+		menuReg.addPathPatterns("/**"); // all requests
+		
+		PostInterceptor postInterceptor = new PostInterceptor(userInfoBean, BoardService);
+		InterceptorRegistration postReg = registry.addInterceptor(postInterceptor);
+		postReg.addPathPatterns("/board/modify", "board/delete");
 	}
 
 	/**

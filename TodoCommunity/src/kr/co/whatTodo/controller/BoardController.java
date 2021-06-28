@@ -66,11 +66,24 @@ public class BoardController {
 	 * @return	: post.jsp
 	 */
 	@GetMapping("/post")
-	public ModelAndView post(Model model, @RequestParam("contentIndex") int contentIndex, @RequestParam("cateIndex") int cateIndex) {
+	public ModelAndView post(@RequestParam("contentIndex") int contentIndex) {
 		ModelAndView mv = new ModelAndView("/post");
-		PostBean postBean = boardService.getPostInfo(contentIndex, cateIndex);
+		PostBean postBean = boardService.getPostInfo(contentIndex);
 		mv.addObject("post", postBean);
 		mv.addObject("loginUser", userInfoBean);
+		return mv;
+	}
+	
+	/**
+	 * @desc	: 게시글 수정
+	 * @param model
+	 * @return	: write.jsp
+	 */
+	@GetMapping("/modify")
+	public ModelAndView modify(@RequestParam("contentIndex") int contentIndex) {
+		ModelAndView mv = new ModelAndView("/modify");
+		PostBean postBean = boardService.getPostInfo(contentIndex);
+		mv.addObject("post", postBean);
 		return mv;
 	}
 }

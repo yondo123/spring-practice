@@ -2,6 +2,7 @@ const constants = {
     /** constants string */
     REQUEST_URL         : "/TodoCommunity",
     POST_URL            : "/TodoCommunity/board/post?",
+    POST_MODIFY_URL     : "/TodoCommunity/board/modify?",
     TEMP_IMAGE_URL      : "/resource/uploadFiles/temporary/",
     COMM_IMAGE_URL      : "/resource/uplaodFiles/community/",
     STDY_IMAGE_URL      : "/resource/uploadFiles/study/",
