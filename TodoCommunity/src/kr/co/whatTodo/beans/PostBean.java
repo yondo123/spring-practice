@@ -1,6 +1,7 @@
 package kr.co.whatTodo.beans;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 public class PostBean {
 	private int boardIndex;
@@ -11,7 +12,9 @@ public class PostBean {
 	private int writerIndex;
 	private String cateName;
 	private int cateIndex;
+	@NotBlank
 	private String contentSubject;
+	@NotBlank
 	private String contentContext;
 	@Min(1)
 	private int contentIndex;

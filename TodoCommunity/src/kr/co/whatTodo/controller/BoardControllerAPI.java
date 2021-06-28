@@ -71,13 +71,12 @@ public class BoardControllerAPI {
 					errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
 			return new ResponseEntity<>(error, HttpStatus.OK);
 		}
-		
 		boardService.addPost(boardListBean,(ArrayList) session.getAttribute("temp_image"));
 		ResponseBean success = new ResponseBean("success", true, null);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
 
-	// 게시물 조회
+	// 게시물 목록 조회
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@ResponseBody
 	@GetMapping("/list")
@@ -102,5 +101,4 @@ public class BoardControllerAPI {
 		ResponseBean success = new ResponseBean("success", true, categoryList);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
-
 }

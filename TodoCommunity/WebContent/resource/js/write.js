@@ -31,9 +31,9 @@ $(document).ready(function () {
             ['height', ['height']],
             ['insert', ['link', 'picture']],
         ],
-        focus: true, 
-        lang: "ko-KR", 
-        placeholder: '최대 1200자까지 쓸 수 있습니다', 
+        focus: true,
+        lang: "ko-KR",
+        placeholder: '최대 1200자까지 쓸 수 있습니다',
         callbacks: {
             onKeyup: function (e) {
                 return contentLength = e.currentTarget.innerText.length;
@@ -42,9 +42,48 @@ $(document).ready(function () {
                 return contentLength = e.currentTarget.innerText.length;
             },
             onImageUpload: function (file) {
-                contentLength+=1;
+                contentLength += 1;
                 return uploadImage(file[0]);
             }
+        }
+    });
+
+    /**
+     * 글쓰기 등록 이벤트
+     */
+    $('#btnWrite').click(function () {
+        const postData = {};
+        const $selectedCategory = $('#category option:selected');
+        const subject = $('#title').val();
+        const content = $("#summernote").summernote('code');
+        const cateIndex = Number($selectedCategory.attr('type'));
+        const uploadImageList = util.data.extractImageName(content);
+
+        postData.contentContext = removeTempResource(content); //게시글
+        postData.contentSubject = subject; //제목
+        postData.cateIndex = cateIndex; //카테고리
+        postData.boardIndex = boardInfo.index; //게시판 타입
+        postData.uploadImageList = uploadImageList; //업로드 이미지
+
+        if (validateContent(subject)) {
+            $.ajax({
+                type: "POST",
+                url: `${constants.REQUEST_URL}/board/contentWrite`,
+                data: JSON.stringify(postData),
+                contentType: 'application/json; UTF-8;',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.result) {
+                        alert('성공적으로 글을 등록하였습니다.');
+                        return util.ui.locatePage(boardInfo.name);
+                    } else {
+                        alert("알 수 없는 오류가 발생하였습니다.");
+                    }
+                },
+                error: function (response) {
+                    alert("알 수 없는 오류가 발생하였습니다.");
+                }
+            });
         }
     });
 
@@ -134,40 +173,14 @@ $(document).ready(function () {
     }
 
     /**
-     * post 등록 이벤트
+     * 임시경로 삭제
+     * @param {String} context 
      */
-    $('#btnWrite').click(function () {
-        const postData = {};
-        const $selectedCategory = $('#category option:selected');
-        const subject = $('#title').val();
-        const content = $("#summernote").summernote('code');
-        const cateIndex = Number($selectedCategory.attr('type'));
-        const uploadImageList = util.data.extractImageName(content);
-
-        postData.contentContext = content;      //게시글
-        postData.contentSubject = subject;      //제목
-        postData.cateIndex = cateIndex;         //카테고리
-        postData.boardIndex = boardInfo.index;  //게시판 타입
-        postData.uploadImageList = uploadImageList; //업로드 이미지
-
-        if (validateContent(subject)) {
-            $.ajax({
-                type: "POST",
-                url: `${constants.REQUEST_URL}/board/contentWrite`,
-                data: JSON.stringify(postData),
-                contentType: 'application/json; UTF-8;',
-                dataType: 'json',
-                success: function (response) {
-                    if (response.result) {
-                        alert('성공적으로 글을 등록하였습니다.')
-                    } else {
-                        alert("알 수 없는 오류가 발생하였습니다.");
-                    }
-                },
-                error: function (response) {
-                    alert("알 수 없는 오류가 발생하였습니다.");
-                }
-            });
+    function removeTempResource(context){
+        if(context.length > 0){
+            return context.replace(/temporary\//g, '');
+        }else{
+            return '';
         }
-    });
+    }
 });

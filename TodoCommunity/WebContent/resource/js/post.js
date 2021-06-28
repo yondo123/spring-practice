@@ -10,26 +10,8 @@ $(document).ready(function () {
         return util.ui.locatePage(boardPath);
     });
 
-    
-    // function getBoardList(){
-    //     $.ajax({
-    //         type: "GET",
-    //         url: `${constants.REQUEST_URL}/board/list`,
-    //         data: {
-    //             boardIndex: boardIndex,
-    //             reqPage: reqPageNumber
-    //         },
-    //         contentType: 'application/json; UTF-8;',
-    //         dataType: 'json',
-    //         success: function (response) {
-    //             if (response.result) {
-    //                 totalPageCount = response.data.totalCount;
-    //                 return renderBoardList(response.data)
-    //             }
-    //         },
-    //         error: function (response) {
-    //             alert("알 수 없는 오류가 발생하였습니다.");
-    //         }
-    //     });
-    // }
+    //게시글 수정
+    $('#btnModify').click(function () {
+        return window.location.href = `${constants.POST_MODIFY_URL}contentIndex=${Number($('.post').data('postId'))}`;
+    });
 });
