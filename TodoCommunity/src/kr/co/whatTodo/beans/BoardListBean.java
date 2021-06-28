@@ -2,7 +2,9 @@ package kr.co.whatTodo.beans;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,13 +12,16 @@ public class BoardListBean {
 	private int startRow;
 	private int endRow;
 	private int contentIndex;
+	@Min(1)
 	private int cateIndex;
+	@NotBlank
 	private String contentContext;
 	@NotBlank
 	private String contentSubject;
 	private String file;
 	private MultipartFile uploadFile = null;
 	private int writerIndex;
+	@Min(1)
 	private int boardIndex;
 	private String writeDate;
 	private String writerId;

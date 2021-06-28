@@ -102,12 +102,16 @@ const util = (function () {
             if (typeof source === 'string' && source.length > 0) {
                 const regex = /<img src="\/TodoCommunity\/resource\/uploadFiles\/temporary\/.*?\"/g;
                 const imageSourceList = source.match(regex);
-                imageSourceList.forEach((item, index, arr) => {
-                    const startPos = item.lastIndexOf('/') + 1;
-                    const endPos = (item.length - 1) - startPos;
-                    arr[index] = item.substr(startPos, endPos);
-                });
-                return imageSourceList;
+                if(imageSourceList){
+                    imageSourceList.forEach((item, index, arr) => {
+                        const startPos = item.lastIndexOf('/') + 1;
+                        const endPos = (item.length - 1) - startPos;
+                        arr[index] = item.substr(startPos, endPos);
+                    });
+                    return imageSourceList;
+                }else{
+                    return [];
+                }
             }
         }
 
