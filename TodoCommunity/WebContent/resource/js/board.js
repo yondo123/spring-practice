@@ -81,7 +81,7 @@ $(document).ready(function () {
             let icon = util.data.getIconImagePath(listArray[i].cateIndex);
             let postInfo = '글쓴이 : ' + listArray[i].writerId + ' | 작성날짜 : ' + util.date.formatToDate(listArray[i].writeDate);
             $listTemplate.find('img').attr('src', icon.path).attr('alt', icon.name);
-            $listTemplate.find('a').attr('href', `${constants.POST_URL}contentIndex=${listArray[i].contentIndex}&cateIndex=${listArray[i].cateIndex}` );
+            $listTemplate.find('a').attr('href', `${constants.POST_URL}contentIndex=${listArray[i].contentIndex}` );
             $listTemplate.find('.content').text(listArray[i].contentSubject);
             $listTemplate.find('.detail').text(postInfo);
             $listTemplate.appendTo('#boardList');

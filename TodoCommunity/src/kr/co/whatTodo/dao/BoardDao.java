@@ -41,7 +41,7 @@ public class BoardDao {
 		return boardMapper.selectUploadFilePath(fileName);
 	}
 	
-	public PostBean selectPostInfo(int contentIndex, int cateIndex) {
-		return boardMapper.selectPostInfo(contentIndex, cateIndex);
+	public PostBean selectPostInfo(int contentIndex) {
+		return boardMapper.selectPostInfo(contentIndex);
 	}
 }

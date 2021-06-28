@@ -103,8 +103,8 @@ public class BoardService {
 	}
 	
 	// 게시글 상세 조회
-	public PostBean getPostInfo(int contentIndex, int cateIndex) {
-		return boardDao.selectPostInfo(contentIndex, cateIndex);
+	public PostBean getPostInfo(int contentIndex) {
+		return boardDao.selectPostInfo(contentIndex);
 	}
 
 	// 카테고리 목록 조회

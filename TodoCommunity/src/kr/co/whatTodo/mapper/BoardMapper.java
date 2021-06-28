@@ -51,11 +51,11 @@ public interface BoardMapper {
 	List<CategoryBean> selectCategoryList();
 	
 	// 게시글 상세 조회
-	@Select("SELECT ct.CONTENT_WRITER_INDEX AS writerIndex, ct.CONTENT_INDEX AS contentIndex, ut.USER_NAME AS userName, "
+	@Select("SELECT ct.CONTENT_BOARD_INDEX AS boardIndex, ct.CONTENT_WRITER_INDEX AS writerIndex, ct.CONTENT_INDEX AS contentIndex, ut.USER_NAME AS userName, "
 			+ "to_char(ct.CONTENT_DATE, 'YYYY.MM.DD') AS writeDate, ct.CONTENT_CONTEXT AS contentContext, "
-			+ "BCT.BOARD_CATE_NAME AS cateName, ct.CONTENT_SUBJECT AS contentSubject "
+			+ "bct.BOARD_CATE_NAME AS cateName, bct.BOARD_CATE_INDEX AS cateIndex, ct.CONTENT_SUBJECT AS contentSubject "
 			+ "	FROM "
 			+ "		CONTENT_TABLE ct, USER_TABLE ut, BOARD_CATE_TABLE bct "
-			+ "WHERE ct.CONTENT_WRITER_INDEX  = ut.USER_INDEX  AND CONTENT_INDEX = #{contentIndex} AND bct.BOARD_CATE_INDEX = #{cateIndex}")
-	PostBean selectPostInfo(@Param("contentIndex") int contentIndex, @Param("cateIndex") int cateIndex);
+			+ "WHERE ct.CONTENT_WRITER_INDEX  = ut.USER_INDEX  AND CONTENT_INDEX = #{contentIndex} AND bct.BOARD_CATE_INDEX = ct.CONTENT_CATE_INDEX ")
+	PostBean selectPostInfo(@Param("contentIndex") int contentIndex);
 }
