@@ -94,6 +94,15 @@ const util = (function () {
         }
 
         /**
+         * 임시 이미지 경로 제거
+         * @param {String} context : 본문 텍스트 (html)
+         * @returns 
+         */
+        data.removeTempResource = function (context) {
+            return context.length ? context.replace(/temporary\//g, '') : '';
+        };
+
+        /**
          * 이미지 이름 추출
          * @param {String} source : parse HTML
          * @return {Array} imageSourceList : 이미지 이름 변환 배열 

@@ -59,7 +59,7 @@ $(document).ready(function () {
         const cateIndex = Number($selectedCategory.attr('type'));
         const uploadImageList = util.data.extractImageName(content);
 
-        postData.contentContext = removeTempResource(content); //게시글
+        postData.contentContext = util.data.removeTempResource(content); //게시글
         postData.contentSubject = subject; //제목
         postData.cateIndex = cateIndex; //카테고리
         postData.boardIndex = boardInfo.index; //게시판 타입
@@ -170,17 +170,5 @@ $(document).ready(function () {
                 alert('이미지 파일 업로드에 실패하였습니다.\n잠시후 다시 시도해주세요.');
             }
         });
-    }
-
-    /**
-     * 임시경로 삭제
-     * @param {String} context 
-     */
-    function removeTempResource(context){
-        if(context.length > 0){
-            return context.replace(/temporary\//g, '');
-        }else{
-            return '';
-        }
     }
 });
