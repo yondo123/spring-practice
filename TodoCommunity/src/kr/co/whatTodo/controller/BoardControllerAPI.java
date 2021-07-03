@@ -1,6 +1,5 @@
 package kr.co.whatTodo.controller;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.whatTodo.beans.BoardListBean;
 import kr.co.whatTodo.beans.CategoryBean;
+import kr.co.whatTodo.beans.PostBean;
 import kr.co.whatTodo.beans.ResponseBean;
 import kr.co.whatTodo.service.BoardService;
 
@@ -58,7 +59,21 @@ public class BoardControllerAPI {
 		ResponseBean success = new ResponseBean("success", true, imageName);
 		return new ResponseEntity<>(success, HttpStatus.OK);
 	}
-
+	
+	// 게시글 수정
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@ResponseBody
+	@PatchMapping("/modify-post")
+	public ResponseEntity<ResponseBean> updatePost(@Valid @RequestBody BoardListBean boardListBean, BindingResult res, HttpServletRequest req){
+		HttpSession session = req.getSession();
+		if (res.hasErrors()) {
+			ResponseBean error = new ResponseBean(errorMessage.getMessage(res.getAllErrors().get(0), Locale.getDefault()), false, null);
+			return new ResponseEntity<>(error, HttpStatus.OK);
+		}
+		boardService.modifyPostInfo(boardListBean, (ArrayList) session.getAttribute("temp_image"));
+		ResponseBean success = new ResponseBean("success", true, null);
+		return new ResponseEntity<>(success, HttpStatus.OK);
+	}
 
 	// 게시글 등록
 	@SuppressWarnings({ "rawtypes", "unchecked" })

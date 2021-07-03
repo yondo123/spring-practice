@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.JdbcType;
 
@@ -38,6 +39,12 @@ public interface BoardMapper {
 			+ "VALUES (CONTENT_SEQ.NEXTVAL, #{contentSubject}, #{file, jdbcType=VARCHAR},"
 			+ "#{writerIndex}, #{contentContext, jdbcType=CLOB} ,#{boardIndex}, sysdate, #{cateIndex})")
 	void insertContentInfo(BoardListBean boardListBean);
+	
+	// 게시글 수정
+	@Update("UPDATE CONTENT_TABLE "
+			+ "	SET	CONTENT_SUBJECT = #{contentSubject}, CONTENT_CONTEXT = #{contentContext} "
+			+ "WHERE CONTENT_INDEX = #{contentIndex}")
+	void updateContentInfo(BoardListBean boardListBean);
 
 	// 게시글 조회
 	@Select("SELECT ct.CONTENT_INDEX AS contentIndex, ct.CONTENT_BOARD_INDEX AS boardIndex ,ct.CONTENT_SUBJECT AS contentSubject, ut.USER_ID AS writerId, ct.CONTENT_CATE_INDEX AS cateIndex, "

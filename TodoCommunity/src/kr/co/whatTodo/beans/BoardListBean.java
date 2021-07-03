@@ -21,7 +21,6 @@ public class BoardListBean {
 	private String file;
 	private MultipartFile uploadFile = null;
 	private int writerIndex;
-	@Min(1)
 	private int boardIndex;
 	private String writeDate;
 	private String writerId;

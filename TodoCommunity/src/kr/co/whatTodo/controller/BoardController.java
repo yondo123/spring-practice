@@ -23,12 +23,12 @@ import kr.co.whatTodo.service.BoardService;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	
+
 	@Resource(name = "loginUserInfoBean")
 	private UserInfoBean userInfoBean;
-	
+
 	/**
-	 * @desc   : 스터디 게시판 
+	 * @desc : 스터디 게시판
 	 * @return : board.jsp
 	 */
 	@GetMapping("/study")
@@ -37,9 +37,9 @@ public class BoardController {
 		model.addAttribute("cateName", "스터디");
 		return "board";
 	}
-	
+
 	/**
-	 * @desc   : 자유 게시판 (커뮤니티)
+	 * @desc : 자유 게시판 (커뮤니티)
 	 * @return : board.jsp
 	 */
 	@GetMapping("/community")
@@ -48,9 +48,9 @@ public class BoardController {
 		model.addAttribute("cateName", "커뮤니티");
 		return "board";
 	}
-	
+
 	/**
-	 * @desc   : 글쓰기 (커뮤니티)
+	 * @desc : 글쓰기 (커뮤니티)
 	 * @return : write.jsp
 	 */
 	@GetMapping("/write")
@@ -59,11 +59,11 @@ public class BoardController {
 		session.setAttribute("temp_image", new ArrayList<String>());
 		return "write";
 	}
-	
+
 	/**
-	 * @desc	: 게시글 조회
+	 * @desc : 게시글 조회
 	 * @param model
-	 * @return	: post.jsp
+	 * @return : post.jsp
 	 */
 	@GetMapping("/post")
 	public ModelAndView post(@RequestParam("contentIndex") int contentIndex) {
@@ -73,14 +73,16 @@ public class BoardController {
 		mv.addObject("loginUser", userInfoBean);
 		return mv;
 	}
-	
+
 	/**
-	 * @desc	: 게시글 수정
+	 * @desc : 게시글 수정
 	 * @param model
-	 * @return	: write.jsp
+	 * @return : write.jsp
 	 */
 	@GetMapping("/modify")
-	public ModelAndView modify(@RequestParam("contentIndex") int contentIndex) {
+	public ModelAndView modify(@RequestParam("contentIndex") int contentIndex, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		session.setAttribute("temp_image", new ArrayList<String>());
 		ModelAndView mv = new ModelAndView("/modify");
 		PostBean postBean = boardService.getPostInfo(contentIndex);
 		mv.addObject("post", postBean);

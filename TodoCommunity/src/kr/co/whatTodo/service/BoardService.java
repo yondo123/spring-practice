@@ -106,6 +106,18 @@ public class BoardService {
 	public PostBean getPostInfo(int contentIndex) {
 		return boardDao.selectPostInfo(contentIndex);
 	}
+	
+	// 게시글 수정
+	public void modifyPostInfo(BoardListBean boardListBean, ArrayList<String> sessionTempImage) {
+		for(String uploadImage : boardListBean.getUploadImageList()) {
+			if(sessionTempImage.contains(uploadImage)) {
+				String tempFilePath = boardDao.selectUploadFilePath(uploadImage);
+				moveFile(tempFilePath);
+			}
+		}
+		
+		boardDao.updateContentInfo(boardListBean);
+	}
 
 	// 카테고리 목록 조회
 	public List<CategoryBean> getCategoryList(String cateType) {
