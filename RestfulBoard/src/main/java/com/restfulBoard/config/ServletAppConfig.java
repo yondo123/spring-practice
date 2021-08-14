@@ -1,7 +1,10 @@
 package com.restfulBoard.config;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.MessageCodesResolver;
@@ -13,12 +16,26 @@ import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.activation.DataSource;
 import java.util.List;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.restfulBoard.conroller")
+
+@PropertySource("/WEB-INF/properties/db.properties")
 public class ServletAppConfig implements WebMvcConfigurer {
+    @Value("${db.classname}")
+    private String db_classname;
+
+    @Value("${db.url}")
+    private String db_url;
+
+    @Value("${db.username}")
+    private String db_username;
+
+    @Value("${db.password}")
+    private String db_password;
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry viewResolverRegistry) {
@@ -112,5 +129,18 @@ public class ServletAppConfig implements WebMvcConfigurer {
     @Override
     public MessageCodesResolver getMessageCodesResolver() {
         return null;
+    }
+
+    /**
+     * database 셋팅
+     */
+    public BasicDataSource dataSource(){
+        BasicDataSource source = new BasicDataSource();
+        System.out.println(db_url+"and"+db_password);
+        source.setDriverClassName(db_classname);
+        source.setUrl(db_url);
+        source.setUsername(db_username);
+        source.setPassword(db_password);
+        return source;
     }
 }
