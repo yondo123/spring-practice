@@ -10,9 +10,4 @@ public class BoardController {
     public String board(){
         return "board";
     }
-
-    @GetMapping("/board/write")
-    public String write(){
-        return "write";
-    }
 }
