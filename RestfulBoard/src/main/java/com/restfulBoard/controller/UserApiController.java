@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.Locale;
 import java.util.Objects;
@@ -34,11 +35,15 @@ public class UserApiController {
         }else{
             String status;
             status = userService.signup(user);
+
             if(Objects.equals(status, "S")){
-                Response<?> success = new Response<>("success", true, null);
+                Response<?> success = new Response<>("success account", true, null);
                 return new ResponseEntity<>(success, HttpStatus.OK);
+            }else if(Objects.equals(status, "Y")){
+                Response<?> existError = new Response<>("success login", true, null);
+                return new ResponseEntity<>(existError, HttpStatus.OK);
             }else{
-                Response<?> existError = new Response<>("already exist userid", false, null);
+                Response<?> existError = new Response<>("fail login", false, null);
                 return new ResponseEntity<>(existError, HttpStatus.OK);
             }
         }

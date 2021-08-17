@@ -16,7 +16,12 @@ public class UserDao {
     }
 
     //sign
-    public void insertUser(User user){
+    public void insertUser(User user) {
         userMapper.insertUser(user);
+    }
+
+    //user check
+    public int selectUserCnt(User user) {
+       return userMapper.selectUser(user);
     }
 }

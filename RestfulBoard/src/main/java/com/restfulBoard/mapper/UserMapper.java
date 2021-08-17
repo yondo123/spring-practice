@@ -11,4 +11,7 @@ public interface UserMapper {
     @Insert("INSERT INTO USER_TBL(USER_ID, USER_PASSWORD) " +
             "VALUES (#{id}, #{password})")
     void insertUser(User user);
+
+    @Select("SELECT COUNT(*) FROM restful_board.USER_TBL WHERE USER_ID = #{id} AND USER_PASSWORD = #{password}")
+    int selectUser(User user);
 }
