@@ -55,7 +55,9 @@
         <input type="password" name="author" id="userPassword" placeholder="your password.." maxlength="12"/>
         <label for="userPassword" class="hide">User Password</label>
     </div>
-    <textarea name="review" id="review-area" cols="15" rows="10"> </textarea>
+    <input type="text" class="title" name="post-title" id="title" placeholder="Title.." maxlength="50">
+    <label for="title" class="hide">Title</label>
+    <textarea name="review" id="post" cols="15" rows="10"> </textarea>
     <div class="article-button">
         <button type="button" id="btnPostSend" class="write">send</button>
         <button type="button" id="btnCancel" class="cancel">cancel</button>

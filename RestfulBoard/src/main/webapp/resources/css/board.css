@@ -141,6 +141,15 @@ main p {
     color: var(--main-color);
     margin-left: 1rem;
 }
+
+.title {
+    padding: 0.3rem 0.5rem;
+    border: 0.1rem solid var(--text-color);
+    border-radius: 0.8rem;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
 .article-info,
 textarea {
     margin-bottom: 1rem;
