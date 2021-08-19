@@ -176,7 +176,7 @@ public class ServletAppConfig implements WebMvcConfigurer {
     @Bean
     public ReloadableResourceBundleMessageSource messageSource() {
         ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
-        res.setBasenames("classpath:error.properties");
+        res.setBasenames("classpath:error");
         return res;
     }
 
