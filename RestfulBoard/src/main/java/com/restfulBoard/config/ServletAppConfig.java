@@ -1,8 +1,15 @@
 package com.restfulBoard.config;
 
+import com.restfulBoard.mapper.BoardMapper;
+import com.restfulBoard.mapper.UserMapper;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.MessageCodesResolver;
@@ -20,19 +27,18 @@ import java.util.List;
 @ComponentScan("com.restfulBoard.controller")
 @ComponentScan("com.restfulBoard.dao")
 @ComponentScan("com.restfulBoard.service")
-
-@PropertySource("classpath:properties/db.properties")
+@PropertySource("classpath:db.properties")
 public class ServletAppConfig implements WebMvcConfigurer {
-    @Value("${db.classname}")
+    @Value("${classname}")
     private String db_classname;
 
-    @Value("${db.url}")
+    @Value("${url}")
     private String db_url;
 
-    @Value("${db.username}")
+    @Value("${username}")
     private String db_username;
 
-    @Value("${db.password}")
+    @Value("${password}")
     private String db_password;
 
     @Override
@@ -45,7 +51,7 @@ public class ServletAppConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
-        resourceHandlerRegistry.addResourceHandler("/resources/**").addResourceLocations("/resources");
+        resourceHandlerRegistry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
     @Override
@@ -133,12 +139,52 @@ public class ServletAppConfig implements WebMvcConfigurer {
      * database 설정
      */
     @Bean
-    public BasicDataSource dataSource(){
+    public BasicDataSource dataSource() {
         BasicDataSource source = new BasicDataSource();
         source.setDriverClassName(db_classname);
         source.setUrl(db_url);
         source.setUsername(db_username);
         source.setPassword(db_password);
         return source;
+    }
+
+    //mapper
+    @Bean
+    public SqlSessionFactory factory(BasicDataSource source) throws Exception {
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(source);
+        return factoryBean.getObject();
+    }
+
+    @Bean
+    public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
+        MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+    }
+
+    @Bean
+    public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory) throws Exception {
+        MapperFactoryBean<BoardMapper> factoryBean = new MapperFactoryBean<>(BoardMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+    }
+
+    /**
+     * error meesage handling
+     */
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
+        ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
+        res.setBasenames("classpath:error.properties");
+        return res;
+    }
+
+    /**
+     * 메시지 프로퍼티 설정
+     */
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }
