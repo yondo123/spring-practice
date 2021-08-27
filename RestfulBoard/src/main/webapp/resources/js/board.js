@@ -1,4 +1,7 @@
 $(function () {
+    let requestPage = 1;
+    getBoardList(requestPage);
+
     //팝업 오픈
     $("#btnWrite").click(function () {
         return togglePopup(true);
@@ -84,5 +87,21 @@ $(function () {
         } else {
             alert("제목과 내용을 입력해주세요.");
         }
+    }
+
+    /**
+     * 게시글 조회
+     */
+    function getBoardList() {
+        $.ajax({
+            type: "GET",
+            url: "/board/list",
+            data: { index: 1 },
+            dataType: "json",
+            contentType: "application/json; UTF-8;",
+            success: function (response) {
+                console.log(JSON.stringify(response));
+            },
+        });
     }
 });

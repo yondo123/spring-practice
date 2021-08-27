@@ -2,7 +2,6 @@ package com.restfulBoard.controller;
 
 import com.restfulBoard.dto.Board;
 import com.restfulBoard.dto.Response;
-import com.restfulBoard.dto.User;
 import com.restfulBoard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -12,7 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/board")
@@ -32,6 +34,18 @@ public class BoardApiController {
         }
         boardService.addPost(board);
         Response<?> success = new Response<>("success upload post", true, null);
+        return new ResponseEntity<>(success, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping("/list")
+    public ResponseEntity<Response<?>> list(@RequestParam int index) {
+        int totalCount = boardService.getBoardCount();
+        Map<String, Object> result = new HashMap<>();
+        List<Board> boardList = boardService.getBoardList(index);
+        result.put("items", boardList);
+        result.put("totalCount", totalCount);
+        Response<?> success = new Response<>("success load list", true, result);
         return new ResponseEntity<>(success, HttpStatus.OK);
     }
 }
