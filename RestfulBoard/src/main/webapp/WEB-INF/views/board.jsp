@@ -34,8 +34,8 @@
 </header>
 <main>
     <h2 class="hide">Recent POST</h2>
-    <ol class="list">
-        <li class="post-list">
+    <ol class="list" id="boardList">
+        <!-- <li class="post-list">
             <details>
                 <summary>제목제목제목제목제목</summary>
                 <p>내용입니다. 내용입니다. 내용입니다.</p>
@@ -43,7 +43,7 @@
             <div class="post-info">
                 <p><span class="author">admin</span> | <span class="date">2021. 08. 16</span></p>
             </div>
-        </li>
+        </li> -->
     </ol>
 </main>
 <section class="write-wrap hide">

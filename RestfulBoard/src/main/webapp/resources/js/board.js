@@ -81,7 +81,12 @@ $(function () {
                 dataType: "json",
                 contentType: "application/json; UTF-8;",
                 success: function (response) {
-                    console.log(JSON.stringify(response));
+                    if (response.result) {
+                        $("#userId, #userPassword, #title, #post").val("");
+                        togglePopup(true);
+                    } else {
+                        alert(response.message);
+                    }
                 },
             });
         } else {
@@ -100,8 +105,46 @@ $(function () {
             dataType: "json",
             contentType: "application/json; UTF-8;",
             success: function (response) {
-                console.log(JSON.stringify(response));
+                if (response.result) {
+                    //@Todo : 데이터 0 일때 데이터 없음 처리
+                    renderBoardList(response.data.items);
+                }
             },
         });
+    }
+
+    /**
+     * 게시글 렌더링
+     * @param {Array} data : 게시글 목록
+     */
+    function renderBoardList(data) {
+        data.forEach(item => {
+            const listTemplate = `<li class="post-list">
+                                        <details>
+                                            <summary class="subject">${item.title}</summary>
+                                            <p class="content">${item.context}</p>
+                                        </details>
+                                        <div class="post-info">
+                                            <p><span class="author">${item.writer}</span> | <span class="date">${formattingDate(item.writeDate)}</span></p>
+                                        </div>
+                                    </li>`
+            $('#boardList').append(listTemplate);
+        });
+    }
+
+    
+    /**
+     * 날짜 형식 변경
+     * @param {String} str : 날짜 형식
+     */
+    function formattingDate(str){
+        let convert = '';
+        if(str.length == 10){
+            const dateArray = str.split('-');
+            dateArray.forEach(function (item, index) {
+                convert += index < 2 ? item + ' .' : item;
+            });
+        }
+        return convert;
     }
 });
