@@ -23,6 +23,8 @@ public class UserService {
         String userId = userDao.selectUserId(user.getId());
         if(userId == null){
             userDao.insertUser(user);
+            loginUser.setId(user.getId());
+            loginUser.setPassword(user.getPassword());
             return "S";
         }else{
             int userCount = userDao.selectUserCnt(user);
