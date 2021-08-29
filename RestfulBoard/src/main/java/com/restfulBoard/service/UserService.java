@@ -4,6 +4,8 @@ import com.restfulBoard.dao.UserDao;
 import com.restfulBoard.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,12 @@ public class UserService {
     private User loginUser;
     //회원가입
     public String signup(User user){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String userId = userDao.selectUserId(user.getId());
+        String cryptoPw = passwordEncoder.encode(user.getPassword());
         if(userId == null){
+            user.setPassword(cryptoPw);
+            System.out.println(user.getPassword());
             userDao.insertUser(user);
             loginUser.setId(user.getId());
             loginUser.setPassword(user.getPassword());

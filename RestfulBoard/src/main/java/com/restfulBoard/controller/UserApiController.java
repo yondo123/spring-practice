@@ -32,17 +32,16 @@ public class UserApiController {
             Response<?> error = new Response<>(
                     errorMessage.getMessage(result.getAllErrors().get(0), Locale.getDefault()), false, null);
             return new ResponseEntity<>(error, HttpStatus.OK);
-        }else{
+        } else {
             String status;
             status = userService.signup(user);
-
-            if(Objects.equals(status, "S")){
+            if (Objects.equals(status, "S")) {
                 Response<?> success = new Response<>("success account", true, null);
                 return new ResponseEntity<>(success, HttpStatus.OK);
-            }else if(Objects.equals(status, "Y")){
+            } else if (Objects.equals(status, "Y")) {
                 Response<?> existError = new Response<>("success login", true, null);
                 return new ResponseEntity<>(existError, HttpStatus.OK);
-            }else{
+            } else {
                 Response<?> existError = new Response<>("fail login", false, null);
                 return new ResponseEntity<>(existError, HttpStatus.OK);
             }
