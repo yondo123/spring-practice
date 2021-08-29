@@ -9,9 +9,8 @@ public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     //root-context
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{RootAppConfig.class};
+        return new Class[]{RootAppConfig.class, WebSecurityConfig.class};
     }
-
     //servlet-context
     @Override
     protected Class<?>[] getServletConfigClasses() {
